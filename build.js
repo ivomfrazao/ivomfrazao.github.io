@@ -297,7 +297,7 @@ const CROSS_REFS = {
   'pos-platform':      [{ slug: 'construction-site', title: 'Construction Site Management App', note: 'same reverse-engineering approach, applied to a different system' }],
 };
 
-function renderCaseStudyPage(slug, fm, body) {
+function renderCaseStudyPage(slug, fm, body, nextCase = null) {
   const title = fm.title || 'Case Study';
 
   const tagsHtml = Array.isArray(fm.tags) && fm.tags.length
@@ -364,6 +364,13 @@ ${mdToHtml(body)}
     ).join('');
     return `<nav class="case-study-related" aria-label="Related case studies"><span class="related-label">See also</span>${links}</nav>`;
   })()}
+  ${nextCase
+    ? `<nav class="case-study-next" aria-label="Next case study">` +
+      `<a href="${esc(nextCase.slug)}.html" class="next-case-link">` +
+      `<span class="next-case-label">Next case study</span>` +
+      `<span class="next-case-title">${esc(nextCase.title)} →</span>` +
+      `</a></nav>`
+    : ''}
   <footer class="site-footer">
     <p><a href="../index.html">← Back to Timeline</a></p>
   </footer>
@@ -457,12 +464,20 @@ function main() {
   console.log('  Built index.html');
 
   /* Case study pages ───────────────────────────────────────────── */
+  const featuredWithSlug = featured.filter(p => p.caseStudySlug);
+  const caseStudyNext = {};
+  for (let i = 0; i < featuredWithSlug.length - 1; i++) {
+    const curr = featuredWithSlug[i];
+    const next = featuredWithSlug[i + 1];
+    caseStudyNext[curr.caseStudySlug] = { slug: next.caseStudySlug, title: next.title };
+  }
+
   const mdFiles = fs.readdirSync('case-studies').filter(f => f.endsWith('.md'));
   for (const file of mdFiles) {
     const slug = path.basename(file, '.md');
     const raw  = fs.readFileSync(`case-studies/${file}`, 'utf8');
     const { fm, body } = parseFrontMatter(raw);
-    fs.writeFileSync(`case-studies/${slug}.html`, renderCaseStudyPage(slug, fm, body));
+    fs.writeFileSync(`case-studies/${slug}.html`, renderCaseStudyPage(slug, fm, body, caseStudyNext[slug] ?? null));
     console.log(`  Built case-studies/${slug}.html`);
   }
 
