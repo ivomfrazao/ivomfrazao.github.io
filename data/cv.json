@@ -181,16 +181,6 @@
               "featured": false,
               "hook": null,
               "caseStudySlug": null
-            },
-            {
-              "id": "proj-outsystems-training",
-              "title": "OutSystems Training Programme",
-              "type": "supporting",
-              "tagline": "Delivered a comprehensive training programme for 12+ participants, achieving a 90% certification success rate.",
-              "tags": ["Training", "Mentorship"],
-              "featured": false,
-              "hook": null,
-              "caseStudySlug": null
             }
           ]
         },
@@ -236,6 +226,7 @@
       ]
     }
   ],
+  "featuredOrder": ["workflow-builder", "proj-pos-platform", "proj-construction-app", "fidelidade-deeplinking"],
   "sideProjects": [],
   "education": [
     {
@@ -266,32 +257,16 @@
     }
   ],
   "certifications": [
-    { "name": "Architecture Specialist (O11)",          "issuer": "OutSystems" },
-    { "name": "Associate Tech Lead",                    "issuer": "OutSystems" },
-    { "name": "Web Developer Specialist (ODC)",         "issuer": "OutSystems" },
-    { "name": "Professional Web Developer (O11)",       "issuer": "OutSystems" },
-    { "name": "Web Developer Specialist (O11)",         "issuer": "OutSystems" },
-    { "name": "Security Specialist (O11)",              "issuer": "OutSystems" },
-    { "name": "Associate Developer (ODC)",              "issuer": "OutSystems" },
-    { "name": "Front-end Developer Specialist",         "issuer": "OutSystems" },
-    { "name": "Expert Traditional Web Developer",       "issuer": "OutSystems" },
-    { "name": "Associate Reactive Developer",           "issuer": "OutSystems" },
-    { "name": "Professional Traditional Web Developer", "issuer": "OutSystems" },
-    { "name": "Associate Traditional Web Developer",    "issuer": "OutSystems" },
-    { "name": "Delivery Specialist",                    "issuer": "OutSystems" },
-    { "name": "Professional Cloud Architect",           "issuer": "Google"     },
-    { "name": "Generative AI Leader",                   "issuer": "Google"     },
-    { "name": "Terraform Associate",                    "issuer": "HashiCorp"  },
-    { "name": "Professional Scrum Master I",            "issuer": "Scrum.org"  },
-    { "name": "AZ-400: DevOps Engineer",                "issuer": "Microsoft"  },
-    { "name": "Azure AI Fundamentals",                  "issuer": "Microsoft"  },
-    { "name": "Azure Fundamentals",                     "issuer": "Microsoft"  },
-    { "name": "Power Platform Fundamentals",            "issuer": "Microsoft"  },
-    { "name": "Dynamics 365 Fundamentals",              "issuer": "Microsoft"  },
-    { "name": "Certified Cloud Practitioner",           "issuer": "AWS"        },
-    { "name": "Database SQL Certified Associate",       "issuer": "Oracle"     },
-    { "name": "APEX Cloud Developer Certified Professional", "issuer": "Oracle" },
-    { "name": "Rapid Developer",                        "issuer": "Mendix"     }
+    { "name": "Professional Cloud Architect",               "issuer": "Google"     },
+    { "name": "Generative AI Leader",                       "issuer": "Google"     },
+    { "name": "Terraform Associate",                        "issuer": "HashiCorp"  },
+    { "name": "Professional Scrum Master I",                "issuer": "Scrum.org"  },
+    { "name": "AZ-400: DevOps Engineer",                    "issuer": "Microsoft"  },
+    { "name": "Certified Cloud Practitioner",               "issuer": "AWS"        },
+    { "name": "Database SQL Certified Associate",           "issuer": "Oracle"     },
+    { "name": "Architecture Specialist (O11)",              "issuer": "OutSystems" },
+    { "name": "Associate Tech Lead",                        "issuer": "OutSystems" },
+    { "name": "and 11 further platform certifications",     "issuer": "OutSystems" }
   ],
   "languages": [
     { "name": "Portuguese", "level": "Native"                      },

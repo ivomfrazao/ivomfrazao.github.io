@@ -378,6 +378,7 @@ function main() {
   const {
     profile,
     companies,
+    featuredOrder  = [],
     sideProjects   = [],
     education      = [],
     certifications = [],
@@ -406,7 +407,14 @@ function main() {
     ...companies.flatMap(c => c.roles.flatMap(r => r.projects ?? [])),
     ...sideProjects,
   ];
-  const featured = allProjects.filter(p => p.featured && (p.caseStudySlug || p.url));
+  const featuredRaw = allProjects.filter(p => p.featured && (p.caseStudySlug || p.url));
+  const featured = featuredOrder.length
+    ? [...featuredRaw].sort((a, b) => {
+        const ai = featuredOrder.indexOf(a.id);
+        const bi = featuredOrder.indexOf(b.id);
+        return (ai === -1 ? Infinity : ai) - (bi === -1 ? Infinity : bi);
+      })
+    : featuredRaw;
   if (featured.length) {
     html = inject(html, 'featured-grid', featured.map(renderFeaturedCard).join('\n'));
     html = setSectionVisible(html, 'featured-section', true);
