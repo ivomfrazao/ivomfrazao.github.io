@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ivo Frazão — Portfolio</title>
+  <meta name="description" content="Ivo Frazão — platform engineer and tech lead. Career timeline and project case studies.">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Ivo Frazão — Portfolio">
+  <meta property="og:description" content="Platform engineer and tech lead. Career timeline and project case studies.">
+  <meta property="og:url"         content="https://ivomfrazao.github.io">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional"></noscript>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="profile-header">
+    <div class="profile-header__inner">
+      <div class="profile-header__text">
+        <h1 class="profile-name"  id="profile-name"></h1>
+        <p class="profile-tagline" id="profile-tagline"></p>
+        <p class="profile-location" id="profile-location"></p>
+        <p class="profile-languages" id="profile-languages"></p>
+      </div>
+      <nav class="profile-links" id="profile-links" aria-label="Contact and social links"></nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="featured-section" aria-labelledby="featured-heading">
+      <div class="section-inner">
+        <h2 class="section-label" id="featured-heading">Featured Work</h2>
+        <div class="featured-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <section class="timeline-section" aria-labelledby="timeline-heading">
+      <div class="timeline-header">
+        <h2 class="section-label" id="timeline-heading">Career</h2>
+        <div id="toggle-container"></div>
+      </div>
+      <div class="timeline-container" id="timeline-container">
+        <div class="loading">Loading…</div>
+      </div>
+    </section>
+
+    <section class="personal-projects-section" aria-labelledby="personal-projects-heading">
+      <div class="section-inner">
+        <h2 class="section-label" id="personal-projects-heading">Personal Projects</h2>
+        <div class="featured-grid" id="personal-projects-grid"></div>
+      </div>
+    </section>
+
+    <section class="education-section" aria-labelledby="education-heading">
+      <div class="section-inner">
+        <h2 class="section-label" id="education-heading">Education</h2>
+        <div class="edu-grid" id="edu-grid"></div>
+      </div>
+    </section>
+
+    <section class="certifications-section" aria-labelledby="certifications-heading">
+      <div class="section-inner">
+        <h2 class="section-label" id="certifications-heading">Certifications</h2>
+        <div class="certs-grid" id="certs-grid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Ivo Frazão · <a href="https://github.com/ivomfrazao/ivomfrazao.github.io">View source</a></p>
+  </footer>
+
+  <script defer src="js/app.js"></script>
+</body>
+</html>

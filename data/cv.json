@@ -1,0 +1,302 @@
+{
+  "profile": {
+    "name": "Ivo Frazão",
+    "tagline": "Platform Software Engineer – Architecture, Security & Cloud",
+    "location": "Lisbon, Portugal (actively relocating)",
+    "links": {
+      "linkedin": "https://linkedin.com/in/ivomfrazao",
+      "github": "https://github.com/ivomfrazao",
+      "email": "ivo.frazao@outlook.com"
+    }
+  },
+  "companies": [
+    {
+      "id": "fidelidade",
+      "name": "Fidelidade",
+      "url": "https://www.fidelidade.pt",
+      "dateStart": "2025-09",
+      "dateEnd": null,
+      "description": "Portugal's largest insurance provider. Working on backend services and shared platform components used across multiple lines of business and development teams.",
+      "roles": [
+        {
+          "id": "fidelidade-platform-engineer",
+          "title": "Platform Software Engineer",
+          "dateStart": "2025-09",
+          "dateEnd": null,
+          "summary": "Building backend services and reusable platform components adopted across multiple lines of business. Work spans security models, authentication flows, simulation engines, caching, and observability.",
+          "projects": [
+            {
+              "id": "fidelidade-deeplinking",
+              "title": "Deep-Linking Security Model",
+              "type": "flagship",
+              "tagline": "Identified a user-level gap in the platform's deep-linking security model. App-to-app isolation was already in place — what was missing was a check that the user opening a deeplink was the user it was created for. Because teams were using deeplink context as an SSO substitute (passing usernames to authenticate on arrival without a password), the missing check was a user impersonation path. Added bearer token validation as a second security layer alongside the existing app-level key mechanism. The service has ~20 integrations in production; the new model is in active rollout.",
+              "tags": ["Security", "Authorization", "JWT", "Platform"],
+              "featured": true,
+              "hook": "App-to-app isolation was already in place. What was missing was simpler and more dangerous: no check that the user opening a deeplink was the user it was created for. Because the custom IdP had no SSO, teams were passing usernames in context and authenticating on arrival without a password — which meant the missing check was a user impersonation path. I added bearer token validation as a second layer alongside the existing app key to close it.",
+              "caseStudySlug": "deeplink-security"
+            },
+            {
+              "id": "fidelidade-idp-migration",
+              "title": "Custom Identity Provider Migration",
+              "type": "supporting",
+              "tagline": "Extended OAuth2/OIDC authentication flows in the platform's custom identity provider, aligning with Microsoft Entra External ID. Currently used by 15 development teams in production.",
+              "tags": ["OAuth2/OIDC", "Microsoft Entra", "Identity", "Platform"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "fidelidade-insurance-flows",
+              "title": "Insurance Simulation Platform",
+              "type": "supporting",
+              "tagline": "Reusable screens, blocks and services for multi-step insurance simulation flows pulled independently by each line of business. Includes in-memory search and cached components reducing external API calls.",
+              "tags": ["Reactive Web", "Reusable Components", "Caching", "Platform"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "fidelidade-observability",
+              "title": "Platform Observability",
+              "type": "supporting",
+              "tagline": "Introduced structured logging and metrics across the platform where none previously existed. Surfaced call volume and version distribution for the deep-linking service — a question previously unanswerable — directly informing consumer migration timelines. Enabled identification of unused settings, making a cleanup process possible for the first time.",
+              "tags": ["Observability", "Logging", "Metrics", "Platform"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deloitte",
+      "name": "Deloitte",
+      "url": "https://www.deloitte.com",
+      "dateStart": "2018-09",
+      "dateEnd": "2025-07",
+      "description": "Global consulting and technology services firm. Nearly seven years growing through the engineering track, from first implementation work to technical ownership of backend behaviour across multiple simultaneous client projects.",
+      "roles": [
+        {
+          "id": "deloitte-analyst",
+          "title": "Tech Analyst",
+          "dateStart": "2018-09",
+          "dateEnd": "2019-08",
+          "summary": "First-year software engineer delivering across mobile, web, and back-office enterprise applications in the consulting track.",
+          "projects": [
+            {
+              "id": "proj-internal-comms-app",
+              "title": "Employee Marketing Communications Mobile App",
+              "type": "supporting",
+              "tagline": "Internal mobile application for employee communications and event management — iOS and Android via OutSystems and Cordova. Push notifications, event calendars, automatic event check-in, employee directory. Backend integrated with LDAP for authentication.",
+              "tags": ["Mobile", "Cordova", "LDAP", "iOS", "Android"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "proj-invoice-matching",
+              "title": "Invoice Matching System",
+              "type": "flagship",
+              "tagline": "Two-week POC modernising a Lotus Notes legacy invoice matching system for a major retail chain — three-stage matching process (invoices, purchase orders, delivery receipts) with bulk import and manual matching, replacing an Excel-by-email workflow. The POC directly triggered a year-long follow-on engagement with a dedicated team building 10+ further applications.",
+              "tags": ["Legacy Migration", "Retail", "POC"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "proj-social-support-platform",
+              "title": "Social Support Programme Platform",
+              "type": "supporting",
+              "tagline": "Public-sector digital platform supporting application management workflows for a Social Support Programme. On-location international project for a GCC public-sector client.",
+              "tags": ["Public Sector", "Workflow", "Government"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            }
+          ]
+        },
+        {
+          "id": "deloitte-consultant",
+          "title": "Tech Consultant",
+          "dateStart": "2019-09",
+          "dateEnd": "2021-08",
+          "summary": "Mid-level delivery across healthcare, construction, and industrial sectors. Started owning complete features end-to-end and introduced DevOps practices to the delivery team.",
+          "projects": [
+            {
+              "id": "proj-healthcare-app",
+              "title": "Healthcare Web & Mobile App",
+              "type": "supporting",
+              "tagline": "Web and mobile platform for patient interactions with hospitals and clinics: appointment scheduling, medical records, telemedicine, Bluetooth-based facility navigation. SOAP integrations with hospital backend systems. Took on client management responsibilities during tech lead absence.",
+              "tags": ["Mobile", "Healthcare", "SOAP", "Bluetooth"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "proj-construction-app",
+              "title": "Construction Site Management App",
+              "type": "flagship",
+              "tagline": "Tablet application for equipment and budget management across construction sites, integrated with SAP for real-time project data. The client's SAP APIs had no JOIN support and required column meaning to be reverse-engineered from observation. Designed and implemented a multi-step async sync engine with a state machine, controlled resume/retry logic, and chunked processing for large tables.",
+              "tags": ["Tablet", "SAP", "Sync Engine", "State Machine", "Construction"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "proj-devops-pipeline",
+              "title": "DevOps Deployment Pipeline",
+              "type": "supporting",
+              "tagline": "Designed an automated deployment pipeline (Jenkins, OutSystems LifeTime, BDD, Selenium, JMeter, SonarQube) as a strategic consulting showcase. Presented to prospective clients; contributed directly to winning a major factory management contract.",
+              "tags": ["CI/CD", "Jenkins", "DevOps", "BDD"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            }
+          ]
+        },
+        {
+          "id": "deloitte-senior",
+          "title": "Tech Senior Consultant",
+          "dateStart": "2021-09",
+          "dateEnd": "2023-08",
+          "summary": "First role as tech lead and team lead. Drove architecture decisions, led cross-functional teams, and grew from owning a single module to overseeing a full production platform.",
+          "projects": [
+            {
+              "id": "workflow-builder",
+              "title": "Workflow Builder Platform",
+              "type": "flagship",
+              "tagline": "No-code workflow builder for an energy sector client — dynamic form generation, event-driven execution, and retry logic enabling non-technical teams to design and run their own operational workflows without engineering involvement. Improved user interactions by 40% in key processes at rollout, with up to 70% expected as more processes migrate.",
+              "tags": ["Platform Engineering", "Event-Driven", "Architecture", "Tech Lead", "Energy"],
+              "featured": true,
+              "hook": "My most technically ambitious project: a configurable workflow platform built as a composition of modular monoliths — field catalogue with dependency chains, rule engine, dynamic form generation, and event-driven workflow activities. Led a cross-functional team of 12.",
+              "caseStudySlug": "workflow-builder"
+            },
+            {
+              "id": "proj-telecom-b2b-portal",
+              "title": "Telecom B2B Self-Management Portal",
+              "type": "supporting",
+              "tagline": "B2B self-management portal for a telecom client. The primary challenge was not technical: the client engaged in irregular bursts requiring active momentum management throughout. Achieved 30% improvement in key processes.",
+              "tags": ["B2B", "Telecom", "Portal", "Client Management"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "proj-outsystems-training",
+              "title": "OutSystems Training Programme",
+              "type": "supporting",
+              "tagline": "Delivered a comprehensive training programme for 12+ participants, achieving a 90% certification success rate.",
+              "tags": ["Training", "Mentorship"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            }
+          ]
+        },
+        {
+          "id": "deloitte-exp-senior",
+          "title": "Tech Experienced Senior Consultant",
+          "dateStart": "2023-09",
+          "dateEnd": "2025-07",
+          "summary": "Technical ownership across multiple client projects simultaneously — full platform delivery, backend architecture, SQL optimisation, infrastructure right-sizing, and mentoring senior developers.",
+          "projects": [
+            {
+              "id": "proj-pos-platform",
+              "title": "Point-of-Sale Platform",
+              "type": "flagship",
+              "tagline": "Delivered a B2C+B2B point-of-sale platform under a 6-month deadline driven by a company merger. Reverse-engineered a legacy ERP with no API documentation to enable integration, maintaining live operations across all subsequent releases. Operated as sole engineer for a sustained phase — making integration, design, and stakeholder decisions independently. Rolled out and trained 20 stores.",
+              "tags": ["ERP Integration", "Architecture", "Retail", "Stakeholder Management"],
+              "featured": true,
+              "hook": "6-month deadline, a legacy ERP with no API documentation, and a company merger to accommodate. For a sustained phase I was the only engineer — redesigning flows end-to-end as ERP assumptions broke, running steering committee meetings, and keeping live ops running.",
+              "caseStudySlug": "pos-platform"
+            },
+            {
+              "id": "proj-energy-bidding",
+              "title": "Public Sector Energy Bidding & Contracting Platform",
+              "type": "supporting",
+              "tagline": "Architecture specialist for a national-scale energy procurement platform covering all public sector buying in the country. Designed a dynamic data model for variable lot combinations — preventing a high-maintenance static implementation. Produced the first C4 architecture model the consulting team presented to a client.",
+              "tags": ["Architecture", "C4 Modelling", "Data Modelling", "Public Sector"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
+              "id": "proj-infra-optimisation",
+              "title": "Infrastructure & SQL Optimisation",
+              "type": "supporting",
+              "tagline": "Designated infrastructure and SQL lead across the low code consulting practice. On taking ownership, resolved a year-long critical deployment pipeline failure that had blocked team governance and delivery. Established platform governance from scratch — enforced team application ownership, replaced free-for-all visibility with team-scoped access, defined responsibilities, and eliminated orphaned applications — reducing the factory by ~20% in application objects. Brought the platform current — executing a multi-version catch-up from a 2020 release to 2024 — and established a yearly upgrade cadence where none had existed. Eliminated all query timeouts on a budget management module (SQL Server) by redesigning lazy-loaded data access stages. Right-sized Mendix RAM allocations achieving 50% cost reduction on peak-burst scaling. Defined dynamic uptime schedules for dev/UAT environments during a cloud lift-and-shift, eliminating idle infrastructure costs.",
+              "tags": ["Cloud", "SQL", "Performance", "Infrastructure", "Mendix"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sideProjects": [],
+  "education": [
+    {
+      "id": "ist-cybersecurity",
+      "institution": "Instituto Superior Técnico – University of Lisbon",
+      "degree": "Post Graduation — Practical Cybersecurity",
+      "dateStart": "2024-09",
+      "dateEnd": "2025-06",
+      "highlights": [
+        "Red Team & Blue Team operations",
+        "Incident response & security monitoring",
+        "Vulnerability exploration & security management"
+      ]
+    },
+    {
+      "id": "coimbra-msc",
+      "institution": "University of Coimbra",
+      "degree": "Master of Engineering — Electrical and Computer Engineering",
+      "dateStart": "2013-09",
+      "dateEnd": "2018-10",
+      "highlights": [
+        "Specialization: Computers | Final grade: 18.495 / 20",
+        "Top 3% best student award, received every year of the degree",
+        "Dissertation: \"Applying Machine Learning Techniques on the Detection of Cyber-Physical Attacks\" — Grade 19/20",
+        "Publication: CRITIS 2018 — \"Denial of Service Attacks: Detecting the frailties of ML algorithms in the Classification Process\"",
+        "Student leadership: Pedagogical Council, Engineering Student Union (Coordinator, Secretary, Treasurer), Bot Olympics General Coordinator"
+      ]
+    }
+  ],
+  "certifications": [
+    { "name": "Architecture Specialist (O11)",          "issuer": "OutSystems" },
+    { "name": "Associate Tech Lead",                    "issuer": "OutSystems" },
+    { "name": "Web Developer Specialist (ODC)",         "issuer": "OutSystems" },
+    { "name": "Professional Web Developer (O11)",       "issuer": "OutSystems" },
+    { "name": "Web Developer Specialist (O11)",         "issuer": "OutSystems" },
+    { "name": "Security Specialist (O11)",              "issuer": "OutSystems" },
+    { "name": "Associate Developer (ODC)",              "issuer": "OutSystems" },
+    { "name": "Front-end Developer Specialist",         "issuer": "OutSystems" },
+    { "name": "Expert Traditional Web Developer",       "issuer": "OutSystems" },
+    { "name": "Associate Reactive Developer",           "issuer": "OutSystems" },
+    { "name": "Professional Traditional Web Developer", "issuer": "OutSystems" },
+    { "name": "Associate Traditional Web Developer",    "issuer": "OutSystems" },
+    { "name": "Delivery Specialist",                    "issuer": "OutSystems" },
+    { "name": "Professional Cloud Architect",           "issuer": "Google"     },
+    { "name": "Generative AI Leader",                   "issuer": "Google"     },
+    { "name": "Terraform Associate",                    "issuer": "HashiCorp"  },
+    { "name": "Professional Scrum Master I",            "issuer": "Scrum.org"  },
+    { "name": "AZ-400: DevOps Engineer",                "issuer": "Microsoft"  },
+    { "name": "Azure AI Fundamentals",                  "issuer": "Microsoft"  },
+    { "name": "Azure Fundamentals",                     "issuer": "Microsoft"  },
+    { "name": "Power Platform Fundamentals",            "issuer": "Microsoft"  },
+    { "name": "Dynamics 365 Fundamentals",              "issuer": "Microsoft"  },
+    { "name": "Certified Cloud Practitioner",           "issuer": "AWS"        },
+    { "name": "Database SQL Certified Associate",       "issuer": "Oracle"     },
+    { "name": "APEX Cloud Developer Certified Professional", "issuer": "Oracle" },
+    { "name": "Rapid Developer",                        "issuer": "Mendix"     }
+  ],
+  "languages": [
+    { "name": "Portuguese", "level": "Native"                      },
+    { "name": "English",    "level": "Fluent"                      },
+    { "name": "German",     "level": "Beginner – actively studying" },
+    { "name": "French",     "level": "Basic"                       }
+  ]
+}
