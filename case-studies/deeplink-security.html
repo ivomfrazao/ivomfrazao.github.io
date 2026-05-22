@@ -24,7 +24,7 @@
       <div class="case-study-hero">
         <div class="case-study-hero__tags"><span class="tag">Security</span><span class="tag">Authorization</span><span class="tag">JWT</span><span class="tag">Platform Engineering</span><span class="tag">Token Design</span></div>
         <h1 class="case-study-hero__title">Deep-Linking Security Model</h1>
-        <div class="case-study-hero__meta"><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Company</span> Fidelidade</span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Role</span> Platform Software Engineer</span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Period</span> Sep 2025 – Present</span></div>
+        <div class="case-study-hero__meta"><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Company</span><span class="case-study-hero__meta-value">Fidelidade</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Role</span><span class="case-study-hero__meta-value">Platform Software Engineer</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Period</span><span class="case-study-hero__meta-value">Sep 2025 – Present</span></span></div>
       </div>
       <div class="case-study-body">
         <article class="case-study-article">
@@ -41,12 +41,6 @@
 <h2>The Fix</h2>
 <p>Bearer token validation was added as a second layer of the security model.</p>
 <p>When a deeplink is created within an authenticated context, it is bound to the user's bearer token — issued by the platform's custom identity provider, scoped to the deeplink service as a resource server. To read the context, the caller must present that token alongside the existing application key. Without it, the context endpoint returns nothing — the context is unavailable, not unvalidated.</p>
-<p>The two checks address different trust boundaries:</p>
-<ul>
-<li><strong>Application key:</strong> Is the receiving application the intended one?</li>
-<li><strong>Bearer token:</strong> Is the user presenting this token the user it was created for?</li>
-</ul>
-<p>Both are required. Neither replaces the other.</p>
 <h2>The Two-Layer Model</h2>
 <p>The result is a two-layer structure:</p>
 <p><strong>Layer 1 — App identity (existing):</strong> The deeplink ID travels in the URL. The corresponding secret key is sent server-side. The origin application declares the intended destination; the receiving application must hold the matching key. A deeplink cannot be consumed by the wrong application.</p>

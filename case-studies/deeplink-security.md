@@ -32,13 +32,6 @@ Bearer token validation was added as a second layer of the security model.
 
 When a deeplink is created within an authenticated context, it is bound to the user's bearer token — issued by the platform's custom identity provider, scoped to the deeplink service as a resource server. To read the context, the caller must present that token alongside the existing application key. Without it, the context endpoint returns nothing — the context is unavailable, not unvalidated.
 
-The two checks address different trust boundaries:
-
-- **Application key:** Is the receiving application the intended one?
-- **Bearer token:** Is the user presenting this token the user it was created for?
-
-Both are required. Neither replaces the other.
-
 ## The Two-Layer Model
 
 The result is a two-layer structure:

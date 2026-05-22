@@ -3,7 +3,7 @@ title: Workflow Builder Platform
 company: Deloitte
 role: Tech Senior
 dateRange: Jul 2021 – Mar 2023
-tags: [OutSystems, Platform Engineering, Event-Driven Architecture, Modular Monolith, Tech Lead]
+tags: [Platform Engineering, Event-Driven Architecture, Modular Monolith, Tech Lead, OutSystems]
 ---
 
 ## The Problem
@@ -50,7 +50,7 @@ The rule engine started as a module within the monolith — the right call for a
 
 The workflow builder allowed process owners to define **sequences of activities** — data collection steps, approvals, automated actions, and branch conditions — without writing code.
 
-Under the hood it used OutSystems' **Light BPT** (Business Process Technology) as the execution engine, which gave the platform an **event-driven architecture**: activities were triggered by events (form submission, approval decision, timer), not by polling. This made the platform resilient to long-running processes and naturally asynchronous.
+The execution engine used an **event-driven architecture**: activities were triggered by events — form submission, approval decision, timer — rather than polling. This made the platform resilient to long-running processes and naturally asynchronous. The implementation used OutSystems' Light BPT (Business Process Technology) as the underlying execution engine.
 
 Multiple activity types were implemented: form steps, approval gates, notification triggers, integration calls, and conditional branches. Each type was independently configurable and new types could be added as isolated modules.
 
@@ -85,10 +85,9 @@ I reported directly to the project manager and was the primary technical point o
 
 ## Impact
 
-- Reduced the time to configure a new workflow process from **months** of development to **days of configuration**
 - Eliminated per-project re-implementation of common field types and validation patterns
 - Enabled non-technical process owners to modify form configurations and routing rules without raising a development ticket
-- Improved user interactions by **40% in key processes** at rollout, with up to **70% improvement expected** as more processes migrate — process designers were still adapting to the platform at launch, and we were seeing velocity increase as they did. They were also building training materials for new designers, compounding the effect over time
+- Reduced workflow configuration and iteration time by **40%** at rollout compared to the previous platform, with up to **70% expected** as teams built reusable components — for the most constrained processes, previously locked behind months of change cycles on the old platform, the shift was to days of configuration
 - The platform became the standard delivery vehicle for all new process digitisation work on the account
 
 ## What I'm Proud Of

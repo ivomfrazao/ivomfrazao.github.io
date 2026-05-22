@@ -308,7 +308,7 @@ function renderCaseStudyPage(slug, fm, body) {
     .filter(d => fm[d.key])
     .map(({ key, label }) =>
       `<span class="case-study-hero__meta-item">` +
-      `<span class="case-study-hero__meta-label">${label}</span> ${esc(fm[key])}` +
+      `<span class="case-study-hero__meta-label">${label}</span><span class="case-study-hero__meta-value">${esc(fm[key])}</span>` +
       `</span>`
     ).join('');
   const metaHtml = metaItems ? `<div class="case-study-hero__meta">${metaItems}</div>` : '';

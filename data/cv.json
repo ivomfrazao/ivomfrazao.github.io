@@ -139,9 +139,9 @@
               "type": "flagship",
               "tagline": "Tablet application for equipment and budget management across construction sites, integrated with SAP for real-time project data. The client's SAP APIs had no JOIN support and required column meaning to be reverse-engineered from observation. Designed and implemented a multi-step async sync engine with a state machine, controlled resume/retry logic, and chunked processing for large tables.",
               "tags": ["Tablet", "SAP", "Sync Engine", "State Machine", "Construction"],
-              "featured": false,
+              "featured": true,
               "hook": null,
-              "caseStudySlug": null
+              "caseStudySlug": "construction-site"
             },
             {
               "id": "proj-devops-pipeline",
@@ -166,10 +166,10 @@
               "id": "workflow-builder",
               "title": "Workflow Builder Platform",
               "type": "flagship",
-              "tagline": "No-code workflow builder for an energy sector client — dynamic form generation, event-driven execution, and retry logic enabling non-technical teams to design and run their own operational workflows without engineering involvement. Improved user interactions by 40% in key processes at rollout, with up to 70% expected as more processes migrate.",
+              "tagline": "No-code workflow builder for an energy sector client — dynamic form generation, event-driven execution, and retry logic enabling non-technical teams to design and run their own operational workflows without engineering involvement. Reduced workflow configuration time by 40% at rollout vs. the previous platform, with 70% expected as reusability compounded — processes that previously took months to change now took days.",
               "tags": ["Platform Engineering", "Event-Driven", "Architecture", "Tech Lead", "Energy"],
               "featured": true,
-              "hook": "My most technically ambitious project: a configurable workflow platform built as a composition of modular monoliths — field catalogue with dependency chains, rule engine, dynamic form generation, and event-driven workflow activities. Led a cross-functional team of 12.",
+              "hook": "My most technically ambitious project: a configurable workflow platform built as a composition of modular monoliths — field catalogue with dependency chains, rule engine, dynamic form generation, and event-driven workflow activities. Led a cross-functional team of 11.",
               "caseStudySlug": "workflow-builder"
             },
             {
@@ -205,10 +205,10 @@
               "id": "proj-pos-platform",
               "title": "Point-of-Sale Platform",
               "type": "flagship",
-              "tagline": "Delivered a B2C+B2B point-of-sale platform under a 6-month deadline driven by a company merger. Reverse-engineered a legacy ERP with no API documentation to enable integration, maintaining live operations across all subsequent releases. Operated as sole engineer for a sustained phase — making integration, design, and stakeholder decisions independently. Rolled out and trained 20 stores.",
+              "tagline": "Delivered a full-scope B2C+B2B point-of-sale platform through a company merger, with all scope intact and live B2B operations maintained throughout. Reverse-engineered a legacy ERP with no API documentation to enable integration, maintaining live operations across all subsequent releases. Operated as sole engineer for a sustained phase — making integration, design, and stakeholder decisions independently. Rolled out and trained 20 stores.",
               "tags": ["ERP Integration", "Architecture", "Retail", "Stakeholder Management"],
               "featured": true,
-              "hook": "6-month deadline, a legacy ERP with no API documentation, and a company merger to accommodate. For a sustained phase I was the only engineer — redesigning flows end-to-end as ERP assumptions broke, running steering committee meetings, and keeping live ops running.",
+              "hook": "A legacy ERP with no API documentation, a company merger to accommodate, and live B2B operations that could not be disrupted. For a sustained phase I was the only engineer — redesigning flows end-to-end as ERP assumptions broke, running steering committee meetings, and keeping live ops running.",
               "caseStudySlug": "pos-platform"
             },
             {

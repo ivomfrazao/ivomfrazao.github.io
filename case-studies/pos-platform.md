@@ -44,14 +44,13 @@ This phase was not planned — it was the result of delivery circumstances. The 
 ## Team Phases
 
 - **Phase 1 — Scoping and architecture:** me, manager, 2 designers, BA
-- **Phase 2 — Core development:** me, manager; front-end developer built the initial UI as designed but was removed as flow reviews extended — leaving shell screens without implemented features; I took over UI changes as the flows became understood
+- **Phase 2 — Core development:** me, manager; front-end developer built the initial UI as designed but left the project as the scope shifted toward integration work; I took over the UI layer as the flows developed
 - **Phase 3 — Integration and redesign:** me solo, manager in background
 - **Phase 4 — Post-launch:** me, junior developer (bugs and roadmapped features)
 
 ## Impact
 
-- Delivered a working B2C+B2B platform in 10 months against an original 6-month target — the delay driven by ERP reverse-engineering, multiple flow redesigns, and rounds of director-level negotiation as constraints emerged
-- Maintained the existing B2B flow without disruption throughout delivery
+- Delivered the full B2C+B2B platform with all scope intact, maintaining live B2B operations throughout. The original 6-month estimate did not account for ERP reverse-engineering requirements that were only discoverable through execution — each new flow touched unmapped parts of the system, and director-level negotiation rounds were required to resolve process conflicts between the merged companies' workflows
 - Rolled out and trained 20 stores on the new platform
 
 ## What I'm Proud Of

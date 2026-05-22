@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Construction Site Management App — Ivo Frazão</title>
+  <meta name="description" content="Construction Site Management App — case study by Ivo Frazão, Platform Software Engineer.">
+  <meta property="og:type"        content="article">
+  <meta property="og:title"       content="Construction Site Management App — Ivo Frazão">
+  <meta property="og:description" content="Construction Site Management App — case study by Ivo Frazão, Platform Software Engineer.">
+  <meta property="og:url"         content="https://ivomfrazao.github.io/case-studies/construction-site.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional"></noscript>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="../index.html">← Back to Timeline</a>
+  </nav>
+  <main>
+    <div id="case-study-container">
+      <div class="case-study-hero">
+        <div class="case-study-hero__tags"><span class="tag">SAP Integration</span><span class="tag">Sync Engine</span><span class="tag">State Machine</span><span class="tag">Architecture</span><span class="tag">Tablet</span></div>
+        <h1 class="case-study-hero__title">Construction Site Management App</h1>
+        <div class="case-study-hero__meta"><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Company</span><span class="case-study-hero__meta-value">Deloitte</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Role</span><span class="case-study-hero__meta-value">Tech Consultant</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Period</span><span class="case-study-hero__meta-value">Sep 2019 – Aug 2021</span></span></div>
+      </div>
+      <div class="case-study-body">
+        <article class="case-study-article">
+<h2>The Situation</h2>
+<p>A construction company needed a tablet application to manage equipment and budgets across active construction sites. Project managers on-site needed real-time visibility into the data held in SAP — what equipment was allocated where, what budget had been consumed, what was still available. But they also needed to act: signing off machines as leaving a site and making them available for reallocation, reporting spending differences, scheduling personnel. Those actions needed to reach SAP, not just stay in the app.</p>
+<p>The sync architecture had two tiers. The first — and the more complex — was a server-side engine that exchanged data with SAP bidirectionally and loaded the results into the app's backend. The second was a simpler downstream sync that pushed already-preprocessed data from the backend to each tablet's local storage, scoped to the constructions relevant to that device. The state machine described here is the first tier.</p>
+<p>The integration challenge was immediate. The client's SAP APIs had no JOIN support — each call returned flat results from a single table, with no way to retrieve related data in a single round trip. Column names were opaque, and there was no documentation mapping them to their business meaning. The institutional knowledge of what each field represented had eroded over the years the system had been in use.</p>
+<h2>The Integration Constraint</h2>
+<p>Before any sync logic could be built, the data model had to be reverse-engineered from observation.</p>
+<p>This meant calling each API endpoint under different conditions, cross-referencing results with known business states, and deriving what each column actually represented from context rather than documentation. Where that wasn't enough, we read the underlying ABAP code — sometimes to confirm what we had observed, sometimes to explain behaviour that seemed inconsistent with our model. The ABAP itself was brittle: it worked, but its rationale and sequencing were obscure enough that observation was often the faster path to understanding. The code could confirm a hypothesis; it rarely explained one.</p>
+<p>With the column meanings mapped, the next constraint was the absence of JOINs. Assembling a coherent view of a construction's state required issuing multiple sequential API calls and joining the results in memory on the server side. The order of those calls was not always fixed: depending on what data had already been loaded and what had changed that day, some calls could be skipped entirely, while others became necessary only after earlier results were known. Timeouts on large result sets were also a real concern, which drove a chunked paging approach — data was fetched per construction, and some constructions fit within a single page while others required several.</p>
+<h2>The Sync Engine Design</h2>
+<p>The first approach was a sequence of timers: each step fired after a fixed delay, handing off to the next. It worked for the simple cases but became brittle as the data dependencies grew. The join sequence was conditional — what needed to be fetched next depended on what the previous fetch had returned — and a fixed timer sequence had no way to express that.</p>
+<p>The sync engine was redesigned as an explicit <strong>state machine</strong>.</p>
+<p>Each sync run moved through defined states: initialising, fetching a chunk, storing that chunk, advancing to the next stage, and completing. The machine tracked what the next stage to call was, and transitions were controlled by what had been loaded so far. If a construction's data was fully covered by the first page, the engine advanced past the paging stages. If a delta that day required a join that was otherwise optional, the engine could make that stage mandatory. The machine knew what to do next; the timers never could.</p>
+<p><strong>The sync was bidirectional.</strong> Changes recorded in the app also needed to reach SAP, but not all changes had the same urgency. Time-sensitive or simpler writes — a machine signed off from a site, a personnel schedule update — were applied immediately to both the app's backend and SAP directly. Less time-sensitive changes were queued in the backend and flushed to SAP as part of the next sync run, where they could be processed alongside the read pass rather than as a separate operation.</p>
+<p><strong>Inconsistency detection</strong> emerged as a natural addition. Because some changes could be made in both the app and SAP directly, there was a real risk that the two systems would diverge — a change applied in one but not the other, or applied differently. A dedicated stage compared the app's backend state against what the sync read from SAP and flagged discrepancies for review, making the sync engine an ongoing integrity check on the integration it was part of.</p>
+<p><strong>Admin visibility</strong> was a direct benefit of making states explicit. Rather than asking an administrator to read through logs, the engine surfaced exactly which stage it was in and, when failures occurred, at what stage and with what error. The same structure that made the logic predictable also made it observable.</p>
+<p><strong>Chunked processing</strong> handled the scale constraint. Tables were paged per construction. The engine tracked which chunk it had last successfully persisted, so progress within a construction was not lost on a failure.</p>
+<p><strong>Failure handling</strong> distinguished between known transient errors — network drops, API timeouts — and errors that were not recoverable. Transient errors triggered a retry, up to a configured limit per sync run. Once that limit was reached, or if the error was not a known transient type, the sync stopped: administrators were notified and the data was marked stale for users. Administrators could also manually launch a new sync instance if they wanted to retry rather than wait for the next scheduled run.</p>
+<p>The result was a sync process that was <strong>legible under complexity</strong>: with dozens of batches, in-memory joins, write-backs, and consistency checks involved in a full run, the state machine gave each unit of work a name and made the overall process something that could be reasoned about, not just observed.</p>
+<p>The downstream tier — syncing preprocessed data from the backend to each tablet's local storage — was comparatively straightforward: scoped to the constructions relevant to each device, it consumed what the server-side engine had already cleaned and joined.</p>
+<h2>What I'm Proud Of</h2>
+<p><strong>Choosing the state machine over the timer sequence.</strong> The timers worked at first and would have been faster to extend. But the join logic was inherently conditional — what to fetch next depended on what had already come back — and that conditionality had nowhere to live in a fixed timer chain. Making the states and transitions explicit was the only way to express the actual logic cleanly, and it paid off every time the sequence needed to change.</p>
+<p><strong>The inconsistency detection as an emergent safeguard.</strong> The comparison between app state and SAP state was a natural consequence of a bidirectional sync, and adding a stage to surface discrepancies required very little extra work. The outcome was an integrity check built into the integration itself — the sync that moved data also verified it, without those being separate concerns.</p>
+<p><strong>Admin observability as a design outcome, not an afterthought.</strong> Because every stage was named and the machine knew where it was at all times, surfacing that state to administrators required almost no additional work. The structure that made the engine correct was the same structure that made it transparent.</p>
+<p><strong>The reverse-engineering discipline.</strong> This one had a wrinkle the POS ERP didn't: when observation wasn't enough, we read the ABAP. Not to understand the codebase — the code was brittle and its rationale was obscure — but to confirm or rule out a hypothesis faster than another round of test calls would. Knowing when to switch from observation to source inspection, and back again, is a judgement call that only works if you're willing to be wrong about your model right up until the evidence is conclusive.</p>
+        </article>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p><a href="../index.html">← Back to Timeline</a></p>
+  </footer>
+</body>
+</html>
