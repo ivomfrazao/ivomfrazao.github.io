@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Point-of-Sale Platform — Ivo Frazão</title>
+  <meta name="description" content="Point-of-Sale Platform — case study by Ivo Frazão, Platform Software Engineer.">
+  <meta property="og:type"        content="article">
+  <meta property="og:title"       content="Point-of-Sale Platform — Ivo Frazão">
+  <meta property="og:description" content="Point-of-Sale Platform — case study by Ivo Frazão, Platform Software Engineer.">
+  <meta property="og:url"         content="https://ivomfrazao.github.io/case-studies/pos-platform.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional"></noscript>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <nav class="breadcrumb">
+    <a href="../index.html">← Back to Timeline</a>
+  </nav>
+  <main>
+    <div id="case-study-container">
+      <div class="case-study-hero">
+        <div class="case-study-hero__tags"><span class="tag">Architecture</span><span class="tag">ERP Integration</span><span class="tag">Retail</span><span class="tag">Stakeholder Management</span><span class="tag">Solo Engineering</span></div>
+        <h1 class="case-study-hero__title">Point-of-Sale Platform</h1>
+        <div class="case-study-hero__meta"><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Company</span> Deloitte</span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Role</span> Tech Experienced Senior</span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Period</span> Sep 2023 – Jun 2025</span></div>
+      </div>
+      <div class="case-study-body">
+        <article class="case-study-article">
+<h2>The Situation</h2>
+<p>Two companies had just merged. The larger one ran its B2B rental workflow through an existing point-of-sale system that could not be disrupted — stores depended on it daily. The smaller one was running three separate legacy applications — covering inventory, contract management, and invoicing — that did not communicate with each other. Staff copied data manually between systems, sync errors were reported daily, and the UX across all three was outdated. None of them had a B2C flow. Everything had to be consolidated into a single platform, alongside the existing B2B workflow. The original deadline was six months.</p>
+<p>The core constraint was that B2C could not simply be built independently. It had to coexist with the B2B flow, and in several places it had to conform to B2B process logic rather than the other way around.</p>
+<h2>The Integration Problem</h2>
+<p>The legacy ERP had no documented API. No swagger, no BAPIs, no internal specs. The client's IT team could not help — the system had been running long enough that institutional knowledge of its internals had eroded.</p>
+<p>The integration layer was built by reverse-engineering: observing the system's behaviour across different inputs, deriving column meanings from context, identifying undocumented filtering constraints, and mapping side effects that only appeared under specific conditions.</p>
+<p>This was not a one-time exercise. New ERP integration challenges emerged throughout the project as assumptions proved incorrect or new flows touched parts of the system not yet mapped. Each one required the same approach: observe, derive, verify.</p>
+<p>The integration layer had to survive across every subsequent ERP release. It did.</p>
+<h2>The Alignment Problem</h2>
+<p>B2C constraints conflicted with the B2B process at multiple points. These were not technical conflicts — they were process conflicts that required decisions from people who owned those processes.</p>
+<p>I engaged directly with directors across multiple departments to surface the constraints and work through them. The resolution was a hybrid approach: B2C was adapted to fit within the B2B process logic at the points where they intersected, and B2B was adapted where the ERP was not imposing a specific way of doing things and a change made operational sense. Neither flow was treated as fixed by default. Each significant decision of this kind required formal director-level sign-off and was obtained through the project's steering committee.</p>
+<h2>The Solo Phase</h2>
+<p>After initial scoping and architecture, I became the sole engineer on the project for a sustained period. The manager remained in the background on governance, but technical and procedural decisions were mine to make.</p>
+<p>During this phase:</p>
+<ul>
+<li>Continued reverse-engineering ERP integration issues as they emerged</li>
+<li>Redesigned affected flows end-to-end when prior architectural assumptions proved incorrect</li>
+<li>Ran steering committee meetings directly, presenting changes and obtaining approval</li>
+<li>Maintained compatibility with live B2B operations throughout</li>
+</ul>
+<p>This phase was not planned — it was the result of delivery circumstances. The decisions made in it were consequential and could not wait for a review cycle.</p>
+<h2>Team Phases</h2>
+<ul>
+<li><strong>Phase 1 — Scoping and architecture:</strong> me, manager, 2 designers, BA</li>
+<li><strong>Phase 2 — Core development:</strong> me, manager; front-end developer built the initial UI as designed but was removed as flow reviews extended — leaving shell screens without implemented features; I took over UI changes as the flows became understood</li>
+<li><strong>Phase 3 — Integration and redesign:</strong> me solo, manager in background</li>
+<li><strong>Phase 4 — Post-launch:</strong> me, junior developer (bugs and roadmapped features)</li>
+</ul>
+<h2>Impact</h2>
+<ul>
+<li>Delivered a working B2C+B2B platform in 10 months against an original 6-month target — the delay driven by ERP reverse-engineering, multiple flow redesigns, and rounds of director-level negotiation as constraints emerged</li>
+<li>Maintained the existing B2B flow without disruption throughout delivery</li>
+<li>Rolled out and trained 20 stores on the new platform</li>
+</ul>
+<h2>What I'm Proud Of</h2>
+<p><strong>The solo phase.</strong> Not just surviving it, but making consequential architecture and stakeholder decisions independently and getting them right. The redesigns that happened in that phase — where flows had to be rethought because an ERP assumption broke — required both technical clarity and the confidence to act without a second opinion.</p>
+<p><strong>The ERP reverse-engineering.</strong> There is a specific kind of problem-solving that only works when you slow down: when you have no documentation, you have to derive the truth from observation. That requires patience, rigour, and the willingness to hold your assumptions loosely until the evidence is solid. That skill was tested repeatedly on this project.</p>
+        </article>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p><a href="../index.html">← Back to Timeline</a></p>
+  </footer>
+</body>
+</html>

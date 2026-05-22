@@ -1,6 +1,6 @@
 # ivomfrazao.github.io
 
-Personal portfolio and CV site. Built with plain HTML, CSS, and vanilla JS — no build step, no framework.
+Personal portfolio and CV site. Built with plain HTML, CSS, and vanilla JS. Content is pre-rendered at build time for SEO, with JavaScript enhancing for interactivity.
 
 ## Running locally
 
@@ -23,6 +23,8 @@ All content lives in two places:
 
 To add a case study, create `case-studies/your-slug.md` and set `"caseStudySlug": "your-slug"` on the project in `cv.json`.
 
+After any content change, run the build step before committing (see below).
+
 ## CSS and JS structure
 
 All styles live in a single `css/style.css`, segmented by section comments. All JavaScript for the main page lives in `js/app.js`, also segmented. The case study page has its own `js/case-study-loader.js`.
@@ -31,6 +33,18 @@ The consolidation was done to reduce HTTP round-trips — six CSS requests and s
 
 When editing styles or logic, work in `css/style.css` and `js/app.js` respectively.
 
+## Build step
+
+`build.js` is a zero-dependency Node.js script that pre-renders content into `index.html` and generates a static `case-studies/{slug}.html` per Markdown file. Run it before every commit:
+
+```bash
+node build.js
+```
+
+The script reads `data/cv.json` and `case-studies/*.md`, then injects pre-rendered HTML between `<!-- BUILD_START/END -->` markers in `index.html`. Running it multiple times is safe — it is idempotent.
+
+This ensures crawlers (Bing, social media unfurlers, Google's first-pass indexing) see fully populated HTML rather than empty JS placeholders.
+
 ## Deploying
 
-Push to the `main` branch. GitHub Pages serves the files directly — no build required.
+Run `node build.js`, then push to the `main` branch. GitHub Pages serves the files directly.
