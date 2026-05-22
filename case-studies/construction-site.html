@@ -29,7 +29,8 @@
       <div class="case-study-body">
         <article class="case-study-article">
 <h2>The Situation</h2>
-<p>A construction company needed a tablet application to manage equipment and budgets across active construction sites. Project managers on-site needed real-time visibility into the data held in SAP — what equipment was allocated where, what budget had been consumed, what was still available. But they also needed to act: signing off machines as leaving a site and making them available for reallocation, reporting spending differences, scheduling personnel. Those actions needed to reach SAP, not just stay in the app.</p>
+<p>The core engineering challenge was a two-tier sync architecture between the app and SAP — this case study covers the server-side engine, the more complex of the two tiers.</p>
+<p>A construction company needed a tablet application to manage equipment and budgets across active construction sites. Project managers on-site needed real-time visibility into the data held in SAP — what equipment was allocated where, what budget had been consumed, what was still available. But they also needed to act: signing off machines as leaving a site and making them available for reallocation, reporting spending differences, scheduling personnel. Those actions needed to reach SAP, not just stay in the app — and not all of them with the same urgency.</p>
 <p>The sync architecture had two tiers. The first — and the more complex — was a server-side engine that exchanged data with SAP bidirectionally and loaded the results into the app's backend. The second was a simpler downstream sync that pushed already-preprocessed data from the backend to each tablet's local storage, scoped to the constructions relevant to that device. The state machine described here is the first tier.</p>
 <p>The integration challenge was immediate. The client's SAP APIs had no JOIN support — each call returned flat results from a single table, with no way to retrieve related data in a single round trip. Column names were opaque, and there was no documentation mapping them to their business meaning. The institutional knowledge of what each field represented had eroded over the years the system had been in use.</p>
 <h2>The Integration Constraint</h2>
@@ -56,6 +57,7 @@
       </div>
     </div>
   </main>
+  <nav class="case-study-related" aria-label="Related case studies"><span class="related-label">See also</span><a href="pos-platform.html" class="related-link"><span class="related-link__title">Point-of-Sale Platform</span><span class="related-link__note">same reverse-engineering approach, applied to a different system</span></a></nav>
   <footer class="site-footer">
     <p><a href="../index.html">← Back to Timeline</a></p>
   </footer>

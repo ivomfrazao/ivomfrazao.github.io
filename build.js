@@ -292,6 +292,11 @@ function parseFrontMatter(raw) {
 
 /* ── CASE STUDY PAGE TEMPLATE ─────────────────────────────────────── */
 
+const CROSS_REFS = {
+  'construction-site': [{ slug: 'pos-platform',      title: 'Point-of-Sale Platform',          note: 'same reverse-engineering approach, applied to a different system' }],
+  'pos-platform':      [{ slug: 'construction-site', title: 'Construction Site Management App', note: 'same reverse-engineering approach, applied to a different system' }],
+};
+
 function renderCaseStudyPage(slug, fm, body) {
   const title = fm.title || 'Case Study';
 
@@ -348,6 +353,17 @@ ${mdToHtml(body)}
       </div>
     </div>
   </main>
+  ${(() => {
+    const refs = CROSS_REFS[slug];
+    if (!refs || !refs.length) return '';
+    const links = refs.map(r =>
+      `<a href="${esc(r.slug)}.html" class="related-link">` +
+      `<span class="related-link__title">${esc(r.title)}</span>` +
+      `<span class="related-link__note">${esc(r.note)}</span>` +
+      `</a>`
+    ).join('');
+    return `<nav class="case-study-related" aria-label="Related case studies"><span class="related-label">See also</span>${links}</nav>`;
+  })()}
   <footer class="site-footer">
     <p><a href="../index.html">← Back to Timeline</a></p>
   </footer>
