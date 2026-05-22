@@ -466,9 +466,9 @@ function main() {
   /* Case study pages ───────────────────────────────────────────── */
   const featuredWithSlug = featured.filter(p => p.caseStudySlug);
   const caseStudyNext = {};
-  for (let i = 0; i < featuredWithSlug.length - 1; i++) {
+  for (let i = 0; i < featuredWithSlug.length; i++) {
     const curr = featuredWithSlug[i];
-    const next = featuredWithSlug[i + 1];
+    const next = featuredWithSlug[(i + 1) % featuredWithSlug.length];
     caseStudyNext[curr.caseStudySlug] = { slug: next.caseStudySlug, title: next.title };
   }
 

@@ -58,6 +58,6 @@ Beyond the mechanics, the absence of SSO in the custom IdP was the root cause of
 
 ## What I'm Proud Of
 
-Identifying the gap proactively, before an incident surfaced it. The application-level isolation was intact and teams were not aware anything was missing — the vulnerability was in the combination of a legitimate workaround and an unchecked assumption the service made about who was on the other end.
+**Identifying the gap proactively.** Before an incident surfaced it. The application-level isolation was intact and teams were not aware anything was missing — the vulnerability was in the combination of a legitimate workaround and an unchecked assumption the service made about who was on the other end.
 
-The fix is proportionate and specific. It does not rebuild the model — it adds what was missing. The existing layer stays; the new layer closes a different boundary. That kind of surgical correctness is harder to achieve than a full replacement, and it is less likely to break things.
+**The fix is proportionate and specific.** It does not rebuild the model — it adds what was missing. The existing layer stays; the new layer closes a different boundary. That kind of surgical correctness is harder to achieve than a full replacement, and it is less likely to break things.

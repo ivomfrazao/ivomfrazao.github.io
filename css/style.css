@@ -431,7 +431,6 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   line-height: 1.7;
-  max-width: 68ch;
 }
 
 .featured-section {
