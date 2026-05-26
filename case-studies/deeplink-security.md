@@ -2,8 +2,11 @@
 title: Deep-Linking Security Model
 company: Fidelidade
 role: Platform Software Engineer
-dateRange: Sep 2025 – Present
+dateRange: Jan 2026 – Present
 tags: [Security, Authorization, JWT, Platform Engineering, Token Design]
+tldrProblem: The platform's deep-linking had application-level isolation but no user-level check — anyone with a URL could arrive authenticated as the user it was created for, an impersonation path across ~20 production integrations.
+tldrDid: Identified the gap proactively, designed a two-layer security model adding bearer token validation alongside the existing app-key mechanism, and extended the custom identity provider to support it.
+tldrOutcome: User impersonation path closed across **~20** production integrations; rollout is incremental to allow consumers to migrate without a hard cutover.
 ---
 
 ## The Problem

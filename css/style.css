@@ -770,6 +770,42 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   padding: var(--space-12) var(--page-padding) var(--space-20);
 }
 
+.cs-tldr {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-10);
+}
+
+.cs-tldr dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-5);
+  align-items: baseline;
+}
+
+.cs-tldr dt {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.cs-tldr dd {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.cs-tldr dd strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
 .case-study-article h2 {
   font-size: var(--text-2xl);
   font-weight: 600;

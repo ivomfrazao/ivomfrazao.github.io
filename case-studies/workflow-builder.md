@@ -1,9 +1,12 @@
 ---
 title: Workflow Builder Platform
 company: Deloitte
-role: Tech Senior
-dateRange: Jul 2021 – Mar 2023
-tags: [Platform Engineering, Event-Driven Architecture, Modular Monolith, Tech Lead, OutSystems]
+role: Tech Consultant → Tech Senior Consultant
+dateRange: Apr 2021 – Jun 2023
+tags: [Platform Engineering, Event-Driven Architecture, Modular Monolith, Tech Lead]
+tldrProblem: A client's workflow landscape was split between bespoke apps with no reuse and a commercial builder too rigid to change — neither could keep up with evolving process requirements.
+tldrDid: Designed a configurable workflow platform as modular monoliths, with a field catalogue, rule engine, dynamic form generator, and event-driven execution engine; led a cross-functional team that grew to 11.
+tldrOutcome: **40%** reduction in workflow configuration time at rollout; processes previously locked behind months of change cycles took days.
 ---
 
 ## The Problem
@@ -87,7 +90,7 @@ I reported directly to the project manager and was the primary technical point o
 
 - Eliminated per-project re-implementation of common field types and validation patterns
 - Enabled non-technical process owners to modify form configurations and routing rules without raising a development ticket
-- Reduced workflow configuration and iteration time by **40%** at rollout compared to the previous platform, with up to **70% expected** as teams built reusable components — for the most constrained processes, previously locked behind months of change cycles on the old platform, the shift was to days of configuration
+- Reduced time to configure or modify a workflow by **40%** at rollout, measured against the previous platform's change cycle baseline. Processes previously locked behind months of change cycles were taking days. With growing component reuse, a further reduction to **70% was projected** as the reusable library matured — each new workflow built faster than the one before it
 - The platform became the standard delivery vehicle for all new process digitisation work on the account
 
 ## What I'm Proud Of

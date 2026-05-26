@@ -297,6 +297,17 @@ const CROSS_REFS = {
   'pos-platform':      [{ slug: 'construction-site', title: 'Construction Site Management App', note: 'same reverse-engineering approach, applied to a different system' }],
 };
 
+function renderTldr(fm) {
+  if (!fm.tldrProblem || !fm.tldrDid || !fm.tldrOutcome) return '';
+  return (
+    `<div class="cs-tldr"><dl>` +
+    `<dt>Problem</dt><dd>${inline(fm.tldrProblem)}</dd>` +
+    `<dt>What I did</dt><dd>${inline(fm.tldrDid)}</dd>` +
+    `<dt>Outcome</dt><dd>${inline(fm.tldrOutcome)}</dd>` +
+    `</dl></div>`
+  );
+}
+
 function renderCaseStudyPage(slug, fm, body, nextCase = null) {
   const title = fm.title || 'Case Study';
 
@@ -307,7 +318,7 @@ function renderCaseStudyPage(slug, fm, body, nextCase = null) {
   const metaDefs = [
     { key: 'company',   label: 'Company' },
     { key: 'role',      label: 'Role'    },
-    { key: 'dateRange', label: 'Period'  },
+    { key: 'dateRange', label: 'Project period'  },
   ];
   const metaItems = metaDefs
     .filter(d => fm[d.key])
@@ -347,6 +358,7 @@ function renderCaseStudyPage(slug, fm, body, nextCase = null) {
         ${metaHtml}
       </div>
       <div class="case-study-body">
+        ${renderTldr(fm)}
         <article class="case-study-article">
 ${mdToHtml(body)}
         </article>

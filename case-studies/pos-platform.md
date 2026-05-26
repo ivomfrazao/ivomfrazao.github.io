@@ -1,9 +1,12 @@
 ---
 title: Point-of-Sale Platform
 company: Deloitte
-role: Tech Experienced Senior
-dateRange: Sep 2023 – Jun 2025
+role: Tech Senior → Tech Experienced Senior Consultant
+dateRange: Jun 2023 – Jul 2025
 tags: [Architecture, ERP Integration, Retail, Stakeholder Management, Solo Engineering]
+tldrProblem: Two just-merged companies needed a unified B2C+B2B point-of-sale platform in six months, with a legacy ERP that had no API documentation and live B2B operations that couldn't be disrupted.
+tldrDid: Reverse-engineered the ERP from observation, resolved B2C/B2B process conflicts at director level through the steering committee, and operated as sole engineer through the critical delivery phase.
+tldrOutcome: Full scope delivered in **10 months** against a 6-month estimate; live B2B operations maintained throughout; 20 stores rolled out and trained.
 ---
 
 ## The Situation
@@ -46,12 +49,13 @@ This phase was not planned — it was the result of delivery circumstances. The 
 - **Phase 1 — Scoping and architecture:** me, manager, 2 designers, BA
 - **Phase 2 — Core development:** me, manager; front-end developer built the initial UI as designed but left the project as the scope shifted toward integration work; I took over the UI layer as the flows developed
 - **Phase 3 — Integration and redesign:** me solo, manager in background
-- **Phase 4 — Post-launch:** me, junior developer (bugs and roadmapped features)
+- **Phase 4 — Post-launch:** me, manager, junior developer (bugs and roadmapped features)
 
 ## Impact
 
-- Delivered the full B2C+B2B platform with all scope intact, maintaining live B2B operations throughout. The original 6-month estimate did not account for ERP reverse-engineering requirements that were only discoverable through execution — each new flow touched unmapped parts of the system, and director-level negotiation rounds were required to resolve process conflicts between the merged companies' workflows
+- Delivered the full B2C+B2B platform with all scope intact in **10 months**, against a 6-month estimate that had not accounted for ERP reverse-engineering requirements only discoverable through execution — each new flow touched unmapped parts of the system, and director-level negotiation rounds were required to resolve process conflicts between the merged companies' workflows
 - Rolled out and trained 20 stores on the new platform
+- Following the merger-critical launch, the platform entered an improvements phase (through Jul 2025) — deferred features and refinements that had been descoped to protect the original delivery timeline
 
 ## What I'm Proud Of
 
