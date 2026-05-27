@@ -13,7 +13,7 @@
    TOKENS — design-system variables
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
-  /* Colors */
+  /* Colors — dark theme defaults */
   --color-bg: #0e0e0e;
   --color-surface: #161616;
   --color-surface-hover: #1c1c1c;
@@ -24,6 +24,8 @@
   --color-accent: #60a5fa;
   --color-accent-dim: rgba(96, 165, 250, 0.07);
   --color-accent-border: rgba(96, 165, 250, 0.25);
+  --color-bg-glass: rgba(14, 14, 14, 0.9);
+  --color-dot-glow: rgba(110, 231, 183, 0.35);
 
   /* Typography */
   --font-sans: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
@@ -69,6 +71,59 @@
   --transition: 180ms ease;
 }
 
+
+/* ── Light theme (system preference, no explicit override) ── */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-bg: #f9f9f9;
+    --color-surface: #ffffff;
+    --color-surface-hover: #f0f0f0;
+    --color-border: #e0e0e0;
+    --color-text-primary: #111111;
+    --color-text-secondary: #555555;
+    --color-text-tertiary: #888888;
+    --color-accent: #2563eb;
+    --color-accent-dim: rgba(37, 99, 235, 0.07);
+    --color-accent-border: rgba(37, 99, 235, 0.25);
+    --spine-color: #e0e0e0;
+    --color-bg-glass: rgba(249, 249, 249, 0.9);
+    --color-dot-glow: rgba(37, 99, 235, 0.2);
+  }
+}
+
+/* ── Dark theme (explicit user override) ── */
+:root[data-theme="dark"] {
+  --color-bg: #0e0e0e;
+  --color-surface: #161616;
+  --color-surface-hover: #1c1c1c;
+  --color-border: #262626;
+  --color-text-primary: #f0f0f0;
+  --color-text-secondary: #8a8a8a;
+  --color-text-tertiary: #818181;
+  --color-accent: #60a5fa;
+  --color-accent-dim: rgba(96, 165, 250, 0.07);
+  --color-accent-border: rgba(96, 165, 250, 0.25);
+  --spine-color: #262626;
+  --color-bg-glass: rgba(14, 14, 14, 0.9);
+  --color-dot-glow: rgba(110, 231, 183, 0.35);
+}
+
+/* ── Light theme (explicit user override) ── */
+:root[data-theme="light"] {
+  --color-bg: #f9f9f9;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f0f0f0;
+  --color-border: #e0e0e0;
+  --color-text-primary: #111111;
+  --color-text-secondary: #555555;
+  --color-text-tertiary: #888888;
+  --color-accent: #2563eb;
+  --color-accent-dim: rgba(37, 99, 235, 0.07);
+  --color-accent-border: rgba(37, 99, 235, 0.25);
+  --spine-color: #e0e0e0;
+  --color-bg-glass: rgba(249, 249, 249, 0.9);
+  --color-dot-glow: rgba(37, 99, 235, 0.2);
+}
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    BASE — reset, layout helpers, profile header
@@ -327,7 +382,7 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
 .company-dot--current {
   box-shadow:
     0 0 0 3px var(--color-accent-dim),
-    0 0 10px rgba(110, 231, 183, 0.35);
+    0 0 10px var(--color-dot-glow);
 }
 
 .company-block__content {
@@ -705,7 +760,7 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(14, 14, 14, 0.9);
+  background: var(--color-bg-glass);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--color-border);
   padding: var(--space-4) var(--page-padding);
@@ -1037,3 +1092,54 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   .case-study-hero__title { font-size: var(--text-2xl); }
   .featured-card__footer  { flex-direction: column; align-items: flex-start; }
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   THEME TOGGLE
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+body {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 200;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    color var(--transition);
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-accent-border);
+  color: var(--color-accent);
+  background: var(--color-surface-hover);
+}
+
+/* Dark mode (default): show sun, hide moon */
+.theme-toggle__icon--sun  { display: block; }
+.theme-toggle__icon--moon { display: none; }
+
+/* Light mode (system): show moon, hide sun */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .theme-toggle__icon--sun  { display: none; }
+  :root:not([data-theme]) .theme-toggle__icon--moon { display: block; }
+}
+
+/* Light mode (explicit): show moon, hide sun */
+:root[data-theme="light"] .theme-toggle__icon--sun  { display: none; }
+:root[data-theme="light"] .theme-toggle__icon--moon { display: block; }
