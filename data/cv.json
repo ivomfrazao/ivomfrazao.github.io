@@ -227,7 +227,30 @@
     }
   ],
   "featuredOrder": ["workflow-builder", "proj-pos-platform", "proj-construction-app", "fidelidade-deeplinking"],
-  "sideProjects": [],
+  "sideProjects": [
+    {
+      "id": "international-number-input",
+      "title": "International Number Input",
+      "type": "flagship",
+      "tagline": "A TypeScript plugin that attaches a searchable country dropdown, placeholder, live formatting, and validation to any number input — covering 92 countries and number types such as national ID and tax identification numbers.",
+      "tags": ["TypeScript", "npm", "Validation", "Open Source"],
+      "featured": false,
+      "hook": null,
+      "caseStudySlug": null,
+      "url": "https://github.com/ivomfrazao/international-number-input"
+    },
+    {
+      "id": "outsystems-actions",
+      "title": "OutSystems Actions",
+      "type": "flagship",
+      "tagline": "A Chromium extension that monitors OutSystems Service Center and LifeTime in real time, sending browser notifications and sound alerts for deployments, publishes, and required interventions. Available on the Chrome Web Store and Edge Add-ons.",
+      "tags": ["TypeScript", "Browser Extension", "OutSystems", "Chrome Web Store"],
+      "featured": false,
+      "hook": null,
+      "caseStudySlug": null,
+      "url": "https://github.com/ivomfrazao/outsystems-actions"
+    }
+  ],
   "education": [
     {
       "id": "ist-cybersecurity",
