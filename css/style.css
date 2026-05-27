@@ -1147,3 +1147,143 @@ body {
 /* Light mode (explicit): show moon, hide sun */
 :root[data-theme="light"] .theme-toggle__icon--sun  { display: none; }
 :root[data-theme="light"] .theme-toggle__icon--moon { display: block; }
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SIDE NAV — desktop sticky (≥ 1200px only)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.side-nav {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    position: fixed;
+    top: 50%;
+    left: calc(50% - 450px - 168px);
+    transform: translateY(-50%);
+    width: 152px;
+    z-index: 50;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-3);
+  }
+}
+
+.side-nav__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  padding-left: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-1);
+}
+
+.side-nav a {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  padding: var(--space-1) 0 var(--space-1) var(--space-3);
+  border-left: 2px solid transparent;
+  line-height: 1.4;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.side-nav a:hover {
+  color: var(--color-text-secondary);
+}
+
+.side-nav a.active {
+  color: var(--color-text-primary);
+  border-left-color: var(--color-accent);
+}
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOP BAR — sticky nav (< 1200px, i.e. no sidebar)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.top-bar {
+  display: none;
+}
+
+@media (max-width: 1199px) {
+  .top-bar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    z-index: 150;
+    background: var(--color-bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .top-bar-nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 var(--space-3);
+    padding-right: 52px; /* leave room for the fixed theme toggle */
+    gap: var(--space-1);
+  }
+
+  .top-bar-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    padding-top: 44px;
+  }
+
+  /* Reposition the theme toggle to sit inside the top bar */
+  .theme-toggle {
+    top: 4px; /* (44px bar − 36px button) / 2 */
+  }
+
+  /* Offset anchor scroll so headings aren't hidden under the bar */
+  #featured-heading,
+  #timeline-heading,
+  #personal-projects-heading,
+  #education-heading,
+  #certifications-heading {
+    scroll-margin-top: 52px;
+  }
+}
+
+.top-bar-link {
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.top-bar-link:hover {
+  color: var(--color-text-primary);
+  background: var(--color-surface-hover);
+}
+
+.top-bar-link.active {
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}

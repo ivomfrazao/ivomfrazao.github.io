@@ -259,3 +259,59 @@ async function init() {
 }
 
 init();
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NAV — active section tracking (desktop + mobile)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+(function () {
+  const sectionIds = [
+    'featured-heading',
+    'timeline-heading',
+    'personal-projects-heading',
+    'education-heading',
+    'certifications-heading',
+  ];
+  const headings = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  if (!headings.length) return;
+
+  // Offset: detect a section as active once its heading reaches within 80px of
+  // the viewport top. Accounts for the 44px mobile top bar plus breathing room.
+  const OFFSET = 80;
+  let lastActiveId = null;
+  let ticking = false;
+
+  function getActiveId() {
+    const scrollTop = window.scrollY + OFFSET;
+    let activeId = headings[0].id;
+    for (const h of headings) {
+      if (h.getBoundingClientRect().top + window.scrollY <= scrollTop) {
+        activeId = h.id;
+      }
+    }
+    return activeId;
+  }
+
+  function updateActive() {
+    const activeId = getActiveId();
+    if (activeId === lastActiveId) return;
+    lastActiveId = activeId;
+
+    document.querySelectorAll('.side-nav a, .top-bar-link').forEach(a => {
+      const isActive = a.getAttribute('href') === '#' + activeId;
+      a.classList.toggle('active', isActive);
+      if (isActive && a.classList.contains('top-bar-link')) {
+        a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => { updateActive(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateActive();
+}());
