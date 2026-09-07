@@ -39,10 +39,10 @@
               "id": "fidelidade-deeplinking",
               "title": "Deep-Linking Security Model",
               "type": "flagship",
-              "tagline": "Identified a user-level gap in the platform's deep-linking security model. App-to-app isolation was already in place — what was missing was a check that the user opening a deeplink was the user it was created for. Because teams were using deeplink context as an SSO substitute (passing usernames to authenticate on arrival without a password), the missing check was a user impersonation path. Added bearer token validation as a second security layer alongside the existing app-level key mechanism. The service has ~20 integrations in production; the new model is in active rollout.",
+              "tagline": "Identified a user-level gap in the platform's deep-linking security model. App-to-app isolation was already in place: what was missing was a check that the user opening a deeplink was the user it was created for. Because teams were using deeplink context as an SSO substitute (passing usernames to authenticate on arrival without a password), the missing check was a user impersonation path. Added bearer token validation as a second security layer alongside the existing app-level key mechanism. The service has ~15 integrations in production; the new model is in active rollout.",
               "tags": ["Security", "Authorization", "JWT", "Platform"],
               "featured": true,
-              "hook": "App-to-app isolation was already in place. What was missing was simpler and more dangerous: no check that the user opening a deeplink was the user it was created for. Because the custom IdP had no SSO, teams were passing usernames in context and authenticating on arrival without a password — which meant the missing check was a user impersonation path. I added bearer token validation as a second layer alongside the existing app key to close it.",
+              "hook": "App-to-app isolation was already in place. What was missing was simpler and more dangerous: no check that the user opening a deeplink was the user it was created for. Because the custom IdP had no SSO, teams were passing usernames in context and authenticating on arrival without a password, which meant the missing check was a user impersonation path. I added bearer token validation as a second layer alongside the existing app key to close it.",
               "caseStudySlug": "deeplink-security"
             },
             {
@@ -59,7 +59,7 @@
               "id": "fidelidade-observability",
               "title": "Platform Observability",
               "type": "supporting",
-              "tagline": "Introduced structured logging and metrics across the platform where none previously existed. Surfaced call volume and version distribution for the deep-linking service — a question previously unanswerable — directly informing consumer migration timelines. Enabled identification of unused settings, making a cleanup process possible for the first time.",
+              "tagline": "Introduced structured logging and metrics across the platform where none previously existed. Surfaced call volume and version distribution for the deep-linking service, a question previously unanswerable, directly informing consumer migration timelines. Enabled identification of unused settings, making a cleanup process possible for the first time.",
               "tags": ["Observability", "Logging", "Metrics", "Platform"],
               "featured": false,
               "hook": null,
@@ -88,7 +88,7 @@
               "id": "proj-internal-comms-app",
               "title": "Employee Marketing Communications Mobile App",
               "type": "supporting",
-              "tagline": "Internal mobile application for employee communications and event management — iOS and Android via OutSystems and Cordova. Push notifications, event calendars, automatic event check-in, employee directory. Backend integrated with LDAP for authentication.",
+              "tagline": "Internal mobile application for employee communications and event management, iOS and Android via OutSystems and Cordova. Push notifications, event calendars, automatic event check-in, employee directory. Backend integrated with LDAP for authentication.",
               "tags": ["Mobile", "Cordova", "LDAP", "iOS", "Android"],
               "featured": false,
               "hook": null,
@@ -98,7 +98,7 @@
               "id": "proj-invoice-matching",
               "title": "Invoice Matching System",
               "type": "flagship",
-              "tagline": "Two-week POC modernising a Lotus Notes legacy invoice matching system for a major retail chain — three-stage matching process (invoices, purchase orders, delivery receipts) with bulk import and manual matching, replacing an Excel-by-email workflow. The POC directly triggered a year-long follow-on engagement with a dedicated team building 10+ further applications.",
+              "tagline": "Two-week POC modernising a Lotus Notes legacy invoice matching system for a major retail chain: three-stage matching process (invoices, purchase orders, delivery receipts) with bulk import and manual matching, replacing an Excel-by-email workflow. The POC directly triggered a year-long follow-on engagement with a dedicated team building 10+ further applications.",
               "tags": ["Legacy Migration", "Retail", "POC"],
               "featured": false,
               "hook": null,
@@ -166,10 +166,10 @@
               "id": "workflow-builder",
               "title": "Workflow Builder Platform",
               "type": "flagship",
-              "tagline": "No-code workflow builder for an energy sector client — dynamic form generation, event-driven execution, and retry logic enabling non-technical teams to design and run their own operational workflows without engineering involvement. Reduced workflow configuration time by 40% at rollout vs. the previous platform — processes that previously took months to change took days. 70% reduction was projected as component reuse compounded.",
+              "tagline": "No-code workflow builder for an energy sector client: dynamic form generation, event-driven execution, and retry logic enabling non-technical teams to design and run their own operational workflows without engineering involvement. Reduced workflow configuration time by 40% at rollout vs. the previous platform. Processes that previously took months to change took days. A further reduction to 70% was projected at the time as component reuse compounded.",
               "tags": ["Platform Engineering", "Event-Driven", "Architecture", "Tech Lead", "Energy"],
               "featured": true,
-              "hook": "My most technically ambitious project: a configurable workflow platform built as a composition of modular monoliths — field catalogue with dependency chains, rule engine, dynamic form generation, and event-driven workflow activities. Led a cross-functional team of 11.",
+              "hook": "My most technically ambitious project: a configurable workflow platform built as a composition of modular monoliths, with a field catalogue with dependency chains, rule engine, dynamic form generation, and event-driven workflow activities. Led a cross-functional team of 11.",
               "caseStudySlug": "workflow-builder"
             },
             {
@@ -189,23 +189,23 @@
           "title": "Tech Experienced Senior Consultant",
           "dateStart": "2023-09",
           "dateEnd": "2025-07",
-          "summary": "Technical ownership across multiple client projects simultaneously — full platform delivery, backend architecture, SQL optimisation, infrastructure right-sizing, and mentoring senior developers.",
+          "summary": "Technical ownership across multiple client projects simultaneously: full platform delivery, backend architecture, SQL optimisation, infrastructure right-sizing, and mentoring senior developers.",
           "projects": [
             {
               "id": "proj-pos-platform",
               "title": "Point-of-Sale Platform",
               "type": "flagship",
-              "tagline": "Delivered a full-scope B2C+B2B point-of-sale platform through a company merger, with all scope intact and live B2B operations maintained throughout. Reverse-engineered a legacy ERP with no API documentation to enable integration, maintaining live operations across all subsequent releases. Operated as sole engineer for a sustained phase — making integration, design, and stakeholder decisions independently. Rolled out and trained 20 stores.",
+              "tagline": "Delivered a full-scope B2C+B2B point-of-sale platform through a company merger, with all scope intact and live B2B operations maintained throughout. Reverse-engineered a legacy ERP with no API documentation to enable integration, maintaining live operations across all subsequent releases. Operated as sole engineer for a sustained phase, making integration, design, and stakeholder decisions independently. Rolled out and trained 20 stores.",
               "tags": ["ERP Integration", "Architecture", "Retail", "Stakeholder Management"],
               "featured": true,
-              "hook": "A legacy ERP with no API documentation, a company merger to accommodate, and live B2B operations that could not be disrupted. For a sustained phase I was the only engineer — redesigning flows end-to-end as ERP assumptions broke, running steering committee meetings, and keeping live ops running.",
+              "hook": "A legacy ERP with no API documentation, a company merger to accommodate, and live B2B operations that could not be disrupted. For a sustained phase I was the only engineer, redesigning flows end-to-end as ERP assumptions broke, running steering committee meetings, and keeping live ops running.",
               "caseStudySlug": "pos-platform"
             },
             {
               "id": "proj-energy-bidding",
               "title": "Public Sector Energy Bidding & Contracting Platform",
               "type": "supporting",
-              "tagline": "Architecture specialist for a national-scale energy procurement platform covering all public sector buying in the country. Designed a dynamic data model for variable lot combinations — preventing a high-maintenance static implementation. Produced the first C4 architecture model the consulting team presented to a client.",
+              "tagline": "Architecture specialist for a national-scale energy procurement platform covering all public sector buying in the country. Designed a dynamic data model for variable lot combinations, avoiding a high-maintenance static implementation. Produced the first C4 architecture model the consulting team presented to a client.",
               "tags": ["Architecture", "C4 Modelling", "Data Modelling", "Public Sector"],
               "featured": false,
               "hook": null,
@@ -215,7 +215,7 @@
               "id": "proj-infra-optimisation",
               "title": "Infrastructure & SQL Optimisation",
               "type": "supporting",
-              "tagline": "Designated infrastructure and SQL lead across my team's delivery practice. On taking ownership, resolved a year-long critical deployment pipeline failure that had blocked team governance and delivery. Established platform governance from scratch — enforced team application ownership, replaced free-for-all visibility with team-scoped access, defined responsibilities, and eliminated orphaned applications — reducing the factory by ~20% in application objects. Brought the platform current — executing a multi-version catch-up from a 2020 release to 2024 — and established a yearly upgrade cadence where none had existed. Eliminated all query timeouts on a budget management module (SQL Server) by redesigning lazy-loaded data access stages. Right-sized Mendix RAM allocations achieving 50% cost reduction on peak-burst scaling. Defined dynamic uptime schedules for dev/UAT environments during a cloud lift-and-shift, eliminating idle infrastructure costs.",
+              "tagline": "Designated infrastructure and SQL lead across my team's delivery practice. On taking ownership, resolved a year-long critical deployment pipeline failure that had blocked team governance and delivery. Established platform governance from scratch: enforced team application ownership, replaced free-for-all visibility with team-scoped access, defined responsibilities, and eliminated orphaned applications, reducing the factory by ~20% in application objects. Brought the platform current, executing a multi-version catch-up from a 2020 release to 2024, and established a yearly upgrade cadence where none had existed. Eliminated all query timeouts on a budget management module (SQL Server) by redesigning lazy-loaded data access stages. Right-sized Mendix RAM allocations achieving 50% cost reduction on peak-burst scaling. Defined dynamic uptime schedules for dev/UAT environments during a cloud lift-and-shift, eliminating idle infrastructure costs.",
               "tags": ["Cloud", "SQL", "Performance", "Infrastructure", "Mendix"],
               "featured": false,
               "hook": null,
@@ -232,7 +232,7 @@
       "id": "international-number-input",
       "title": "International Number Input",
       "type": "flagship",
-      "tagline": "A TypeScript plugin that attaches a searchable country dropdown, placeholder, live formatting, and validation to any number input — covering 92 countries and number types such as national ID and tax identification numbers.",
+      "tagline": "A TypeScript plugin that attaches a searchable country dropdown, placeholder, live formatting, and validation to any number input, covering 92 countries and number types such as national ID and tax identification numbers.",
       "tags": ["TypeScript", "npm", "Validation", "Open Source"],
       "featured": false,
       "hook": null,
@@ -255,7 +255,7 @@
     {
       "id": "ist-cybersecurity",
       "institution": "Instituto Superior Técnico – University of Lisbon",
-      "degree": "Post Graduation — Practical Cybersecurity",
+      "degree": "Post Graduation: Practical Cybersecurity",
       "dateStart": "2024-09",
       "dateEnd": "2025-06",
       "highlights": [
@@ -267,14 +267,14 @@
     {
       "id": "coimbra-msc",
       "institution": "University of Coimbra",
-      "degree": "Master of Engineering — Electrical and Computer Engineering",
+      "degree": "Master of Engineering: Electrical and Computer Engineering",
       "dateStart": "2013-09",
       "dateEnd": "2018-10",
       "highlights": [
         "Specialization: Computers | Final grade: 18.495 / 20",
         "Top 3% best student award, received every year of the degree",
-        "Dissertation: \"Applying Machine Learning Techniques on the Detection of Cyber-Physical Attacks\" — Grade 19/20",
-        "Publication: CRITIS 2018 — \"Denial of Service Attacks: Detecting the frailties of ML algorithms in the Classification Process\"",
+        "Dissertation: \"Applying Machine Learning Techniques on the Detection of Cyber-Physical Attacks\", Grade 19/20",
+        "Publication: CRITIS 2018, \"Denial of Service Attacks: Detecting the frailties of ML algorithms in the Classification Process\"",
         "Student leadership: Pedagogical Council, Engineering Student Union (Coordinator, Secretary, Treasurer), Bot Olympics General Coordinator"
       ]
     }

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deep-Linking Security Model — Ivo Frazão</title>
-  <meta name="description" content="Deep-Linking Security Model — case study by Ivo Frazão, Platform Software Engineer.">
+  <title>Deep-Linking Security Model · Ivo Frazão</title>
+  <meta name="description" content="Deep-Linking Security Model · case study by Ivo Frazão, Platform Software Engineer.">
   <meta property="og:type"        content="article">
-  <meta property="og:title"       content="Deep-Linking Security Model — Ivo Frazão">
-  <meta property="og:description" content="Deep-Linking Security Model — case study by Ivo Frazão, Platform Software Engineer.">
+  <meta property="og:title"       content="Deep-Linking Security Model · Ivo Frazão">
+  <meta property="og:description" content="Deep-Linking Security Model · case study by Ivo Frazão, Platform Software Engineer.">
   <meta property="og:url"         content="https://ivomfrazao.github.io/case-studies/deeplink-security.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,36 +28,36 @@
         <div class="case-study-hero__meta"><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Company</span><span class="case-study-hero__meta-value">Fidelidade</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Role</span><span class="case-study-hero__meta-value">Platform Software Engineer</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Project period</span><span class="case-study-hero__meta-value">Jan 2026 – Present</span></span></div>
       </div>
       <div class="case-study-body">
-        <div class="cs-tldr"><dl><dt>Problem</dt><dd>The platform's deep-linking had application-level isolation but no user-level check — anyone with a URL could arrive authenticated as the user it was created for, an impersonation path across ~20 production integrations.</dd><dt>What I did</dt><dd>Identified the gap proactively, designed a two-layer security model adding bearer token validation alongside the existing app-key mechanism, and extended the custom identity provider to support it.</dd><dt>Outcome</dt><dd>User impersonation path closed across <strong>~20</strong> production integrations; rollout is incremental to allow consumers to migrate without a hard cutover.</dd></dl></div>
+        <div class="cs-tldr"><dl><dt>Problem</dt><dd>The platform's deep-linking had application-level isolation but no user-level check: anyone with a URL could arrive authenticated as the user it was created for, an impersonation path across ~15 production integrations.</dd><dt>What I did</dt><dd>Identified the gap proactively, designed a two-layer security model adding bearer token validation alongside the existing app-key mechanism, and extended the custom identity provider to support it.</dd><dt>Outcome</dt><dd>User impersonation path closed across <strong>~15</strong> production integrations; rollout is incremental to allow consumers to migrate without a hard cutover.</dd></dl></div>
         <article class="case-study-article">
 <h2>The Problem</h2>
-<p>The platform's deep-linking service allows applications to hand off a user to another application, carrying context — user identity, session state, the current flow — across the boundary.</p>
+<p>The platform's deep-linking service allows applications to hand off a user to another application, carrying context, such as user identity, session state, and the current flow, across the boundary.</p>
 <p>The existing model already had application-level isolation in place. Each deeplink carried an ID in the URL; the corresponding secret key was sent server-side. The origin application declared the intended destination; the receiving application had to hold the matching key to read the context. An application could not consume a deeplink meant for a different application.</p>
 <p>What the model did not have was a user-level check.</p>
-<p>A deeplink created within User 1's authenticated session could be opened by User 2 — or by someone not logged in at all — and the context would be handed over regardless. The application-level gate checked which app was the intended recipient. It said nothing about which user.</p>
-<p>This gap was exploitable. The platform's custom identity provider did not support single sign-on at the time. Teams had worked around this by passing the intended username inside the deeplink context, then using it on arrival to authenticate that user without requesting a password — effectively treating the deeplink as an SSO token. With no user-level check on the deeplink, anyone who obtained the URL could arrive at the destination application and be silently authenticated as the user it was created for.</p>
+<p>A deeplink created within User 1's authenticated session could be opened by User 2, or by someone not logged in at all, and the context would be handed over regardless. The application-level gate checked which app was the intended recipient. It said nothing about which user.</p>
+<p>This gap was exploitable. The platform's custom identity provider did not support single sign-on at the time. Teams had worked around this by passing the intended username inside the deeplink context, then using it on arrival to authenticate that user without requesting a password, effectively treating the deeplink as an SSO token. With no user-level check on the deeplink, anyone who obtained the URL could arrive at the destination application and be silently authenticated as the user it was created for.</p>
 <h2>Identifying the Gap</h2>
-<p>I walked through the existing implementation and mapped what each layer of the model actually verified. The application-level isolation was real and correct — it worked as designed. The gap was orthogonal to it.</p>
+<p>I walked through the existing implementation and mapped what each layer of the model actually verified. The application-level isolation was real and correct: it worked as designed. The gap was orthogonal to it.</p>
 <p>The missing check was not subtle. The service had no concept of a principal attached to a deeplink. If an authenticated session created one, that fact was not recorded. When a user arrived to consume it, nothing confirmed they were the same person. The context endpoint had no way to distinguish the intended recipient from anyone else with the URL.</p>
-<p>Given how teams were using deeplinks — as an SSO substitute, carrying usernames that would authenticate silently on arrival — the missing check was a user impersonation path in production.</p>
+<p>Given how teams were using deeplinks, as an SSO substitute, carrying usernames that would authenticate silently on arrival, the missing check was a user impersonation path in production.</p>
 <h2>The Fix</h2>
 <p>Bearer token validation was added as a second layer of the security model.</p>
-<p>When a deeplink is created within an authenticated context, it is bound to the user's bearer token — issued by the platform's custom identity provider, scoped to the deeplink service as a resource server. To read the context, the caller must present that token alongside the existing application key. Without it, the context endpoint returns nothing — the context is unavailable, not unvalidated.</p>
+<p>When a deeplink is created within an authenticated context, it is bound to the user's bearer token, issued by the platform's custom identity provider and scoped to the deeplink service as a resource server. To read the context, the caller must present that token alongside the existing application key. Without it, the context endpoint returns nothing: the context is unavailable, not unvalidated.</p>
 <h2>The Two-Layer Model</h2>
 <p>The result is a two-layer structure:</p>
-<p><strong>Layer 1 — App identity (existing):</strong> The deeplink ID travels in the URL. The corresponding secret key is sent server-side. The origin application declares the intended destination; the receiving application must hold the matching key. A deeplink cannot be consumed by the wrong application.</p>
-<p><strong>Layer 2 — User identity (added):</strong> Deeplinks created in authenticated contexts are bound to a bearer token. The context endpoint requires that token to respond. A deeplink cannot be consumed by the wrong user.</p>
-<p>Deeplinks created in unauthenticated contexts carry no bearer token and require none — the constraint applies only where a principal exists to constrain.</p>
+<p><strong>Layer 1, App identity (existing):</strong> The deeplink ID travels in the URL. The corresponding secret key is sent server-side. The origin application declares the intended destination; the receiving application must hold the matching key. A deeplink cannot be consumed by the wrong application.</p>
+<p><strong>Layer 2, User identity (added):</strong> Deeplinks created in authenticated contexts are bound to a bearer token. The context endpoint requires that token to respond. A deeplink cannot be consumed by the wrong user.</p>
+<p>Deeplinks created in unauthenticated contexts carry no bearer token and require none: the constraint applies only where a principal exists to constrain.</p>
 <h2>Rollout</h2>
-<p>The service had ~20 integrations in production when the new model was introduced. A hard cutover was not feasible — teams needed time to update their implementations.</p>
+<p>The service had ~15 integrations in production when the new model was introduced. A hard cutover was not feasible: teams needed time to update their implementations.</p>
 <p>The rollout is incremental: the service supports both models in parallel during the transition period, with integrations migrating one by one.</p>
 <h2>Connection to the Identity Gateway Work</h2>
 <p>Partway through this rollout, I extended the platform's custom identity provider to align its OAuth2/OIDC authentication flows with Microsoft Entra External ID, and proposed, designed and built an <a href="identity-gateway.html">identity gateway</a> that gives every application a stable, simple way to use those flows correctly. That project is covered in its own case study.</p>
 <p>The connection between these two workstreams is direct, not just thematic. Making the bearer token requirement work required changes to the IdP itself. I introduced the audience concept to the tokens it generates, and registered the deeplink service as a resource server. The tokens the deeplink endpoint now validates are IdP-issued, audience-scoped to the deeplink service. The IdP extension was a prerequisite for the fix.</p>
 <p>Beyond the mechanics, the absence of single sign-on in the custom IdP was the root cause of why teams were using deeplink context as an authentication substitute in the first place. Single sign-on now exists at the identity provider itself, which closes that gap directly: a user already signed in through one application is recognized by another without a fresh login, no deeplink required. The identity gateway does not create that capability, but it is what will let every application rely on it without building its own OAuth2/OIDC client, as gateway adoption grows beyond the pilot it is in today. The bearer token requirement closes the vulnerability the workaround had created in the meantime. The two workstreams close the same root cause from opposite ends.</p>
 <h2>What I'm Proud Of</h2>
-<p><strong>Identifying the gap proactively.</strong> Before an incident surfaced it. The application-level isolation was intact and teams were not aware anything was missing — the vulnerability was in the combination of a legitimate workaround and an unchecked assumption the service made about who was on the other end.</p>
-<p><strong>The fix is proportionate and specific.</strong> It does not rebuild the model — it adds what was missing. The existing layer stays; the new layer closes a different boundary. That kind of surgical correctness is harder to achieve than a full replacement, and it is less likely to break things.</p>
+<p><strong>Identifying the gap proactively.</strong> Before an incident surfaced it. The application-level isolation was intact and teams were not aware anything was missing: the vulnerability was in the combination of a legitimate workaround and an unchecked assumption the service made about who was on the other end.</p>
+<p><strong>The fix is proportionate and specific.</strong> It does not rebuild the model; it adds what was missing. The existing layer stays; the new layer closes a different boundary. That kind of surgical correctness is harder to achieve than a full replacement, and it is less likely to break things.</p>
         </article>
       </div>
     </div>

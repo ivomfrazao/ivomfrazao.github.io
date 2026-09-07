@@ -337,11 +337,11 @@ function renderCaseStudyPage(slug, fm, body, nextCase = null) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${esc(title)} — Ivo Frazão</title>
-  <meta name="description" content="${esc(title)} — case study by Ivo Frazão, Platform Software Engineer.">
+  <title>${esc(title)} · Ivo Frazão</title>
+  <meta name="description" content="${esc(title)} · case study by Ivo Frazão, Platform Software Engineer.">
   <meta property="og:type"        content="article">
-  <meta property="og:title"       content="${esc(title)} — Ivo Frazão">
-  <meta property="og:description" content="${esc(title)} — case study by Ivo Frazão, Platform Software Engineer.">
+  <meta property="og:title"       content="${esc(title)} · Ivo Frazão">
+  <meta property="og:description" content="${esc(title)} · case study by Ivo Frazão, Platform Software Engineer.">
   <meta property="og:url"         content="https://ivomfrazao.github.io/case-studies/${esc(slug)}.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
