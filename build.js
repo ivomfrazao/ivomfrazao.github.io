@@ -37,6 +37,7 @@ function inline(text) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,     '<em>$1</em>')
     .replace(/`(.+?)`/g,       '<code>$1</code>');
@@ -295,6 +296,8 @@ function parseFrontMatter(raw) {
 const CROSS_REFS = {
   'construction-site': [{ slug: 'pos-platform',      title: 'Point-of-Sale Platform',          note: 'same reverse-engineering approach, applied to a different system' }],
   'pos-platform':      [{ slug: 'construction-site', title: 'Construction Site Management App', note: 'same reverse-engineering approach, applied to a different system' }],
+  'deeplink-security': [{ slug: 'identity-gateway',  title: 'Identity Gateway',                 note: 'the IdP extension that made the bearer token fix possible' }],
+  'identity-gateway':  [{ slug: 'deeplink-security', title: 'Deep-Linking Security Model',      note: 'the vulnerability this IdP work closed the root cause of' }],
 };
 
 function renderTldr(fm) {

@@ -26,6 +26,16 @@
           "summary": "Building backend services and reusable platform components adopted across multiple lines of business. Work spans security models, authentication flows, simulation engines, caching, and observability.",
           "projects": [
             {
+              "id": "fidelidade-idp-migration",
+              "title": "Identity Gateway",
+              "type": "flagship",
+              "tagline": "Added PKCE, nonce, a JWKS endpoint, and front-channel logout to the platform's custom identity provider, all new capabilities, then designed and built an identity gateway giving every OutSystems application a single, stable API to use them correctly instead of building its own OAuth2/OIDC client. In pilot with the first 5 applications; corrects JWT validation individual teams were getting wrong and turns a browser-imposed front-channel logout limitation into a server-side fix. Also rewrote the Authorization Code, Refresh Token, and Access Token minting logic end-to-end. Positions gateway-integrated apps for a configuration-only migration to Microsoft Entra External ID.",
+              "tags": ["OAuth2/OIDC", "Microsoft Entra", "Session Security", "Platform Engineering"],
+              "featured": true,
+              "hook": "Every OutSystems application talked to the identity provider directly, which meant the platform's session security was only as good as whichever team had been most careful under delivery pressure, and some hadn't been. The fix wasn't just adding PKCE, nonce, and single sign-out to the IdP; it was giving every application a single, stable API to use them correctly, instead of expecting 15 teams to each build a correct OAuth2/OIDC client. JWT validation now happens correctly in one place, and a browser restriction that broke front-channel logout gets solved server-side instead of fought client-side.",
+              "caseStudySlug": "identity-gateway"
+            },
+            {
               "id": "fidelidade-deeplinking",
               "title": "Deep-Linking Security Model",
               "type": "flagship",
@@ -34,16 +44,6 @@
               "featured": true,
               "hook": "App-to-app isolation was already in place. What was missing was simpler and more dangerous: no check that the user opening a deeplink was the user it was created for. Because the custom IdP had no SSO, teams were passing usernames in context and authenticating on arrival without a password — which meant the missing check was a user impersonation path. I added bearer token validation as a second layer alongside the existing app key to close it.",
               "caseStudySlug": "deeplink-security"
-            },
-            {
-              "id": "fidelidade-idp-migration",
-              "title": "Custom Identity Provider Migration",
-              "type": "supporting",
-              "tagline": "Extended OAuth2/OIDC authentication flows in the platform's custom identity provider, aligning with Microsoft Entra External ID. Currently used by 15 development teams in production.",
-              "tags": ["OAuth2/OIDC", "Microsoft Entra", "Identity", "Platform"],
-              "featured": false,
-              "hook": null,
-              "caseStudySlug": null
             },
             {
               "id": "fidelidade-insurance-flows",
@@ -226,7 +226,7 @@
       ]
     }
   ],
-  "featuredOrder": ["workflow-builder", "proj-pos-platform", "proj-construction-app", "fidelidade-deeplinking"],
+  "featuredOrder": ["fidelidade-idp-migration", "fidelidade-deeplinking", "proj-pos-platform", "workflow-builder", "proj-construction-app"],
   "sideProjects": [
     {
       "id": "international-number-input",

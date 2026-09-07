@@ -51,13 +51,13 @@ The service had ~20 integrations in production when the new model was introduced
 
 The rollout is incremental: the service supports both models in parallel during the transition period, with integrations migrating one by one.
 
-## Connection to the Identity Provider Work
+## Connection to the Identity Gateway Work
 
-In parallel, I extended the platform's custom identity provider to align its OAuth2/OIDC authentication flows with Microsoft Entra External ID.
+Partway through this rollout, I extended the platform's custom identity provider to align its OAuth2/OIDC authentication flows with Microsoft Entra External ID, and proposed, designed and built an [identity gateway](identity-gateway.html) that gives every application a stable, simple way to use those flows correctly. That project is covered in its own case study.
 
-The connection between these two workstreams is direct, not just thematic. Making the bearer token requirement work required changes to the IdP itself: I introduced the audience concept to the tokens it generates, and registered the deeplink service as a resource server. The tokens the deeplink endpoint now validates are IdP-issued, audience-scoped to the deeplink service — the IdP extension was a prerequisite for the fix.
+The connection between these two workstreams is direct, not just thematic. Making the bearer token requirement work required changes to the IdP itself. I introduced the audience concept to the tokens it generates, and registered the deeplink service as a resource server. The tokens the deeplink endpoint now validates are IdP-issued, audience-scoped to the deeplink service. The IdP extension was a prerequisite for the fix.
 
-Beyond the mechanics, the absence of SSO in the custom IdP was the root cause of why teams were using deeplink context as an authentication substitute. The IdP work, by moving toward proper SSO support, addresses that underlying condition. The bearer token requirement closes the vulnerability SSO absence created. The two workstreams meet at both ends.
+Beyond the mechanics, the absence of single sign-on in the custom IdP was the root cause of why teams were using deeplink context as an authentication substitute in the first place. Single sign-on now exists at the identity provider itself, which closes that gap directly: a user already signed in through one application is recognized by another without a fresh login, no deeplink required. The identity gateway does not create that capability, but it is what will let every application rely on it without building its own OAuth2/OIDC client, as gateway adoption grows beyond the pilot it is in today. The bearer token requirement closes the vulnerability the workaround had created in the meantime. The two workstreams close the same root cause from opposite ends.
 
 ## What I'm Proud Of
 
