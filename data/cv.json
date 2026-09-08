@@ -49,7 +49,7 @@
               "id": "fidelidade-insurance-flows",
               "title": "Insurance Simulation Platform",
               "type": "supporting",
-              "tagline": "Reusable screens, blocks and services for multi-step insurance simulation flows pulled independently by each line of business. Includes in-memory search and cached components reducing external API calls.",
+              "tagline": "Reusable screens, blocks and services for multi-step insurance simulation flows, adopted independently by each line of business. Includes logic that converts abandoned journeys into leads for contact-center and mediator follow-up, averaging ~280 daily, plus in-memory search and cached components reducing external API calls.",
               "tags": ["Reactive Web", "Reusable Components", "Caching", "Platform"],
               "featured": false,
               "hook": null,
