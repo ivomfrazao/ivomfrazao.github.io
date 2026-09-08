@@ -4,9 +4,9 @@ company: Fidelidade
 role: Platform Software Engineer
 dateRange: Jan 2026 – Present
 tags: [Security, Authorization, JWT, Platform Engineering, Token Design]
-tldrProblem: The platform's deep-linking had application-level isolation but no user-level check: anyone with a URL could arrive authenticated as the user it was created for, an impersonation path across ~15 production integrations.
+tldrProblem: The platform's deep-linking had application-level isolation but no user-level check: anyone with a URL could arrive authenticated as the user it was created for, an impersonation path across 11 of the more than 20 integrations registered on the service.
 tldrDid: Identified the gap proactively, designed a two-layer security model adding bearer token validation alongside the existing app-key mechanism, and extended the custom identity provider to support it.
-tldrOutcome: User impersonation path closed across **~15** production integrations; rollout is incremental to allow consumers to migrate without a hard cutover.
+tldrOutcome: User impersonation path closed across the **11 exploitable integrations** (of 20+ registered on the service); rollout is incremental to allow consumers to migrate without a hard cutover.
 ---
 
 ## The Problem
@@ -47,7 +47,7 @@ Deeplinks created in unauthenticated contexts carry no bearer token and require 
 
 ## Rollout
 
-The service had ~15 integrations in production when the new model was introduced. A hard cutover was not feasible: teams needed time to update their implementations.
+More than 20 integrations were registered on the deeplink service, but only 11 were exploitable: 6 were already in production using deeplink context as an SSO substitute (1 institutional site, 2 mobile apps, 3 web apps), and 5 more adopted the same pattern before the fix landed (1 additional institutional site, 4 in the pipeline). The remaining registered integrations never used deeplink context that way and were not exploitable. A hard cutover was not feasible for the 11 affected: teams needed time to update their implementations.
 
 The rollout is incremental: the service supports both models in parallel during the transition period, with integrations migrating one by one.
 
