@@ -280,21 +280,21 @@
     }
   ],
   "certifications": [
-    { "name": "Professional Cloud Architect",               "issuer": "Google"     },
-    { "name": "Generative AI Leader",                       "issuer": "Google"     },
-    { "name": "Terraform Associate",                        "issuer": "HashiCorp"  },
-    { "name": "Professional Scrum Master I",                "issuer": "Scrum.org"  },
-    { "name": "AZ-400: DevOps Engineer",                    "issuer": "Microsoft"  },
-    { "name": "Certified Cloud Practitioner",               "issuer": "AWS"        },
-    { "name": "Database SQL Certified Associate",           "issuer": "Oracle"     },
-    { "name": "Architecture Specialist (O11)",              "issuer": "OutSystems" },
-    { "name": "Associate Tech Lead",                        "issuer": "OutSystems" },
-    { "name": "and 11 further platform certifications",     "issuer": "OutSystems" }
+    { "name": "Professional Cloud Architect", "issuer": "Google" },
+    { "name": "Terraform Associate", "issuer": "HashiCorp" },
+    { "name": "Professional Scrum Master I", "issuer": "Scrum.org" },
+    { "name": "AZ-400: DevOps Engineer", "issuer": "Microsoft" },
+    { "name": "Certified Cloud Practitioner", "issuer": "AWS" },
+    { "name": "Database SQL Certified Associate", "issuer": "Oracle" },
+    { "name": "Architecture Specialist (O11)", "issuer": "OutSystems" },
+    { "name": "Associate Tech Lead", "issuer": "OutSystems" },
+    { "name": "Security Specialist (O11)", "issuer": "OutSystems" },
+    { "name": "10 additional OutSystems certifications, 2018–2025", "issuer": "OutSystems" }
   ],
   "languages": [
-    { "name": "Portuguese", "level": "Native"                      },
-    { "name": "English",    "level": "Fluent"                      },
-    { "name": "German",     "level": "Beginner – actively studying" },
-    { "name": "French",     "level": "Basic"                       }
+    { "name": "Portuguese", "level": "Native"               },
+    { "name": "English",    "level": "Fluent"               },
+    { "name": "German",     "level": "A1, Goethe-certified" },
+    { "name": "French",     "level": "Basic"                }
   ]
 }

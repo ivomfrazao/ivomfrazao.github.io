@@ -11,7 +11,7 @@ tldrOutcome: The gateway is in pilot with the platform's first 5 applications; P
 
 ## The Problem
 
-Fidelidade's platform runs a custom identity provider, built in-house before Microsoft Entra External ID was adopted as the organisation's long-term direction. Every OutSystems application that needed authentication talked to it directly, and each team was responsible for its own OAuth2/OIDC client code.
+Fidelidade's platform runs a custom identity provider, built in-house before Microsoft Entra External ID was adopted as the organisation's long-term direction. It authenticates customers and partners across the platform's applications, not only the core insurance line, including partner applications in the health sector. Registered accounts run into the millions, with logins in the hundreds of thousands a day. Every OutSystems application that needed authentication talked to it directly, and each team was responsible for its own OAuth2/OIDC client code.
 
 I reviewed a sample of the platform's highest-usage applications, and in practice, none of them were persisting tokens with any real discipline. Most weren't keeping access and refresh tokens around in a considered way at all. The few that did store them did it poorly. None of this had been flagged as a risk to product owners before I looked at it end to end.
 
@@ -76,6 +76,8 @@ Checking on every interaction would mean a validation call per click, which does
 ## Rewriting Token Minting
 
 Alongside this work, I rewrote the Authorization Code, Refresh Token, and Access Token minting logic in the identity provider. The rewrite addressed several performance and security issues uncovered while working through the rest of this project, the kind of issues that surface once someone reads token-minting code end-to-end looking for problems instead of treating it as settled infrastructure.
+
+Some of what surfaced was structural. Several token-related tables had no purge job, so records accumulated indefinitely; a few held millions of rows with no relation to logging or auditing, years of dead data with no retention policy behind it. Indexing across these tables was inconsistent: present on some, missing on others, with no documented rationale for which. At the volumes this identity provider runs, hundreds of thousands of logins a day feeding these tables continuously, that combination was a performance problem building slowly enough that nobody had flagged it. The rework put a clean baseline under all of it: purge jobs where none existed, indexes brought up to a consistent standard.
 
 Because the identity provider sits underneath every application on the platform, this was not a change I could cut over in one release. It rolled out progressively, per application, so any regression would surface against a small blast radius rather than the whole platform at once.
 
