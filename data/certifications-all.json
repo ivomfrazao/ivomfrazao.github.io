@@ -1,0 +1,184 @@
+{
+  "_note": "Full certification record (source: LinkedIn, 2026-11-01). Not read by build.js. The site shows only entries with shownOnSite true, defined in cv.json. Low-signal certs are deliberately left off the site.",
+  "certifications": [
+    {
+      "name": "Expert Developer (O11)",
+      "issuer": "OutSystems",
+      "issued": "2026-10",
+      "shownOnSite": true
+    },
+    {
+      "name": "Mobile Developer Specialist (O11 and ODC)",
+      "issuer": "OutSystems",
+      "issued": "2026-10",
+      "shownOnSite": false
+    },
+    {
+      "name": "Goethe-Zertifikat A1: Start Deutsch 1",
+      "issuer": "Goethe-Institut e.V.",
+      "issued": "2026-06",
+      "credentialId": "1395-ASA1-0002837535",
+      "shownOnSite": false
+    },
+    {
+      "name": "HashiCorp Certified: Terraform Associate (003)",
+      "issuer": "HashiCorp",
+      "issued": "2025-07",
+      "expires": "2027-07",
+      "shownOnSite": true
+    },
+    {
+      "name": "Generative AI Leader",
+      "issuer": "Google",
+      "issued": "2025-07",
+      "expires": "2028-07",
+      "shownOnSite": false
+    },
+    {
+      "name": "Professional Cloud Architect",
+      "issuer": "Google",
+      "issued": "2025-06",
+      "expires": "2027-06",
+      "shownOnSite": true
+    },
+    {
+      "name": "Oracle Database SQL Certified Associate",
+      "issuer": "Oracle",
+      "issued": "2025-06",
+      "shownOnSite": true
+    },
+    {
+      "name": "Web Developer Specialist (ODC)",
+      "issuer": "OutSystems",
+      "issued": "2025-04",
+      "shownOnSite": false
+    },
+    {
+      "name": "APEX Cloud Developer Certified Professional",
+      "issuer": "Oracle",
+      "issued": "2025-01",
+      "shownOnSite": false
+    },
+    {
+      "name": "Professional Web Developer (O11)",
+      "issuer": "OutSystems",
+      "issued": "2025-01",
+      "shownOnSite": false
+    },
+    {
+      "name": "Web Developer Specialist (O11)",
+      "issuer": "OutSystems",
+      "issued": "2025-01",
+      "shownOnSite": false
+    },
+    {
+      "name": "Architecture Specialist (O11)",
+      "issuer": "OutSystems",
+      "issued": "2024-08",
+      "shownOnSite": true
+    },
+    {
+      "name": "Security Specialist (O11)",
+      "issuer": "OutSystems",
+      "issued": "2023-04",
+      "shownOnSite": true
+    },
+    {
+      "name": "Associate Developer (ODC)",
+      "issuer": "OutSystems",
+      "issued": "2023-03",
+      "shownOnSite": false
+    },
+    {
+      "name": "Front-end Developer Specialist",
+      "issuer": "OutSystems",
+      "issued": "2022-10",
+      "shownOnSite": false
+    },
+    {
+      "name": "Mendix Rapid Developer",
+      "issuer": "Mendix",
+      "issued": "2022-10",
+      "shownOnSite": false
+    },
+    {
+      "name": "Professional Scrum Master I (PSM I)",
+      "issuer": "Scrum.org",
+      "issued": "2022-05",
+      "shownOnSite": true
+    },
+    {
+      "name": "Delivery Specialist",
+      "issuer": "OutSystems",
+      "issued": "2022-03",
+      "shownOnSite": false
+    },
+    {
+      "name": "Microsoft Certified: Power Platform Fundamentals",
+      "issuer": "Microsoft",
+      "issued": "2022-02",
+      "shownOnSite": false
+    },
+    {
+      "name": "Associate Tech Lead",
+      "issuer": "OutSystems",
+      "issued": "2022-02",
+      "shownOnSite": true
+    },
+    {
+      "name": "Microsoft Certified: Azure AI Fundamentals",
+      "issuer": "Microsoft",
+      "issued": "2021-12",
+      "shownOnSite": false
+    },
+    {
+      "name": "AWS Certified Cloud Practitioner",
+      "issuer": "Amazon Web Services (AWS)",
+      "issued": "2021-08",
+      "expires": "2027-08",
+      "shownOnSite": true
+    },
+    {
+      "name": "AZ-400: Designing and Implementing Microsoft DevOps Solutions",
+      "issuer": "Microsoft",
+      "issued": "2021-07",
+      "shownOnSite": true
+    },
+    {
+      "name": "Microsoft Certified: Dynamics 365 Fundamentals",
+      "issuer": "Microsoft",
+      "issued": "2021-06",
+      "shownOnSite": false
+    },
+    {
+      "name": "Expert Traditional Web Developer",
+      "issuer": "OutSystems",
+      "issued": "2021-05",
+      "shownOnSite": false
+    },
+    {
+      "name": "Associate Reactive Developer",
+      "issuer": "OutSystems",
+      "issued": "2021-01",
+      "shownOnSite": false
+    },
+    {
+      "name": "Microsoft Certified: Azure Fundamentals",
+      "issuer": "Microsoft",
+      "issued": "2020-11",
+      "shownOnSite": false
+    },
+    {
+      "name": "Professional Traditional Web Developer",
+      "issuer": "OutSystems",
+      "issued": "2020-04",
+      "shownOnSite": false
+    },
+    {
+      "name": "Associate Traditional Web Developer",
+      "issuer": "OutSystems",
+      "issued": "2018-10",
+      "shownOnSite": false
+    }
+  ]
+}
