@@ -36,6 +36,16 @@
               "caseStudySlug": "identity-gateway"
             },
             {
+              "id": "fidelidade-entra-migration",
+              "title": "Entra External ID Migration",
+              "type": "supporting",
+              "tagline": "Leading Fidelidade's side of the migration from the custom identity provider to Microsoft Entra External ID, with an external partner responsible for the technical architecture. Started by mapping the current state with the partner, gathering the technical and operational details they needed and defining Fidelidade's technical requirements. When the target-state design also needed structured input from business and marketing stakeholders, ran workshops that laid out the decisions they had to make, the pros and cons of each option, and how each choice constrained the ones that followed. Work is ongoing.",
+              "tags": ["Microsoft Entra", "Identity", "Stakeholder Workshops", "Requirements"],
+              "featured": false,
+              "hook": null,
+              "caseStudySlug": null
+            },
+            {
               "id": "fidelidade-deeplinking",
               "title": "Deep-Linking Security Model",
               "type": "flagship",
