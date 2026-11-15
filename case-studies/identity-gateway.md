@@ -1,38 +1,33 @@
 ---
 title: Identity Gateway
-company: Fidelidade
 role: Platform Software Engineer
 dateRange: Apr 2026 – Present
 tags: [OAuth2/OIDC, JWKS, Microsoft Entra, Session Security, Platform Engineering]
 published: 2026-09-08
-description: Identity gateway bringing PKCE, nonce and JWKS-based JWT validation to applications through configuration, with no code changes. In pilot with 5 applications.
+description: Identity gateway bringing PKCE, nonce and JWKS-based JWT validation to applications through configuration, with no code changes on their side.
 diagram: diagrams/identity-gateway.svg
 diagramTitle: Identity gateway architecture
 diagramCaption: Applications call the gateway's stable API. The gateway runs the OAuth2/OIDC flow against the identity provider and validates tokens with keys from its JWKS endpoint. On logout, the identity provider's callback makes the gateway invalidate the session server-side.
-tldrProblem: Every application ran its own OAuth2/OIDC client against a high-traffic customer identity provider. Relying parties validated JWTs inconsistently, and signing keys were distributed as static certificates, which made rotation impractical.
-tldrDid: Added PKCE, nonce, a JWKS endpoint, session-scoped tokens and front-channel logout to the identity provider, then designed and built an identity gateway that applies them, with correct JWT validation, to any application that moves onto it, with no code changes on that application's side.
-tldrOutcome: The gateway is in pilot with the first 5 applications, which get PKCE, nonce and correct JWT validation without code changes. Logout is enforced server-side, which sidesteps browser limits on front-channel logout. A future migration to Microsoft Entra External ID needs configuration changes only for applications behind the gateway.
+tldrProblem: Every application ran its own OAuth2/OIDC client against a custom identity provider, and implementations were inconsistent across teams. Signature validation relied on distributed static certificates, which made key rotation impractical.
+tldrDid: Added PKCE, nonce, a JWKS endpoint, session-scoped tokens and front-channel logout to the identity provider, then designed and built an identity gateway that applies them, with correct JWT validation, to any application integrated through it, with no code changes on that application's side.
+tldrOutcome: Applications integrated through the gateway get PKCE, nonce and correct JWT validation without code changes. Logout is enforced server-side, which sidesteps browser limits on front-channel logout. A future migration to Microsoft Entra External ID needs configuration changes only for applications behind the gateway.
 ---
 
 ## The Problem
 
-Fidelidade's platform runs a custom, high-traffic customer identity provider, built in-house before Microsoft Entra External ID was adopted as the organisation's long-term direction. It authenticates customers and partners across the platform's applications. Every OutSystems application that needed authentication talked to it directly, and each team was responsible for its own OAuth2/OIDC client code.
+The platform runs a custom customer identity provider, built in-house. It authenticates users across the platform's applications. Every OutSystems application that needed authentication talked to it directly, and each team was responsible for its own OAuth2/OIDC client code.
 
-With a separate client in every team, token handling varied from one application to the next. Most applications weren't keeping access and refresh tokens around in a considered way at all, and the few that did stored them poorly.
+OIDC client implementations were inconsistent across teams. Getting OAuth2 right while also shipping features is a specialised skill, and generalist application teams weren't set up to maintain it.
 
-JWT validation existed per team, but it had real gaps, and they varied by team. Relying parties validated JWTs inconsistently: some didn't check a token's lifetime, some didn't check its issuer, some didn't check its audience. None of this was because anyone was negligent. Getting OAuth2 right while also shipping features is a specialised skill, and generalist application teams weren't set up to maintain it.
-
-Two things were missing at the protocol level, not just inconsistently applied per team. Nonce validation did not exist on the platform: the identity provider had never implemented it, so there was nothing for any team to check. And signing keys were distributed as static certificates that each team held locally, rather than fetched dynamically from a JWKS endpoint keyed by the signing key's ID, because no such endpoint existed. That made rotation impractical: changing the signing key would have broken every team's hardcoded copy at once, so the key had never been rotated.
-
-The identity provider also had no shared sign-out. Ending a session in one application did nothing to sessions the same user held open in others.
+Signature validation relied on distributed static certificates rather than keys fetched dynamically, which made key rotation impractical. The identity provider also lacked a shared sign-out: ending a session in one application did nothing to sessions the same user held open in others.
 
 ## Building the Missing IdP Capabilities
 
-I added PKCE code challenge verification and nonce to the identity provider's authorization code flow. Neither had existed before.
+I added PKCE code challenge verification and nonce to the identity provider's authorization code flow.
 
-I also added a session identifier and a usable issuer claim to the tokens the identity provider mints, and built a JWKS endpoint so relying parties can fetch the current signing key by its key ID instead of holding a static copy. That endpoint is what makes key rotation possible for the first time. Before it existed, rotating the key meant breaking every team's hardcoded certificate at once, which is why it had never been done.
+I also added a session identifier and an issuer claim to the tokens the identity provider mints, and built a JWKS endpoint so relying parties can fetch the current signing key by its key ID. The JWKS endpoint makes key rotation possible.
 
-The identity provider had no shared sign-out mechanism of any kind. I built one from scratch, implemented as front-channel logout, matching the pattern Entra External ID uses: on logout, the identity provider notifies every relying party of the session end through a browser-mediated call, so each application can clear its own session state. Matching Entra's pattern here was deliberate. Anything built to align with how the eventual migration target already behaves is one less thing to redesign when that migration happens.
+I built a shared sign-out mechanism from scratch, implemented as front-channel logout, matching the pattern Entra External ID uses: on logout, the identity provider notifies every relying party of the session end through a browser-mediated call, so each application can clear its own session state. Matching Entra's pattern here was deliberate. Anything built to align with how the eventual migration target already behaves is one less thing to redesign when that migration happens.
 
 ## The Front-Channel Logout Problem
 
@@ -46,19 +41,19 @@ This is not a bug in any one implementation. It is a structural conflict between
 
 None of the new IdP capabilities needed a gateway to work. Single sign-on, single sign-out, PKCE, nonce, and JWKS-based validation are all things the identity provider now supports directly, and any application that implements the OAuth2/OIDC flow correctly against it gets them, gateway or not.
 
-Implementing that flow correctly is the hard part, and it is exactly what had gone wrong before. Adopting the new capabilities without a gateway would still have meant every team updating its own OAuth2 client to send a code challenge, check a nonce, fetch the right key from the JWKS endpoint, and handle a front-channel logout call. That is 15 teams, 15 separate implementations, 15 separate chances to get it wrong again, the same pattern that produced the token storage and JWT validation problems in the first place.
+Implementing that flow correctly is the hard part, and it is where inconsistency creeps in. Adopting the new capabilities without a gateway would still have meant every team updating its own OAuth2 client to send a code challenge, check a nonce, fetch the right key from the JWKS endpoint, and handle a front-channel logout call. That is one implementation per team, each a separate chance to get it wrong, the same pattern that produced inconsistent client implementations in the first place.
 
 That fragmentation risk does not end once these particular gaps are closed. The next security requirement, the next protocol update, the next capability the identity provider gains, would hit the same wall again unless the integration point itself was built to change without dragging every application along with it.
 
 So I proposed, designed and built an identity gateway: a single piece of software with a stable, simple API that gives every application the identity provider's capabilities correctly, without each team having to build and maintain its own OAuth2/OIDC client. The gateway does what each application used to do for itself.
 
-**Secure token storage.** Access and refresh tokens are held by the gateway and stored according to security practices maintained by a team dedicated to that problem, rather than left to each application's generalist web developers.
+**Secure token storage.** Access and refresh tokens are held by the gateway and stored according to security practices maintained centrally by the team responsible for that problem.
 
 **Redirect-context storage.** The state that has to survive an OAuth2 redirect round trip is centralized rather than reinvented per application.
 
 **Protocol compliance.** Any application that integrates through the gateway gets PKCE, nonce, JWKS-based signature validation, single sign-on, and single sign-out without changing its own code. The gateway speaks the protocol on the application's behalf, correctly, once.
 
-**Correct JWT validation.** The validation logic individual teams were getting wrong, including checking lifetime, issuer, and audience against keys fetched dynamically from the JWKS endpoint, now lives in one place, built and maintained by the platform team, and applies uniformly to everything routed through the gateway.
+**Correct JWT validation.** Signature and claims validation against keys fetched dynamically from the JWKS endpoint now lives in one place, built and maintained by the platform team, and applies uniformly to everything routed through the gateway.
 
 **Independent evolution.** The gateway is built as a microservice, exposed through OutSystems' built-in service action capabilities. New capabilities can be added on the gateway side without any integrated application changing its own code, unless the change requires a new API version.
 
@@ -74,36 +69,32 @@ The browser restriction was never going to be solved by working around it on the
 
 ## Keeping the Front End Honest
 
-Server-side invalidation closes the security gap, but a user sitting in an application with a dead session doesn't know it until they try to do something that fails. I built a front-end widget for OutSystems applications that checks current session validity on user interaction, so a session killed elsewhere surfaces quickly instead of silently.
-
-Checking on every interaction would mean a validation call per click, which doesn't scale. The widget uses a local timeout: it checks on interaction, then suppresses further checks for a short window, trading a small amount of staleness for a large reduction in call volume.
+Server-side invalidation closes the security gap, but a user sitting in an application with a dead session doesn't know it until they try to do something that fails. I built a front-end widget for OutSystems applications that surfaces a session killed elsewhere, so it doesn't go unnoticed.
 
 ## Rewriting Token Minting
 
-Alongside this work, I rewrote the Authorization Code, Refresh Token, and Access Token minting logic in the identity provider. The rewrite addressed several performance and security issues uncovered while working through the rest of this project, the kind of issues that surface once someone reads token-minting code end-to-end looking for problems instead of treating it as settled infrastructure.
+Alongside this work, I rewrote the Authorization Code, Refresh Token, and Access Token minting logic in the identity provider. The rewrite addressed performance and security concerns found while working through the rest of this project, the kind that surface once someone reads token-minting code end-to-end instead of treating it as settled infrastructure.
 
-Some of what surfaced was structural. Several token-related tables had no purge job, so records accumulated indefinitely; a few held millions of rows with no relation to logging or auditing, years of dead data with no retention policy behind it. Indexing across these tables was inconsistent: present on some, missing on others, with no documented rationale for which. At the volumes a high-traffic identity provider runs, with logins feeding these tables continuously, that combination was a performance problem building slowly enough that nobody had flagged it. The rework put a clean baseline under all of it: purge jobs where none existed, indexes brought up to a consistent standard.
+It also added retention purge jobs for token-related tables and brought indexing across them to a consistent standard, giving the identity provider a clean baseline under sustained load.
 
-Because the identity provider sits underneath every application on the platform, this was not a change I could cut over in one release. It rolled out progressively, per application, so any regression would surface against a small blast radius rather than the whole platform at once.
+## What It Gives Applications
 
-## Where This Stands
-
-The IdP capabilities, PKCE, nonce, the JWKS endpoint, session-scoped tokens, single sign-on, and front-channel logout, are in production and available to the whole platform to any application that implements the OAuth2/OIDC flow against them correctly. The gateway itself is in pilot with the platform's first 5 applications. Those applications get PKCE, nonce, and correct JWT validation without having touched their own code. Whether the gateway extends to the identity provider's other development teams depends on how that pilot goes.
+The identity provider capabilities, PKCE, nonce, the JWKS endpoint, session-scoped tokens, single sign-on, and front-channel logout, are available to any application that implements the OAuth2/OIDC flow against them correctly. Applications integrated through the gateway get PKCE, nonce, and correct JWT validation without touching their own code.
 
 ## Connection to the Deep-Linking Security Work
 
 This work is the direct root cause of the [Deep-Linking Security Model](deeplink-security.html) case study, not just a related topic.
 
-The custom identity provider had no single sign-on. Teams responded by passing a username through deeplink context and authenticating on arrival without a password, using the deeplink itself as a substitute for a real cross-application session. That workaround is what the deep-linking case study is about: it left no check on who was allowed to consume a given deeplink, and it became a user impersonation path that I closed by adding bearer token validation to the deeplink service.
+Some integrations relied on deeplink context for cross-application sign-in, which made a user-level check essential. That is what the deep-linking case study is about: I closed that gap by adding bearer token validation to the deeplink service.
 
-What actually removes the reason the workaround existed is single sign-on itself, now built into the identity provider. Any application that implements the OAuth2/OIDC flow correctly against it gets a user recognized across applications without a fresh login, and that did not require the gateway to exist. What the gateway adds is the same thing it adds everywhere else: a single, stable, simple API so an application gets that behaviour correctly without building and maintaining its own OAuth2/OIDC client, the same complexity that produced the token storage and JWT validation problems in the first place. As gateway adoption grows, fewer applications carry that risk, and the deeplink-based substitute has less reason to exist anywhere on the platform.
+Single sign-on, now built into the identity provider, is what removes the need for that pattern. Any application that implements the OAuth2/OIDC flow correctly against it gets a user recognized across applications without a fresh login, and that did not require the gateway to exist. What the gateway adds is the same thing it adds everywhere else: a single, stable, simple API so an application gets that behaviour correctly without building and maintaining its own OAuth2/OIDC client.
 
 Making the bearer token fix work also required a separate change to the identity provider. I introduced an audience concept to the tokens it issues and registered the deep-linking service as a resource server, both done as part of this project. The token-minting rewrite is what those audience-scoped tokens run through today.
 
-The deep-linking fix closed the vulnerability the workaround had created. This project closes the gap that made the workaround necessary in the first place.
+The deep-linking fix closed the user-level gap. This project addresses the need behind it.
 
 ## What I'm Proud Of
 
 **Solving the browser restriction by not fighting it.** Front-channel logout being undermined by browser privacy protections is a known, structural problem, not something specific to this platform. The fix was not a cleverer client-side workaround. It was recognising that the client side was the wrong place to look, and moving the actual invalidation somewhere the browser has no say over.
 
-**Turning fragmentation into leverage.** Fifteen teams each maintaining their own OAuth2 client and JWT validation was not just a security inconsistency, it was fifteen places a future migration would have to touch. The gateway collapses that into one component, and every application that moves onto it is protected without touching its own code. That is the kind of fix that pays for itself twice.
+**Turning fragmentation into leverage.** Every team maintaining its own OAuth2 client and JWT validation was not just an inconsistency, it was a place every future change would have to touch. The gateway collapses that into one component, and every application integrated through it is protected without touching its own code. That is the kind of fix that pays for itself twice.

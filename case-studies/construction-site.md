@@ -1,6 +1,5 @@
 ---
 title: Construction Site Management App
-company: Deloitte
 role: Tech Consultant
 dateRange: Jan 2021 – Apr 2021
 tags: [SAP Integration, Sync Engine, State Machine, Architecture, Tablet]
@@ -15,7 +14,7 @@ tldrOutcome: A legible, observable sync engine that handled the full data comple
 
 The core engineering challenge was a two-tier sync architecture between the app and SAP. This case study covers the server-side engine, the more complex of the two tiers.
 
-A construction company needed a tablet application to manage equipment and budgets across active construction sites. Project managers on-site needed real-time visibility into the data held in SAP: what equipment was allocated where, what budget had been consumed, what was still available. But they also needed to act: signing off machines as leaving a site and making them available for reallocation, reporting spending differences, scheduling personnel. Those actions needed to reach SAP, not just stay in the app, and not all of them with the same urgency.
+A construction client needed a tablet application to manage equipment and budgets across active construction sites. Project managers on-site needed real-time visibility into the data held in SAP: what equipment was allocated where, what budget had been consumed, what was still available. But they also needed to act: signing off machines as leaving a site and making them available for reallocation, reporting spending differences, scheduling personnel. Those actions needed to reach SAP, not just stay in the app, and not all of them with the same urgency.
 
 The sync architecture had two tiers. The first, and more complex, tier was a server-side engine that exchanged data with SAP bidirectionally and loaded the results into the app's backend. The second was a simpler downstream sync that pushed already-preprocessed data from the backend to each tablet's local storage, scoped to the constructions relevant to that device. The state machine described here is the first tier.
 

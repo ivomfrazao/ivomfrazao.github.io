@@ -1,12 +1,11 @@
 ---
 title: Workflow Builder Platform
-company: Deloitte
 role: Tech Consultant → Tech Senior Consultant
 dateRange: Apr 2021 – Jun 2023
 tags: [Platform Engineering, Event-Driven Architecture, Modular Monolith, Tech Lead]
 published: 2026-05-22
 description: Configurable workflow platform with a rule engine, dynamic forms and event-driven execution. Workflow configuration time fell by 40% at rollout.
-tldrProblem: A client's workflow landscape was split between bespoke apps with no reuse and a commercial builder too rigid to change; neither could keep up with evolving process requirements.
+tldrProblem: An energy-sector client's workflow landscape was split between bespoke apps with no reuse and a commercial builder too rigid to change; neither could keep up with evolving process requirements.
 tldrDid: Designed a configurable workflow platform as modular monoliths, with a field catalogue, rule engine, dynamic form generator, and event-driven execution engine; led a cross-functional team that grew to 11.
 tldrOutcome: **40%** reduction in workflow configuration time at rollout; processes previously locked behind months of change cycles took days.
 ---

@@ -1,19 +1,18 @@
 ---
 title: Point-of-Sale Platform
-company: Deloitte
 role: Tech Senior → Tech Experienced Senior Consultant
 dateRange: Jun 2023 – Jul 2025
 tags: [Architecture, ERP Integration, Retail, Stakeholder Management, Solo Engineering]
 published: 2026-05-22
 description: Unified B2C and B2B point-of-sale platform on a legacy ERP with no API docs. Delivered in 10 months against a 6-month estimate, with 20 stores rolled out.
-tldrProblem: Two just-merged companies needed a unified B2C+B2B point-of-sale platform in six months, with a legacy ERP that had no API documentation and live B2B operations that couldn't be disrupted.
+tldrProblem: A retail client needed a unified B2C+B2B point-of-sale platform in six months, with a legacy ERP that had no API documentation and live B2B operations that couldn't be disrupted.
 tldrDid: Reverse-engineered the ERP from observation, resolved B2C/B2B process conflicts at director level through the steering committee, and operated as sole engineer through the critical delivery phase.
 tldrOutcome: Full scope delivered in **10 months** against a 6-month estimate; live B2B operations maintained throughout; 20 stores rolled out and trained.
 ---
 
 ## The Situation
 
-Two companies had just merged. The larger one ran its B2B rental workflow through an existing point-of-sale system that could not be disrupted: stores depended on it daily. The smaller one was running three separate legacy applications, covering inventory, contract management, and invoicing, that did not communicate with each other. Staff copied data manually between systems, sync errors were reported daily, and the UX across all three was outdated. None of them had a B2C flow. Everything had to be consolidated into a single platform, alongside the existing B2B workflow. The original deadline was six months.
+A retail client needed one platform covering both B2C and B2B. The existing B2B rental workflow ran through a point-of-sale system that could not be disrupted: stores depended on it daily. Alongside it, separate legacy applications for inventory, contract management and invoicing did not communicate with each other. Staff copied data manually between systems, sync errors were reported daily, and the UX was outdated. None of them had a B2C flow. Everything had to be consolidated into a single platform, alongside the existing B2B workflow. The original deadline was six months.
 
 The core constraint was that B2C could not simply be built independently. It had to coexist with the B2B flow, and in several places it had to conform to B2B process logic rather than the other way around.
 
@@ -55,9 +54,9 @@ This phase was not planned; it was the result of delivery circumstances. The dec
 
 ## Impact
 
-- Delivered the full B2C+B2B platform with all scope intact in **10 months**, against a 6-month estimate that had not accounted for ERP reverse-engineering requirements only discoverable through execution. Each new flow touched unmapped parts of the system, and director-level negotiation rounds were required to resolve process conflicts between the merged companies' workflows
+- Delivered the full B2C+B2B platform with all scope intact in **10 months**, against a 6-month estimate that had not accounted for ERP reverse-engineering requirements only discoverable through execution. Each new flow touched unmapped parts of the system, and director-level negotiation rounds were required to resolve process conflicts between the two businesses' workflows
 - Rolled out and trained 20 stores on the new platform
-- Following the merger-critical launch, the platform entered an improvements phase (through Jul 2025): deferred features and refinements that had been descoped to protect the original delivery timeline
+- Following the launch, the platform entered an improvements phase (through Jul 2025): deferred features and refinements that had been descoped to protect the original delivery timeline
 
 ## What I'm Proud Of
 
