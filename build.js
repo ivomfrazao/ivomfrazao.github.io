@@ -298,9 +298,18 @@ function renderAllCertifications(all, headline) {
           b.issued.slice(0, 4).localeCompare(a.issued.slice(0, 4)) ||
           Number(!!b.shownOnSite) - Number(!!a.shownOnSite) ||
           a.name.localeCompare(b.name))
-        .map(c =>
-          `<li class="certs-all__item"><span class="certs-all__name">${esc(c.name)}</span>` +
-          `<span class="certs-all__year">${esc(c.issued.slice(0, 4))}</span></li>`)
+        .map(c => {
+          const name = c.credentialUrl
+            ? `<a class="certs-all__link" href="${esc(c.credentialUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.name)}</a>`
+            : esc(c.name);
+          const dates = c.expires
+            ? formatDateRange(c.issued, c.expires)
+            : formatDate(c.issued);
+          return (
+            `<li class="certs-all__item"><span class="certs-all__name">${name}</span>` +
+            `<span class="certs-all__year">${esc(dates)}</span></li>`
+          );
+        })
         .join('');
       return (
         `<div class="cert-group">` +

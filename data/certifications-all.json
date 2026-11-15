@@ -5,12 +5,14 @@
       "name": "Expert Developer (O11)",
       "issuer": "OutSystems",
       "issued": "2026-10",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": true
     },
     {
       "name": "Mobile Developer Specialist (O11 and ODC)",
       "issuer": "OutSystems",
       "issued": "2026-10",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
@@ -25,6 +27,7 @@
       "issuer": "HashiCorp",
       "issued": "2025-07",
       "expires": "2027-07",
+      "credentialUrl": "https://www.credly.com/badges/5adb684b-7111-4a4e-b053-bcd1a03ed75a/linked_in_profile",
       "shownOnSite": true
     },
     {
@@ -32,6 +35,7 @@
       "issuer": "Google",
       "issued": "2025-07",
       "expires": "2028-07",
+      "credentialUrl": "https://www.credly.com/badges/38f641ab-1fc0-4502-b0b2-4107c5a8783d/linked_in_profile",
       "shownOnSite": false
     },
     {
@@ -39,60 +43,70 @@
       "issuer": "Google",
       "issued": "2025-06",
       "expires": "2027-06",
+      "credentialUrl": "https://www.credly.com/badges/cbad3a08-0844-40a7-8eff-01572ebf09a9/linked_in_profile",
       "shownOnSite": true
     },
     {
       "name": "Oracle Database SQL Certified Associate",
       "issuer": "Oracle",
       "issued": "2025-06",
+      "credentialUrl": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=EE4414AE812D1EA7F00780F433D0EF7F91034143B8F0C73883A351F3D04FD1A1",
       "shownOnSite": true
     },
     {
       "name": "Web Developer Specialist (ODC)",
       "issuer": "OutSystems",
       "issued": "2025-04",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "APEX Cloud Developer Certified Professional",
       "issuer": "Oracle",
       "issued": "2025-01",
+      "credentialUrl": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=7A6F382F52EDDDC7932F343D62C1C35C1561F229B8073FB193519065A2BD00B9",
       "shownOnSite": false
     },
     {
       "name": "Professional Web Developer (O11)",
       "issuer": "OutSystems",
       "issued": "2025-01",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "Web Developer Specialist (O11)",
       "issuer": "OutSystems",
       "issued": "2025-01",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "Architecture Specialist (O11)",
       "issuer": "OutSystems",
       "issued": "2024-08",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": true
     },
     {
       "name": "Security Specialist (O11)",
       "issuer": "OutSystems",
       "issued": "2023-04",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": true
     },
     {
       "name": "Associate Developer (ODC)",
       "issuer": "OutSystems",
       "issued": "2023-03",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "Front-end Developer Specialist",
       "issuer": "OutSystems",
       "issued": "2022-10",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
@@ -105,30 +119,35 @@
       "name": "Professional Scrum Master I (PSM I)",
       "issuer": "Scrum.org",
       "issued": "2022-05",
+      "credentialUrl": "https://www.credly.com/badges/44628de2-6920-44f7-b775-6a85d9edc7f0?source=linked_in_profile",
       "shownOnSite": true
     },
     {
       "name": "Delivery Specialist",
       "issuer": "OutSystems",
       "issued": "2022-03",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "Microsoft Certified: Power Platform Fundamentals",
       "issuer": "Microsoft",
       "issued": "2022-02",
+      "credentialUrl": "https://www.credly.com/badges/6a37fadd-154d-4c7c-95e4-417bfdf66d46?source=linked_in_profile",
       "shownOnSite": false
     },
     {
       "name": "Associate Tech Lead",
       "issuer": "OutSystems",
       "issued": "2022-02",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": true
     },
     {
       "name": "Microsoft Certified: Azure AI Fundamentals",
       "issuer": "Microsoft",
       "issued": "2021-12",
+      "credentialUrl": "https://www.credly.com/badges/6a9301a5-565e-4e7a-a466-7ca83e573324?source=linked_in_profile",
       "shownOnSite": false
     },
     {
@@ -136,48 +155,56 @@
       "issuer": "Amazon Web Services (AWS)",
       "issued": "2021-08",
       "expires": "2027-08",
+      "credentialUrl": "https://www.credly.com/badges/1cb0a558-9d91-4c7f-8682-09a1e93d9ec2?source=linked_in_profile",
       "shownOnSite": true
     },
     {
       "name": "AZ-400: Designing and Implementing Microsoft DevOps Solutions",
       "issuer": "Microsoft",
       "issued": "2021-07",
+      "credentialUrl": "https://www.credly.com/badges/68a2b892-8505-433a-bdea-20c2e99aa965?source=linked_in_profile",
       "shownOnSite": true
     },
     {
       "name": "Microsoft Certified: Dynamics 365 Fundamentals",
       "issuer": "Microsoft",
       "issued": "2021-06",
+      "credentialUrl": "https://www.credly.com/badges/ad4e951d-a19e-43a6-bc42-f5a6fefa34ca?source=linked_in_profile",
       "shownOnSite": false
     },
     {
       "name": "Expert Traditional Web Developer",
       "issuer": "OutSystems",
       "issued": "2021-05",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "Associate Reactive Developer",
       "issuer": "OutSystems",
       "issued": "2021-01",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "Microsoft Certified: Azure Fundamentals",
       "issuer": "Microsoft",
       "issued": "2020-11",
+      "credentialUrl": "https://www.youracclaim.com/badges/c985e432-5de9-4f72-94fa-143275f70919?source=linked_in_profile",
       "shownOnSite": false
     },
     {
       "name": "Professional Traditional Web Developer",
       "issuer": "OutSystems",
       "issued": "2020-04",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     },
     {
       "name": "Associate Traditional Web Developer",
       "issuer": "OutSystems",
       "issued": "2018-10",
+      "credentialUrl": "https://www.outsystems.com/profile/lus0bawon1/learn",
       "shownOnSite": false
     }
   ]
