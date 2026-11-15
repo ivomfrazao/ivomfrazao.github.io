@@ -2,6 +2,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 /* ── DATE UTILS (mirrored from app.js) ────────────────────────────── */
 
@@ -296,6 +297,23 @@ function parseFrontMatter(raw) {
 const SITE_URL  = 'https://ivomfrazao.github.io';
 const SITE_NAME = 'Ivo Frazão';
 
+// LinkedIn caches og:image by URL, so a regenerated card keeps showing the old
+// one until the URL changes. The ?v= value is a hash of the PNG's bytes: it only
+// changes when the image does. Regenerate images (npm run og) before building.
+function ogImageUrl(file) {
+  const png = path.join('assets', 'og', `${file}.png`);
+  const url = `${SITE_URL}/assets/og/${file}.png`;
+  if (!fs.existsSync(png)) return url;
+  const hash = crypto.createHash('sha256').update(fs.readFileSync(png)).digest('hex').slice(0, 8);
+  return `${url}?v=${hash}`;
+}
+
+// Keeps the hand-written heads (index.html, case-study.html) in sync with their PNGs.
+function versionOgImage(html, file) {
+  const re = new RegExp(`${escRe(`${SITE_URL}/assets/og/${file}.png`)}(?:\\?v=[0-9a-f]+)?`, 'g');
+  return html.replace(re, ogImageUrl(file));
+}
+
 // Returns the <meta> block for description, Open Graph and Twitter Card tags.
 // For type "article" it also emits author and article:published_time, which
 // LinkedIn's Post Inspector reads as the author and publish date.
@@ -388,7 +406,7 @@ ${renderSocialMeta({
     title,
     description,
     url:   `${SITE_URL}/case-studies/${slug}.html`,
-    image: `${SITE_URL}/assets/og/${slug}.png`,
+    image: ogImageUrl(slug),
     type:  'article',
     author:    profile.name ?? SITE_NAME,
     authorUrl: profile.links?.linkedin ?? SITE_URL,
@@ -532,8 +550,13 @@ function main() {
     html = setSectionVisible(html, 'certifications-section', false);
   }
 
+  html = versionOgImage(html, 'index');
   fs.writeFileSync('index.html', html);
   console.log('  Built index.html');
+
+  // case-study.html is a hand-written shell; only its og:image version is managed here.
+  const shell = fs.readFileSync('case-study.html', 'utf8');
+  fs.writeFileSync('case-study.html', versionOgImage(shell, 'case-study'));
 
   /* Case study pages ───────────────────────────────────────────── */
   const featuredWithSlug = featured.filter(p => p.caseStudySlug);

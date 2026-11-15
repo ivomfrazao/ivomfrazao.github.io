@@ -108,11 +108,14 @@ for (const page of pages) {
   }
 
   if (image) {
-    const rel = image.replace(`${SITE}/`, '');
+    const [imgPath, query = ''] = image.replace(`${SITE}/`, '').split('?');
+    const rel = imgPath;
     const file = path.join(ROOT, rel);
-    if (!rel.startsWith('assets/og/') || !image.endsWith('.png')) fail(page, `og:image not under assets/og/ as .png: ${image}`);
+    if (!rel.startsWith('assets/og/') || !rel.endsWith('.png')) fail(page, `og:image not under assets/og/ as .png: ${image}`);
     else if (!fs.existsSync(file)) fail(page, `og:image file missing: ${rel}`);
     else {
+      const hash = require('crypto').createHash('sha256').update(fs.readFileSync(file)).digest('hex').slice(0, 8);
+      if (query !== `v=${hash}`) fail(page, `og:image version is "${query}", expected "v=${hash}" (run: node build.js)`);
       const size = pngSize(file);
       if (!size) fail(page, `${rel} is not a PNG`);
       else {
