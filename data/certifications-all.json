@@ -1,5 +1,5 @@
 {
-  "_note": "Full certification record (source: LinkedIn, 2026-11-01). Not read by build.js. The site shows only entries with shownOnSite true, defined in cv.json. Low-signal certs are deliberately left off the site.",
+  "_note": "Full certification record (source: LinkedIn, 2026-11-01). build.js renders every entry in the All certifications expander. shownOnSite marks entries that are headline chips (defined in cv.json) and sorts them first within a year.",
   "certifications": [
     {
       "name": "Expert Developer (O11)",

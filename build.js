@@ -274,6 +274,47 @@ function renderCertifications(certs) {
   }).join('\n');
 }
 
+const ISSUER_LABELS = {
+  'Amazon Web Services (AWS)': 'AWS',
+  'Goethe-Institut e.V.':      'Goethe-Institut',
+};
+
+// Full certification record, grouped by issuer (headline issuers first, in their
+// on-page order), newest year first within each issuer, then headline certs, then alphabetical. Rendered into a collapsed expander.
+function renderAllCertifications(all, headline) {
+  const label = issuer => ISSUER_LABELS[issuer] ?? issuer;
+  const grouped = new Map();
+  for (const issuer of headline.map(c => c.issuer)) grouped.set(issuer, []);
+  for (const cert of all) {
+    const key = label(cert.issuer);
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(cert);
+  }
+  const groups = [...grouped.entries()]
+    .filter(([, items]) => items.length)
+    .map(([issuer, items]) => {
+      const rows = [...items]
+        .sort((a, b) =>
+          b.issued.slice(0, 4).localeCompare(a.issued.slice(0, 4)) ||
+          Number(!!b.shownOnSite) - Number(!!a.shownOnSite) ||
+          a.name.localeCompare(b.name))
+        .map(c =>
+          `<li class="certs-all__item"><span class="certs-all__name">${esc(c.name)}</span>` +
+          `<span class="certs-all__year">${esc(c.issued.slice(0, 4))}</span></li>`)
+        .join('');
+      return (
+        `<div class="cert-group">` +
+        `<span class="cert-group__label">${esc(issuer)}</span>` +
+        `<ul class="certs-all__list">${rows}</ul>` +
+        `</div>`
+      );
+    }).join('\n');
+  return (
+    `<summary class="certs-all__summary">All certifications (${all.length})</summary>` +
+    `<div class="certs-all__body">${groups}</div>`
+  );
+}
+
 /* ── FRONT MATTER PARSER (mirrored from case-study-loader.js) ─────── */
 
 function parseFrontMatter(raw) {
@@ -549,6 +590,10 @@ function main() {
     html = inject(html, 'certs-grid', '');
     html = setSectionVisible(html, 'certifications-section', false);
   }
+
+  // Full certification record (collapsed expander under the headline certs)
+  const allCerts = JSON.parse(fs.readFileSync('data/certifications-all.json', 'utf8')).certifications ?? [];
+  html = inject(html, 'certs-all', allCerts.length ? renderAllCertifications(allCerts, certifications) : '');
 
   html = versionOgImage(html, 'index');
   fs.writeFileSync('index.html', html);

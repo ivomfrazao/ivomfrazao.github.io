@@ -299,8 +299,7 @@
     { "name": "Expert Developer (O11)", "issuer": "OutSystems" },
     { "name": "Architecture Specialist (O11)", "issuer": "OutSystems" },
     { "name": "Associate Tech Lead", "issuer": "OutSystems" },
-    { "name": "Security Specialist (O11)", "issuer": "OutSystems" },
-    { "name": "11 additional OutSystems certifications, 2018–2026", "issuer": "OutSystems" }
+    { "name": "Security Specialist (O11)", "issuer": "OutSystems" }
   ],
   "languages": [
     { "name": "Portuguese", "level": "Native"               },
