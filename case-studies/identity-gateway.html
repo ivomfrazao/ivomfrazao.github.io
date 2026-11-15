@@ -13,14 +13,15 @@
   <meta property="og:title"       content="Identity Gateway">
   <meta property="og:description" content="Identity gateway bringing PKCE, nonce and JWKS-based JWT validation to applications through configuration, with no code changes. In pilot with 5 applications.">
   <meta property="og:url"         content="https://ivomfrazao.github.io/case-studies/identity-gateway.html">
-  <meta property="og:image"       content="https://ivomfrazao.github.io/assets/og/identity-gateway.png?v=a7fb8f2b">
+  <meta property="og:image"       content="https://ivomfrazao.github.io/assets/og/identity-gateway.png?v=7cc20553">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="627">
   <meta property="og:image:alt"   content="Identity Gateway, by Ivo Frazão">
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="Identity Gateway">
   <meta name="twitter:description" content="Identity gateway bringing PKCE, nonce and JWKS-based JWT validation to applications through configuration, with no code changes. In pilot with 5 applications.">
-  <meta name="twitter:image"       content="https://ivomfrazao.github.io/assets/og/identity-gateway.png?v=a7fb8f2b">
+  <meta name="twitter:image"       content="https://ivomfrazao.github.io/assets/og/identity-gateway.png?v=7cc20553">
+  <link rel="canonical" href="https://ivomfrazao.github.io/case-studies/identity-gateway.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
@@ -40,13 +41,58 @@
         <div class="case-study-hero__meta"><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Company</span><span class="case-study-hero__meta-value">Fidelidade</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Role</span><span class="case-study-hero__meta-value">Platform Software Engineer</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Project period</span><span class="case-study-hero__meta-value">Apr 2026 – Present</span></span></div>
       </div>
       <div class="case-study-body">
-        <div class="cs-tldr"><dl><dt>Problem</dt><dd>A review of the platform's highest-usage OutSystems applications found none with complete JWT validation, and inconsistent, often undisciplined, token persistence. Validation gaps included inconsistent lifetime, issuer, and audience checks, no nonce support anywhere, and signature checks against a static certificate per team instead of a JWKS endpoint, which meant the signing key had never been rotated.</dd><dt>What I did</dt><dd>Added the missing IdP capabilities (PKCE, nonce, a JWKS endpoint, session-scoped tokens, and front-channel logout, all new to the identity provider), then proposed, designed and built an identity gateway that applies those capabilities and correct JWT validation to any application that moves onto it, with no code changes on that application's side. Also rewrote token minting end-to-end.</dd><dt>Outcome</dt><dd>The gateway is in pilot with the platform's first 5 applications; PKCE, nonce, and correct JWT validation apply to them without any code changes on their side. Wider rollout across the identity provider's other development teams depends on the pilot's outcome. A future migration to Microsoft Entra External ID will need configuration changes only for applications integrated through the gateway.</dd></dl></div>
+        <div class="cs-tldr"><dl><dt>Problem</dt><dd>Every application ran its own OAuth2/OIDC client against a high-traffic customer identity provider. Relying parties validated JWTs inconsistently, and signing keys were distributed as static certificates, which made rotation impractical.</dd><dt>What I built</dt><dd>Added PKCE, nonce, a JWKS endpoint, session-scoped tokens and front-channel logout to the identity provider, then designed and built an identity gateway that applies them, with correct JWT validation, to any application that moves onto it, with no code changes on that application's side.</dd><dt>Outcome</dt><dd>The gateway is in pilot with the first 5 applications, which get PKCE, nonce and correct JWT validation without code changes. Logout is enforced server-side, which sidesteps browser limits on front-channel logout. A future migration to Microsoft Entra External ID needs configuration changes only for applications behind the gateway.</dd></dl></div>
+        <figure class="cs-diagram"><svg viewBox="0 0 400 456" role="img" aria-labelledby="ig-t ig-d">
+  <title id="ig-t">Identity gateway architecture</title>
+  <desc id="ig-d">Applications call the identity gateway. The gateway talks to the identity provider and fetches signing keys from its JWKS endpoint. The identity provider sends a logout callback to the gateway, which invalidates the session server-side.</desc>
+  <defs>
+    <marker id="ig-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ig-head-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="dg-head dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <rect class="dg-box" x="100" y="16" width="200" height="54" rx="6"/>
+  <text class="dg-title" x="200" y="40" text-anchor="middle">Applications</text>
+  <text class="dg-text" x="200" y="57" text-anchor="middle">no OAuth2/OIDC client code</text>
+
+  <line class="dg-line" x1="200" y1="70" x2="200" y2="116" marker-end="url(#ig-head)"/>
+  <text class="dg-label" x="210" y="97">stable API</text>
+
+  <rect class="dg-box dg-box--accent" x="30" y="118" width="340" height="130" rx="6"/>
+  <text class="dg-title" x="46" y="142">Identity gateway</text>
+  <text class="dg-text" x="46" y="166">PKCE and nonce</text>
+  <text class="dg-text" x="46" y="184">JWT validation via JWKS</text>
+  <text class="dg-text" x="46" y="202">Token storage</text>
+  <text class="dg-text" x="46" y="220">SSO and sign-out</text>
+  <rect class="dg-box" x="216" y="190" width="140" height="46" rx="5"/>
+  <text class="dg-text dg-text--strong" x="286" y="209" text-anchor="middle">Session invalidated</text>
+  <text class="dg-text dg-text--strong" x="286" y="225" text-anchor="middle">server-side</text>
+
+  <line class="dg-line" x1="70" y1="248" x2="70" y2="338" marker-end="url(#ig-head)"/>
+  <text class="dg-label" x="78" y="272">auth code flow</text>
+  <text class="dg-label" x="78" y="286">PKCE + nonce</text>
+
+  <text class="dg-label" x="198" y="272">fetches signing</text>
+  <text class="dg-label" x="198" y="286">keys by key ID</text>
+
+  <line class="dg-line dg-line--dash dg-line--accent" x1="330" y1="338" x2="330" y2="238" marker-end="url(#ig-head-accent)"/>
+  <text class="dg-label" x="322" y="298" text-anchor="end">logout</text>
+  <text class="dg-label" x="322" y="312" text-anchor="end">callback</text>
+
+  <rect class="dg-box" x="30" y="340" width="340" height="100" rx="6"/>
+  <text class="dg-title" x="46" y="364">Identity provider</text>
+  <text class="dg-text" x="46" y="392">issues tokens</text>
+  <text class="dg-text" x="46" y="408">with a session ID</text>
+  <rect class="dg-box dg-box--accent" x="160" y="388" width="120" height="40" rx="5"/>
+  <text class="dg-text dg-text--strong" x="220" y="412" text-anchor="middle">JWKS endpoint</text>
+  <!-- drawn last so it stays visible where it crosses the identity provider box -->
+  <line class="dg-line dg-line--dash" x1="190" y1="248" x2="190" y2="386" marker-end="url(#ig-head)"/>
+</svg><figcaption>Applications call the gateway's stable API. The gateway runs the OAuth2/OIDC flow against the identity provider and validates tokens with keys from its JWKS endpoint. On logout, the identity provider's callback makes the gateway invalidate the session server-side.</figcaption></figure>
         <article class="case-study-article">
 <h2>The Problem</h2>
-<p>Fidelidade's platform runs a custom identity provider, built in-house before Microsoft Entra External ID was adopted as the organisation's long-term direction. It authenticates customers and partners across the platform's applications, not only the core insurance line, including partner applications in the health sector. Registered accounts run into the millions, with logins in the hundreds of thousands a day. Every OutSystems application that needed authentication talked to it directly, and each team was responsible for its own OAuth2/OIDC client code.</p>
-<p>I reviewed a sample of the platform's highest-usage applications, and in practice, none of them were persisting tokens with any real discipline. Most weren't keeping access and refresh tokens around in a considered way at all. The few that did store them did it poorly. None of this had been flagged as a risk to product owners before I looked at it end to end.</p>
-<p>JWT validation existed per team, but it had real gaps, and they varied by team. None of the applications in the sample had complete validation: some didn't check a token's lifetime, some didn't check its issuer, some didn't check its audience. None of this was because anyone was negligent. Getting OAuth2 right while also shipping features is a specialised skill, and generalist application teams weren't set up to maintain it.</p>
-<p>Two things were missing at the protocol level, not just inconsistently applied per team. Nonce validation did not exist anywhere on the platform: the identity provider had never implemented it, so there was nothing for any team to check. And signature validation was done against a static certificate each team held locally, rather than fetched dynamically from a JWKS endpoint keyed by the signing key's ID, because no such endpoint existed. That meant rotating the signing key would have broken every team's hardcoded copy at once. The key had never been rotated.</p>
+<p>Fidelidade's platform runs a custom, high-traffic customer identity provider, built in-house before Microsoft Entra External ID was adopted as the organisation's long-term direction. It authenticates customers and partners across the platform's applications. Every OutSystems application that needed authentication talked to it directly, and each team was responsible for its own OAuth2/OIDC client code.</p>
+<p>With a separate client in every team, token handling varied from one application to the next. Most applications weren't keeping access and refresh tokens around in a considered way at all, and the few that did stored them poorly.</p>
+<p>JWT validation existed per team, but it had real gaps, and they varied by team. Relying parties validated JWTs inconsistently: some didn't check a token's lifetime, some didn't check its issuer, some didn't check its audience. None of this was because anyone was negligent. Getting OAuth2 right while also shipping features is a specialised skill, and generalist application teams weren't set up to maintain it.</p>
+<p>Two things were missing at the protocol level, not just inconsistently applied per team. Nonce validation did not exist on the platform: the identity provider had never implemented it, so there was nothing for any team to check. And signing keys were distributed as static certificates that each team held locally, rather than fetched dynamically from a JWKS endpoint keyed by the signing key's ID, because no such endpoint existed. That made rotation impractical: changing the signing key would have broken every team's hardcoded copy at once, so the key had never been rotated.</p>
 <p>The identity provider also had no shared sign-out. Ending a session in one application did nothing to sessions the same user held open in others.</p>
 <h2>Building the Missing IdP Capabilities</h2>
 <p>I added PKCE code challenge verification and nonce to the identity provider's authorization code flow. Neither had existed before.</p>
@@ -76,7 +122,7 @@
 <p>Checking on every interaction would mean a validation call per click, which doesn't scale. The widget uses a local timeout: it checks on interaction, then suppresses further checks for a short window, trading a small amount of staleness for a large reduction in call volume.</p>
 <h2>Rewriting Token Minting</h2>
 <p>Alongside this work, I rewrote the Authorization Code, Refresh Token, and Access Token minting logic in the identity provider. The rewrite addressed several performance and security issues uncovered while working through the rest of this project, the kind of issues that surface once someone reads token-minting code end-to-end looking for problems instead of treating it as settled infrastructure.</p>
-<p>Some of what surfaced was structural. Several token-related tables had no purge job, so records accumulated indefinitely; a few held millions of rows with no relation to logging or auditing, years of dead data with no retention policy behind it. Indexing across these tables was inconsistent: present on some, missing on others, with no documented rationale for which. At the volumes this identity provider runs, hundreds of thousands of logins a day feeding these tables continuously, that combination was a performance problem building slowly enough that nobody had flagged it. The rework put a clean baseline under all of it: purge jobs where none existed, indexes brought up to a consistent standard.</p>
+<p>Some of what surfaced was structural. Several token-related tables had no purge job, so records accumulated indefinitely; a few held millions of rows with no relation to logging or auditing, years of dead data with no retention policy behind it. Indexing across these tables was inconsistent: present on some, missing on others, with no documented rationale for which. At the volumes a high-traffic identity provider runs, with logins feeding these tables continuously, that combination was a performance problem building slowly enough that nobody had flagged it. The rework put a clean baseline under all of it: purge jobs where none existed, indexes brought up to a consistent standard.</p>
 <p>Because the identity provider sits underneath every application on the platform, this was not a change I could cut over in one release. It rolled out progressively, per application, so any regression would surface against a small blast radius rather than the whole platform at once.</p>
 <h2>Where This Stands</h2>
 <p>The IdP capabilities, PKCE, nonce, the JWKS endpoint, session-scoped tokens, single sign-on, and front-channel logout, are in production and available to the whole platform to any application that implements the OAuth2/OIDC flow against them correctly. The gateway itself is in pilot with the platform's first 5 applications. Those applications get PKCE, nonce, and correct JWT validation without having touched their own code. Whether the gateway extends to the identity provider's other development teams depends on how that pilot goes.</p>

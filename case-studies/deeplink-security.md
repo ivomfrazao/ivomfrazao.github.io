@@ -5,15 +5,18 @@ role: Platform Software Engineer
 dateRange: Jan 2026 – Present
 tags: [Security, Authorization, JWT, Platform Engineering, Token Design]
 published: 2026-05-22
-description: Bearer token validation added to deep-linking to close a user impersonation path across 11 exploitable integrations, with an incremental rollout.
-tldrProblem: The platform's deep-linking had application-level isolation but no user-level check: anyone with a URL could arrive authenticated as the user it was created for, an impersonation path across 11 of the more than 20 integrations registered on the service.
-tldrDid: Identified the gap proactively, designed a two-layer security model adding bearer token validation alongside the existing app-key mechanism, and extended the custom identity provider to support it.
-tldrOutcome: User impersonation path closed across the **11 exploitable integrations** (of 20+ registered on the service); rollout is incremental to allow consumers to migrate without a hard cutover.
+description: Bearer token validation added to deep-linking to close a user impersonation path across multiple integrations, without a hard cutover.
+diagram: diagrams/deeplink-security.svg
+diagramTitle: Deeplink security model
+diagramCaption: A deeplink is bound to the creating user's bearer token. The deeplink service returns context only when the caller presents both the application key and a token scoped to the service.
+tldrProblem: The platform's deep-linking had application-level isolation but no user-level check. Teams used deeplink context as an SSO substitute, so anyone with a URL could arrive authenticated as the user it was created for.
+tldrDid: Identified the gap proactively, designed a two-layer security model adding bearer token validation alongside the existing app-key mechanism, and extended the custom identity provider to issue audience-scoped tokens for it.
+tldrOutcome: The user impersonation path was closed for **multiple integrations**, and the service supported both models in parallel so consumers could migrate without a hard cutover.
 ---
 
 ## The Problem
 
-The platform's deep-linking service allows applications to hand off a user to another application, carrying context, such as user identity, session state, and the current flow, across the boundary.
+The platform's deep-linking service allowed applications to hand off a user to another application, carrying context, such as user identity, session state, and the current flow, across the boundary.
 
 The existing model already had application-level isolation in place. Each deeplink carried an ID in the URL; the corresponding secret key was sent server-side. The origin application declared the intended destination; the receiving application had to hold the matching key to read the context. An application could not consume a deeplink meant for a different application.
 
@@ -35,7 +38,7 @@ Given how teams were using deeplinks, as an SSO substitute, carrying usernames t
 
 Bearer token validation was added as a second layer of the security model.
 
-When a deeplink is created within an authenticated context, it is bound to the user's bearer token, issued by the platform's custom identity provider and scoped to the deeplink service as a resource server. To read the context, the caller must present that token alongside the existing application key. Without it, the context endpoint returns nothing: the context is unavailable, not unvalidated.
+When a deeplink was created within an authenticated context, it was bound to the user's bearer token, issued by the platform's custom identity provider and scoped to the deeplink service as a resource server. To read the context, the caller had to present that token alongside the existing application key. Without it, the context endpoint returned nothing: the context was unavailable, not unvalidated.
 
 ## The Two-Layer Model
 
@@ -47,15 +50,15 @@ The result is a two-layer structure:
 
 Deeplinks created in unauthenticated contexts carry no bearer token and require none: the constraint applies only where a principal exists to constrain.
 
-## Rollout
+## Migration
 
-More than 20 integrations were registered on the deeplink service, but only 11 were exploitable: 6 were already in production using deeplink context as an SSO substitute (1 institutional site, 2 mobile apps, 3 web apps), and 5 more adopted the same pattern before the fix landed (1 additional institutional site, 4 in the pipeline). The remaining registered integrations never used deeplink context that way and were not exploitable. A hard cutover was not feasible for the 11 affected: teams needed time to update their implementations.
+Several integrations had registered on the deeplink service, and a number of them used deeplink context as an SSO substitute. A hard cutover was not feasible for those: teams needed time to update their implementations.
 
-The rollout is incremental: the service supports both models in parallel during the transition period, with integrations migrating one by one.
+The service supported both models in parallel during the transition, so integrations could migrate one by one.
 
 ## Connection to the Identity Gateway Work
 
-Partway through this rollout, I extended the platform's custom identity provider to align its OAuth2/OIDC authentication flows with Microsoft Entra External ID, and proposed, designed and built an [identity gateway](identity-gateway.html) that gives every application a stable, simple way to use those flows correctly. That project is covered in its own case study.
+Alongside this work, I extended the platform's custom identity provider to align its OAuth2/OIDC authentication flows with Microsoft Entra External ID, and proposed, designed and built an [identity gateway](identity-gateway.html) that gives every application a stable, simple way to use those flows correctly. That project is covered in its own case study.
 
 The connection between these two workstreams is direct, not just thematic. Making the bearer token requirement work required changes to the IdP itself. I introduced the audience concept to the tokens it generates, and registered the deeplink service as a resource server. The tokens the deeplink endpoint now validates are IdP-issued, audience-scoped to the deeplink service. The IdP extension was a prerequisite for the fix.
 

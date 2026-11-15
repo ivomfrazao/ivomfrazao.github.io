@@ -93,6 +93,11 @@ for (const page of pages) {
   const expectedUrl = page === 'index.html' ? `${SITE}/` : `${SITE}/${page}`;
   if (url !== expectedUrl) fail(page, `og:url is ${url}, expected ${expectedUrl}`);
 
+  const canonicals = [...head.matchAll(/<link\s+rel="canonical"\s+href="([^"]*)"/g)].map(m => m[1]);
+  if (canonicals.length !== 1) fail(page, `canonical link appears ${canonicals.length} times (expected 1)`);
+  else if (canonicals[0] !== expectedUrl) fail(page, `canonical is ${canonicals[0]}, expected ${expectedUrl}`);
+  if (/<meta[^>]+name="(?:robots|googlebot)"[^>]*(?:noindex|nofollow)/i.test(head)) fail(page, 'page carries a noindex/nofollow robots meta tag');
+
   if (type === 'article') {
     const [author] = get('name', 'author');
     const [authorUrl] = get('property', 'article:author');
@@ -126,6 +131,13 @@ for (const page of pages) {
   }
 
   console.log(`${page} | ${title} | ${image} | ${get('name', 'author')[0] ?? '-'} | ${get('property', 'article:published_time')[0] ?? '-'}`);
+}
+
+// sitemap.xml must list the home page and every case study page.
+const sitemap = fs.existsSync(path.join(ROOT, 'sitemap.xml')) ? fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8') : '';
+for (const page of pages.filter(p => p === 'index.html' || p.startsWith('case-studies/'))) {
+  const loc = page === 'index.html' ? `${SITE}/` : `${SITE}/${page}`;
+  if (!sitemap.includes(`<loc>${loc}</loc>`)) fail('sitemap.xml', `missing ${loc}`);
 }
 
 console.log(failures ? `\n${failures} problem(s) found.` : `\nAll ${pages.length} pages OK.`);

@@ -212,31 +212,6 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   letter-spacing: 0.01em;
 }
 
-.profile-links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  flex-shrink: 0;
-  padding-top: var(--space-2);
-  align-items: flex-end;
-}
-
-.profile-link {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  transition: color var(--transition);
-}
-.profile-link:hover {
-  color: var(--color-accent);
-  opacity: 1;
-}
-.profile-link svg {
-  flex-shrink: 0;
-}
-
 /* ── Order toggle ── */
 .order-toggle {
   background: var(--color-surface);
@@ -483,9 +458,49 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
 }
 
 .theme-note {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-text-secondary);
   line-height: 1.7;
+}
+
+/* Call to action under the intro paragraph. Mirrors .order-toggle (neutral)
+   and .tag (accent) so it needs no new colours. */
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-5);
+  text-decoration: none;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+.cta-btn:hover {
+  border-color: var(--color-accent-border);
+  color: var(--color-accent);
+  opacity: 1;
+}
+.cta-btn svg { flex-shrink: 0; }
+
+.cta-btn--primary {
+  color: var(--color-accent);
+  background: var(--color-accent-dim);
+  border-color: var(--color-accent-border);
+}
+.cta-btn--primary:hover {
+  border-color: var(--color-accent);
 }
 
 .featured-section {
@@ -494,14 +509,9 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
 }
 
 .featured-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-5);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
-  padding-bottom: var(--space-2);
 }
 
 .featured-card {
@@ -515,8 +525,6 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   gap: var(--space-4);
   text-decoration: none;
   color: inherit;
-  flex: 0 0 240px;
-  scroll-snap-align: start;
   transition:
     background var(--transition),
     border-color var(--transition),
@@ -535,6 +543,12 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   font-weight: 600;
   color: var(--color-text-primary);
   line-height: 1.3;
+}
+
+.featured-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
 }
 
 .featured-card__footer {
@@ -565,8 +579,8 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   border-top: 1px solid var(--color-border);
 }
 
-#personal-projects-grid .featured-card {
-  flex: 1 0 240px;
+#personal-projects-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .project-card {
@@ -938,6 +952,40 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
   font-weight: 600;
 }
 
+/* Architecture diagram (inline SVG, inlined by build.js from case-studies/diagrams/).
+   Colours come from the theme tokens so it follows light/dark. */
+.cs-diagram {
+  margin: 0 0 var(--space-10);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.cs-diagram svg {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+}
+.cs-diagram figcaption {
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+.dg-box        { fill: var(--color-surface); stroke: var(--color-border); stroke-width: 1.5; }
+.dg-box--accent { fill: var(--color-accent-dim); stroke: var(--color-accent-border); }
+.dg-title      { font-size: 13px; font-weight: 600; fill: var(--color-text-primary); }
+.dg-text       { font-size: 11.5px; fill: var(--color-text-secondary); }
+.dg-text--strong { font-weight: 600; fill: var(--color-text-primary); }
+.dg-label      { font-size: 11px; fill: var(--color-text-secondary); }
+.dg-line       { fill: none; stroke: var(--color-text-secondary); stroke-width: 1.5; }
+.dg-line--dash { stroke-dasharray: 5 4; }
+.dg-line--accent { stroke: var(--color-accent); }
+.dg-head       { fill: var(--color-text-secondary); }
+.dg-head--accent { fill: var(--color-accent); }
+
 .case-study-article h2 {
   font-size: var(--text-2xl);
   font-weight: 600;
@@ -1131,11 +1179,8 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 600; }
     gap: var(--space-6);
   }
   .profile-name { font-size: var(--text-3xl); }
-  .profile-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
+  .featured-grid,
+  #personal-projects-grid { grid-template-columns: 1fr; }
 
   .company-block { grid-template-columns: var(--timeline-dot-col) 1fr; }
   .company-block__date { display: none; }

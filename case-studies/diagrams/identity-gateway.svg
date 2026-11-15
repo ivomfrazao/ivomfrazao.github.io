@@ -1,0 +1,45 @@
+<svg viewBox="0 0 400 456" role="img" aria-labelledby="ig-t ig-d">
+  <title id="ig-t">Identity gateway architecture</title>
+  <desc id="ig-d">Applications call the identity gateway. The gateway talks to the identity provider and fetches signing keys from its JWKS endpoint. The identity provider sends a logout callback to the gateway, which invalidates the session server-side.</desc>
+  <defs>
+    <marker id="ig-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="ig-head-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="dg-head dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <rect class="dg-box" x="100" y="16" width="200" height="54" rx="6"/>
+  <text class="dg-title" x="200" y="40" text-anchor="middle">Applications</text>
+  <text class="dg-text" x="200" y="57" text-anchor="middle">no OAuth2/OIDC client code</text>
+
+  <line class="dg-line" x1="200" y1="70" x2="200" y2="116" marker-end="url(#ig-head)"/>
+  <text class="dg-label" x="210" y="97">stable API</text>
+
+  <rect class="dg-box dg-box--accent" x="30" y="118" width="340" height="130" rx="6"/>
+  <text class="dg-title" x="46" y="142">Identity gateway</text>
+  <text class="dg-text" x="46" y="166">PKCE and nonce</text>
+  <text class="dg-text" x="46" y="184">JWT validation via JWKS</text>
+  <text class="dg-text" x="46" y="202">Token storage</text>
+  <text class="dg-text" x="46" y="220">SSO and sign-out</text>
+  <rect class="dg-box" x="216" y="190" width="140" height="46" rx="5"/>
+  <text class="dg-text dg-text--strong" x="286" y="209" text-anchor="middle">Session invalidated</text>
+  <text class="dg-text dg-text--strong" x="286" y="225" text-anchor="middle">server-side</text>
+
+  <line class="dg-line" x1="70" y1="248" x2="70" y2="338" marker-end="url(#ig-head)"/>
+  <text class="dg-label" x="78" y="272">auth code flow</text>
+  <text class="dg-label" x="78" y="286">PKCE + nonce</text>
+
+  <text class="dg-label" x="198" y="272">fetches signing</text>
+  <text class="dg-label" x="198" y="286">keys by key ID</text>
+
+  <line class="dg-line dg-line--dash dg-line--accent" x1="330" y1="338" x2="330" y2="238" marker-end="url(#ig-head-accent)"/>
+  <text class="dg-label" x="322" y="298" text-anchor="end">logout</text>
+  <text class="dg-label" x="322" y="312" text-anchor="end">callback</text>
+
+  <rect class="dg-box" x="30" y="340" width="340" height="100" rx="6"/>
+  <text class="dg-title" x="46" y="364">Identity provider</text>
+  <text class="dg-text" x="46" y="392">issues tokens</text>
+  <text class="dg-text" x="46" y="408">with a session ID</text>
+  <rect class="dg-box dg-box--accent" x="160" y="388" width="120" height="40" rx="5"/>
+  <text class="dg-text dg-text--strong" x="220" y="412" text-anchor="middle">JWKS endpoint</text>
+  <!-- drawn last so it stays visible where it crosses the identity provider box -->
+  <line class="dg-line dg-line--dash" x1="190" y1="248" x2="190" y2="386" marker-end="url(#ig-head)"/>
+</svg>

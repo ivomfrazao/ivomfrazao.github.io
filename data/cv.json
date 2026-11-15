@@ -1,8 +1,8 @@
 {
   "profile": {
     "name": "Ivo Frazão",
-    "tagline": "Platform Software Engineer – Architecture, Security & Cloud",
-    "location": "Lisbon, Portugal (actively relocating)",
+    "tagline": "Backend & Identity Engineer",
+    "location": "Lisbon, Portugal · EU citizen · relocating to Amsterdam / Berlin",
     "links": {
       "linkedin": "https://linkedin.com/in/ivomfrazao",
       "github": "https://github.com/ivomfrazao",
@@ -11,32 +11,32 @@
   },
   "companies": [
     {
-      "id": "fidelidade",
+      "id": "insurer",
       "name": "Fidelidade",
       "url": "https://www.fidelidade.pt",
       "dateStart": "2025-09",
       "dateEnd": null,
-      "description": "Portugal's largest insurance provider. Working on backend services and shared platform components used across multiple lines of business and development teams.",
+      "description": "Working on backend services and shared platform components used across multiple lines of business and development teams.",
       "roles": [
         {
-          "id": "fidelidade-platform-engineer",
+          "id": "insurer-platform-engineer",
           "title": "Platform Software Engineer",
           "dateStart": "2025-09",
           "dateEnd": null,
           "summary": "Building backend services and reusable platform components adopted across multiple lines of business. Work spans security models, authentication flows, simulation engines, caching, and observability.",
           "projects": [
             {
-              "id": "fidelidade-idp-migration",
+              "id": "insurer-idp-migration",
               "title": "Identity Gateway",
               "type": "flagship",
-              "tagline": "Added PKCE, nonce, a JWKS endpoint, and front-channel logout to the platform's custom identity provider, all new capabilities, then designed and built an identity gateway giving every OutSystems application a single, stable API to use them correctly instead of building its own OAuth2/OIDC client. In pilot with the first 5 applications; corrects JWT validation individual teams were getting wrong and turns a browser-imposed front-channel logout limitation into a server-side fix. Also rewrote the Authorization Code, Refresh Token, and Access Token minting logic end-to-end. Positions gateway-integrated apps for a configuration-only migration to Microsoft Entra External ID.",
+              "tagline": "Added PKCE, nonce, a JWKS endpoint, and front-channel logout to the platform's custom identity provider, all new capabilities, then designed and built an identity gateway giving every OutSystems application a single, stable API to use them correctly instead of building its own OAuth2/OIDC client. In pilot with the first 5 applications; applies correct JWT validation in one place and turns a browser-imposed front-channel logout limitation into a server-side fix. Also rewrote the Authorization Code, Refresh Token, and Access Token minting logic end-to-end. Positions gateway-integrated apps for a configuration-only migration to Microsoft Entra External ID.",
               "tags": ["OAuth2/OIDC", "Microsoft Entra", "Session Security", "Platform Engineering"],
               "featured": true,
-              "hook": "Every OutSystems application talked to the identity provider directly, which meant the platform's session security was only as good as whichever team had been most careful under delivery pressure, and some hadn't been. The fix wasn't just adding PKCE, nonce, and single sign-out to the IdP; it was giving every application a single, stable API to use them correctly, instead of expecting 15 teams to each build a correct OAuth2/OIDC client. JWT validation now happens correctly in one place, and a browser restriction that broke front-channel logout gets solved server-side instead of fought client-side.",
+              "hook": "Every OutSystems application talked to the identity provider directly, so each team owned its own OAuth2/OIDC client and the platform's session security was only as good as the least careful one. The fix wasn't just adding PKCE, nonce, and single sign-out to the IdP; it was giving every application a single, stable API to use them correctly, instead of expecting 15 teams to each build a correct client. JWT validation now happens correctly in one place, and a browser restriction that broke front-channel logout gets solved server-side instead of fought client-side.",
               "caseStudySlug": "identity-gateway"
             },
             {
-              "id": "fidelidade-entra-migration",
+              "id": "insurer-entra-migration",
               "title": "Entra External ID Migration",
               "type": "supporting",
               "tagline": "Leading Fidelidade's side of the migration from the custom identity provider to Microsoft Entra External ID, with an external partner responsible for the technical architecture. Started by mapping the current state with the partner, gathering the technical and operational details they needed and defining Fidelidade's technical requirements. When the target-state design also needed structured input from business and marketing stakeholders, ran workshops that laid out the decisions they had to make, the pros and cons of each option, and how each choice constrained the ones that followed. Work is ongoing.",
@@ -46,17 +46,17 @@
               "caseStudySlug": null
             },
             {
-              "id": "fidelidade-deeplinking",
+              "id": "insurer-deeplinking",
               "title": "Deep-Linking Security Model",
               "type": "flagship",
-              "tagline": "Identified a user-level gap in the platform's deep-linking security model. App-to-app isolation was already in place: what was missing was a check that the user opening a deeplink was the user it was created for. Because teams were using deeplink context as an SSO substitute (passing usernames to authenticate on arrival without a password), the missing check was a user impersonation path. Added bearer token validation as a second security layer alongside the existing app-level key mechanism. Of the 20+ integrations registered on the service, 11 were exploitable; the new model is in active rollout across them.",
+              "tagline": "Identified a user-level gap in the platform's deep-linking security model. App-to-app isolation was already in place: what was missing was a check that the user opening a deeplink was the user it was created for. Because teams were using deeplink context as an SSO substitute, passing usernames to authenticate on arrival without a password, the missing check was a user impersonation path. Closed it by adding audience-scoped bearer token validation as a second security layer alongside the existing app-level key mechanism, which let multiple integrations migrate without a hard cutover.",
               "tags": ["Security", "Authorization", "JWT", "Platform"],
               "featured": true,
-              "hook": "App-to-app isolation was already in place. What was missing was simpler and more dangerous: no check that the user opening a deeplink was the user it was created for. Because the custom IdP had no SSO, teams were passing usernames in context and authenticating on arrival without a password, which meant the missing check was a user impersonation path. I added bearer token validation as a second layer alongside the existing app key to close it.",
+              "hook": "App-to-app isolation was already in place. What was missing was simpler and more dangerous: no check that the user opening a deeplink was the user it was created for. Because the custom IdP had no SSO, teams were passing usernames in context and authenticating on arrival without a password, which meant the missing check was a user impersonation path. I closed it by adding audience-scoped bearer token validation as a second layer alongside the existing app key.",
               "caseStudySlug": "deeplink-security"
             },
             {
-              "id": "fidelidade-insurance-flows",
+              "id": "insurer-insurance-flows",
               "title": "Insurance Simulation Platform",
               "type": "supporting",
               "tagline": "Reusable screens, blocks and services for multi-step insurance simulation flows, adopted independently by each line of business. Includes logic that converts abandoned journeys into leads for contact-center and mediator follow-up, averaging ~280 daily, plus in-memory search and cached components reducing external API calls.",
@@ -66,7 +66,7 @@
               "caseStudySlug": null
             },
             {
-              "id": "fidelidade-observability",
+              "id": "insurer-observability",
               "title": "Platform Observability",
               "type": "supporting",
               "tagline": "Introduced structured logging and metrics across the platform where none previously existed. Surfaced call volume and version distribution for the deep-linking service, a question previously unanswerable, directly informing consumer migration timelines. Enabled identification of unused settings, making a cleanup process possible for the first time.",
@@ -113,16 +113,6 @@
               "featured": false,
               "hook": null,
               "caseStudySlug": null
-            },
-            {
-              "id": "proj-social-support-platform",
-              "title": "Social Support Programme Platform",
-              "type": "supporting",
-              "tagline": "Public-sector digital platform supporting application management workflows for a Social Support Programme. On-location international project for a GCC public-sector client.",
-              "tags": ["Public Sector", "Workflow", "Government"],
-              "featured": false,
-              "hook": null,
-              "caseStudySlug": null
             }
           ]
         },
@@ -133,16 +123,6 @@
           "dateEnd": "2021-08",
           "summary": "Mid-level delivery across healthcare, construction, and industrial sectors. Started owning complete features end-to-end and introduced DevOps practices to the delivery team.",
           "projects": [
-            {
-              "id": "proj-healthcare-app",
-              "title": "Healthcare Web & Mobile App",
-              "type": "supporting",
-              "tagline": "Web and mobile platform for patient interactions with hospitals and clinics: appointment scheduling, medical records, telemedicine, Bluetooth-based facility navigation. SOAP integrations with hospital backend systems. Took on client management responsibilities during tech lead absence.",
-              "tags": ["Mobile", "Healthcare", "SOAP", "Bluetooth"],
-              "featured": false,
-              "hook": null,
-              "caseStudySlug": null
-            },
             {
               "id": "proj-construction-app",
               "title": "Construction Site Management App",
@@ -176,21 +156,11 @@
               "id": "workflow-builder",
               "title": "Workflow Builder Platform",
               "type": "flagship",
-              "tagline": "No-code workflow builder for an energy sector client: dynamic form generation, event-driven execution, and retry logic enabling non-technical teams to design and run their own operational workflows without engineering involvement. Reduced workflow configuration time by 40% at rollout vs. the previous platform. Processes that previously took months to change took days. A further reduction to 70% was projected at the time as component reuse compounded.",
+              "tagline": "No-code workflow builder for an energy sector client: dynamic form generation, event-driven execution, and retry logic enabling non-technical teams to design and run their own operational workflows without engineering involvement. Reduced workflow configuration time by 40% at rollout vs. the previous platform. Processes that previously took months to change took days.",
               "tags": ["Platform Engineering", "Event-Driven", "Architecture", "Tech Lead", "Energy"],
               "featured": true,
               "hook": "My most technically ambitious project: a configurable workflow platform built as a composition of modular monoliths, with a field catalogue with dependency chains, rule engine, dynamic form generation, and event-driven workflow activities. Led a cross-functional team of 11.",
               "caseStudySlug": "workflow-builder"
-            },
-            {
-              "id": "proj-telecom-b2b-portal",
-              "title": "Telecom B2B Self-Management Portal",
-              "type": "supporting",
-              "tagline": "B2B self-management portal for a telecom client. The primary challenge was not technical: the client engaged in irregular bursts requiring active momentum management throughout. Delivered measurable improvement across the client's key self-service processes.",
-              "tags": ["B2B", "Telecom", "Portal", "Client Management"],
-              "featured": false,
-              "hook": null,
-              "caseStudySlug": null
             }
           ]
         },
@@ -236,12 +206,13 @@
       ]
     }
   ],
-  "featuredOrder": ["fidelidade-idp-migration", "fidelidade-deeplinking", "proj-pos-platform", "workflow-builder", "proj-construction-app"],
+  "featuredOrder": ["insurer-idp-migration", "insurer-deeplinking", "proj-pos-platform", "workflow-builder", "proj-construction-app"],
   "sideProjects": [
     {
       "id": "international-number-input",
       "title": "International Number Input",
       "type": "flagship",
+      "description": "Published npm library (TypeScript) that validates tax IDs, national IDs and country-specific number formats across multiple countries.",
       "tagline": "A TypeScript plugin that attaches a searchable country dropdown, placeholder, live formatting, and validation to any number input, covering 92 countries and number types such as national ID and tax identification numbers.",
       "tags": ["TypeScript", "npm", "Validation", "Open Source"],
       "featured": false,
@@ -253,6 +224,7 @@
       "id": "outsystems-actions",
       "title": "OutSystems Actions",
       "type": "flagship",
+      "description": "Chromium extension (TypeScript) that sends browser and sound alerts for OutSystems deployments and publishes. Available on Edge Add-ons.",
       "tagline": "A Chromium extension that monitors OutSystems Service Center and LifeTime in real time, sending browser notifications and sound alerts for deployments, publishes, and required interventions. Available on Edge Add-ons.",
       "tags": ["TypeScript", "Browser Extension", "OutSystems", "Edge Add-ons"],
       "featured": false,
@@ -293,7 +265,7 @@
     { "name": "Professional Cloud Architect", "issuer": "Google" },
     { "name": "Terraform Associate", "issuer": "HashiCorp" },
     { "name": "Professional Scrum Master I", "issuer": "Scrum.org" },
-    { "name": "AZ-400: DevOps Engineer", "issuer": "Microsoft" },
+    { "name": "AZ-400: Designing and Implementing Microsoft DevOps Solutions", "issuer": "Microsoft" },
     { "name": "Certified Cloud Practitioner", "issuer": "AWS" },
     { "name": "Database SQL Certified Associate", "issuer": "Oracle" },
     { "name": "Expert Developer (O11)", "issuer": "OutSystems" },

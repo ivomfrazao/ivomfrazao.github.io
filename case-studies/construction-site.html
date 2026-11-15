@@ -13,14 +13,15 @@
   <meta property="og:title"       content="Construction Site Management App">
   <meta property="og:description" content="Tablet app sync engine for SAP, rebuilt as an explicit state machine after reverse-engineering an undocumented data model, with bidirectional writes.">
   <meta property="og:url"         content="https://ivomfrazao.github.io/case-studies/construction-site.html">
-  <meta property="og:image"       content="https://ivomfrazao.github.io/assets/og/construction-site.png?v=60c6da9a">
+  <meta property="og:image"       content="https://ivomfrazao.github.io/assets/og/construction-site.png?v=d48ba1ee">
   <meta property="og:image:width"  content="1200">
   <meta property="og:image:height" content="627">
   <meta property="og:image:alt"   content="Construction Site Management App, by Ivo Frazão">
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="Construction Site Management App">
   <meta name="twitter:description" content="Tablet app sync engine for SAP, rebuilt as an explicit state machine after reverse-engineering an undocumented data model, with bidirectional writes.">
-  <meta name="twitter:image"       content="https://ivomfrazao.github.io/assets/og/construction-site.png?v=60c6da9a">
+  <meta name="twitter:image"       content="https://ivomfrazao.github.io/assets/og/construction-site.png?v=d48ba1ee">
+  <link rel="canonical" href="https://ivomfrazao.github.io/case-studies/construction-site.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
@@ -40,7 +41,8 @@
         <div class="case-study-hero__meta"><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Company</span><span class="case-study-hero__meta-value">Deloitte</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Role</span><span class="case-study-hero__meta-value">Tech Consultant</span></span><span class="case-study-hero__meta-item"><span class="case-study-hero__meta-label">Project period</span><span class="case-study-hero__meta-value">Jan 2021 – Apr 2021</span></span></div>
       </div>
       <div class="case-study-body">
-        <div class="cs-tldr"><dl><dt>Problem</dt><dd>A construction client needed real-time SAP integration on a tablet app, but the APIs had no JOIN support and column meanings had to be reverse-engineered with no documentation.</dd><dt>What I did</dt><dd>Mapped the SAP data model from systematic observation, then redesigned a timer-based sync as an explicit state machine with conditional transitions, bidirectional writes, inconsistency detection, and chunked paging.</dd><dt>Outcome</dt><dd>A legible, observable sync engine that handled the full data complexity, making a difficult integration correct and transparent without documented API support.</dd></dl></div>
+        <div class="cs-tldr"><dl><dt>Problem</dt><dd>A construction client needed real-time SAP integration on a tablet app, but the APIs had no JOIN support and column meanings had to be reverse-engineered with no documentation.</dd><dt>What I built</dt><dd>Mapped the SAP data model from systematic observation, then redesigned a timer-based sync as an explicit state machine with conditional transitions, bidirectional writes, inconsistency detection, and chunked paging.</dd><dt>Outcome</dt><dd>A legible, observable sync engine that handled the full data complexity, making a difficult integration correct and transparent without documented API support.</dd></dl></div>
+        
         <article class="case-study-article">
 <h2>The Situation</h2>
 <p>The core engineering challenge was a two-tier sync architecture between the app and SAP. This case study covers the server-side engine, the more complex of the two tiers.</p>

@@ -135,7 +135,7 @@ function cardSvg({ label, title, subtitle, name, role }) {
 
 function loadPages() {
   const cv   = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'cv.json'), 'utf8'));
-  const base = { name: cv.profile.name, role: 'Platform Software Engineer' };
+  const base = { name: cv.profile.name, role: 'Backend & Identity Engineer' };
 
   const pages = [{
     file: 'index',

@@ -1,0 +1,37 @@
+<svg viewBox="0 0 400 424" role="img" aria-labelledby="dl-t dl-d">
+  <title id="dl-t">Deeplink security model</title>
+  <desc id="dl-d">A source application creates a deeplink bound to the user's bearer token. The target application presents the application key and the user's bearer token to the deeplink service. The service checks both layers and returns the context only if both pass.</desc>
+  <defs>
+    <marker id="dl-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="dl-head-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="dg-head dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+
+  <rect class="dg-box" x="80" y="16" width="240" height="54" rx="6"/>
+  <text class="dg-title" x="200" y="40" text-anchor="middle">Source application</text>
+  <text class="dg-text" x="200" y="57" text-anchor="middle">deeplink created in the user's session</text>
+
+  <line class="dg-line" x1="200" y1="70" x2="200" y2="116" marker-end="url(#dl-head)"/>
+  <text class="dg-label" x="210" y="90">create deeplink,</text>
+  <text class="dg-label" x="210" y="104">bound to user token</text>
+
+  <rect class="dg-box dg-box--accent" x="30" y="118" width="340" height="150" rx="6"/>
+  <text class="dg-title" x="46" y="142">Deeplink service</text>
+  <rect class="dg-box" x="46" y="156" width="308" height="44" rx="5"/>
+  <text class="dg-text dg-text--strong" x="60" y="175">Layer 1: app-level key</text>
+  <text class="dg-text" x="60" y="191">receiving app must hold the matching key</text>
+  <rect class="dg-box" x="46" y="208" width="308" height="44" rx="5"/>
+  <text class="dg-text dg-text--strong" x="60" y="227">Layer 2: user bearer token</text>
+  <text class="dg-text" x="60" y="243">audience-scoped to the deeplink service</text>
+
+  <line class="dg-line" x1="110" y1="350" x2="110" y2="270" marker-end="url(#dl-head)"/>
+  <text class="dg-label" x="118" y="304">presents app key</text>
+  <text class="dg-label" x="118" y="318">+ user's token</text>
+
+  <line class="dg-line dg-line--accent" x1="280" y1="270" x2="280" y2="350" marker-end="url(#dl-head-accent)"/>
+  <text class="dg-label" x="288" y="304">context only</text>
+  <text class="dg-label" x="288" y="318">if both pass</text>
+
+  <rect class="dg-box" x="80" y="352" width="240" height="54" rx="6"/>
+  <text class="dg-title" x="200" y="376" text-anchor="middle">Target application</text>
+  <text class="dg-text" x="200" y="393" text-anchor="middle">receives the user and context</text>
+</svg>

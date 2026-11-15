@@ -126,19 +126,22 @@ const ICONS = {
   email:    '<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>',
 };
 
-function renderProfileLinks(profile) {
-  const defs = [
-    { key: 'linkedin', label: 'LinkedIn' },
-    { key: 'github',   label: 'GitHub'   },
-    { key: 'email',    label: 'Email'    },
-  ];
-  return defs.map(({ key, label }) => {
-    const val = profile.links?.[key];
-    if (!val) return '';
-    const href   = key === 'email' ? `mailto:${val}` : val;
-    const target = key !== 'email' ? ' target="_blank" rel="noopener noreferrer"' : '';
-    return `<a class="profile-link" href="${esc(href)}"${target} aria-label="${esc(label)}"><span>${esc(label)}</span>${ICONS[key]}</a>`;
-  }).join('');
+// Contact buttons under the home page intro: Email, LinkedIn, GitHub.
+function renderProfileCta(profile) {
+  const email    = profile.links?.email;
+  const linkedin = profile.links?.linkedin;
+  const github   = profile.links?.github;
+  const buttons  = [];
+  if (email) {
+    buttons.push(`<a class="cta-btn cta-btn--primary" href="mailto:${esc(email)}">${ICONS.email}<span>Email me</span></a>`);
+  }
+  if (linkedin) {
+    buttons.push(`<a class="cta-btn" href="${esc(linkedin)}" target="_blank" rel="noopener noreferrer">${ICONS.linkedin}<span>LinkedIn</span></a>`);
+  }
+  if (github) {
+    buttons.push(`<a class="cta-btn" href="${esc(github)}" target="_blank" rel="noopener noreferrer">${ICONS.github}<span>GitHub</span></a>`);
+  }
+  return buttons.join('');
 }
 
 /* ── PROJECT CARDS ───────────────────────────────────────────────── */
@@ -157,10 +160,12 @@ function renderFeaturedCard(p) {
   const targetAttr = cta.external ? ' target="_blank" rel="noopener noreferrer"' : '';
   const tags       = (p.tags ?? []).slice(0, 4).map(makeTag).join('');
   const tagsHtml   = tags ? `<div class="featured-card__tags">${tags}</div>` : '';
+  const descHtml   = p.description ? `<p class="featured-card__desc">${esc(p.description)}</p>` : '';
 
   return (
     `<a class="featured-card" href="${esc(cta.href)}"${targetAttr}>` +
     `<h3 class="featured-card__title">${esc(p.title)}</h3>` +
+    `${descHtml}` +
     `<div class="featured-card__footer">${tagsHtml}` +
     `<span class="featured-card__cta">${cta.label}</span></div></a>`
   );
@@ -412,10 +417,23 @@ function renderTldr(fm) {
   return (
     `<div class="cs-tldr"><dl>` +
     `<dt>Problem</dt><dd>${inline(fm.tldrProblem)}</dd>` +
-    `<dt>What I did</dt><dd>${inline(fm.tldrDid)}</dd>` +
+    `<dt>What I built</dt><dd>${inline(fm.tldrDid)}</dd>` +
     `<dt>Outcome</dt><dd>${inline(fm.tldrOutcome)}</dd>` +
     `</dl></div>`
   );
+}
+
+// Inlines the SVG named by the "diagram" front matter key (a path relative to
+// case-studies/). Inline SVG lets the diagram use the page's theme tokens.
+function renderDiagram(slug, fm) {
+  if (!fm.diagram) return '';
+  const file = path.join('case-studies', fm.diagram);
+  if (!fs.existsSync(file)) {
+    throw new Error(`case-studies/${slug}.md: diagram file not found: ${file}`);
+  }
+  const svg = fs.readFileSync(file, 'utf8').replace(/^<\?xml[^>]*\?>\s*/, '').trim();
+  const caption = fm.diagramCaption ? `<figcaption>${inline(fm.diagramCaption)}</figcaption>` : '';
+  return `<figure class="cs-diagram">${svg}${caption}</figure>`;
 }
 
 function renderCaseStudyPage(slug, fm, body, nextCase = null, profile = {}) {
@@ -462,6 +480,7 @@ ${renderSocialMeta({
     authorUrl: profile.links?.linkedin ?? SITE_URL,
     published: fm.published,
   })}
+  <link rel="canonical" href="${SITE_URL}/case-studies/${slug}.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
@@ -482,6 +501,7 @@ ${renderSocialMeta({
       </div>
       <div class="case-study-body">
         ${renderTldr(fm)}
+        ${renderDiagram(slug, fm)}
         <article class="case-study-article">
 ${mdToHtml(body)}
         </article>
@@ -544,10 +564,10 @@ function main() {
     const lvl = l.level.toLowerCase();
     if (lvl === 'native' || lvl === 'fluent') return l.name;
     if (lvl.includes('beginner'))             return `${l.name} (learning)`;
-    return `${l.name} (${lvl})`;
+    return `${l.name} (${l.level})`;
   }).join(' · ');
   html = inject(html, 'profile-languages', esc(langText));
-  html = inject(html, 'profile-links',     renderProfileLinks(profile));
+  html = inject(html, 'profile-cta',       renderProfileCta(profile));
 
   // Featured projects
   const allProjects = [
@@ -629,6 +649,16 @@ function main() {
     fs.writeFileSync(`case-studies/${slug}.html`, renderCaseStudyPage(slug, fm, body, caseStudyNext[slug] ?? null, profile));
     console.log(`  Built case-studies/${slug}.html`);
   }
+
+  /* sitemap.xml ────────────────────────────────────────────────── */
+  const urls = [`${SITE_URL}/`, ...mdFiles.map(f => `${SITE_URL}/case-studies/${path.basename(f, '.md')}.html`).sort()];
+  const sitemap =
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    urls.map(u => `  <url><loc>${esc(u)}</loc></url>\n`).join('') +
+    `</urlset>\n`;
+  fs.writeFileSync('sitemap.xml', sitemap);
+  console.log('  Built sitemap.xml');
 
   console.log('Build complete.');
 }
