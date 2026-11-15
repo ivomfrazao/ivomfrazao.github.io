@@ -39,11 +39,18 @@ const C = {
   accent:    '#60a5fa',
 };
 
+/*
+ * Sizes are chosen so the card stays legible when LinkedIn shrinks it to
+ * ~480px wide (scale 0.4): nothing below ~30px on the 1200px canvas, and the
+ * lighter text is brightened rather than using the dim secondary grey.
+ */
 const PAD_X     = 80;
 const MAX_TEXT  = W - PAD_X * 2;
-const TITLE_PX  = 76;
-const TITLE_LH  = 90;
-const MAX_LINES = 3;
+const TITLE_PX  = 96;
+const TITLE_LH  = 106;
+const MAX_LINES = 2;
+const SUB_PX    = 42;
+const SUB_MIN   = 32;
 
 const FONT_OPTS = {
   fontFiles: FONTS,
@@ -86,39 +93,41 @@ function wrap(text, px, weight, maxWidth) {
 }
 
 /* Shrinks a single line until it fits (used for the subtitle). */
-function fit(text, px, weight, maxWidth, minPx = 22) {
+function fit(text, px, weight, maxWidth, minPx) {
   let size = px;
   while (size > minPx && measure(text, size, weight) > maxWidth) size -= 1;
   return size;
 }
 
-function cardSvg({ label, title, subtitle, name, role, host }) {
+function cardSvg({ label, title, subtitle, name, role }) {
   const titleLines = wrap(title, TITLE_PX, 700, MAX_TEXT);
   if (titleLines.length > MAX_LINES) {
-    throw new Error(`Title too long for the card (${titleLines.length} lines): "${title}"`);
+    throw new Error(`Title too long for the card (${titleLines.length} lines, max ${MAX_LINES}): "${title}"`);
   }
 
-  const titleTop  = 200;
-  const titleSvg  = titleLines
-    .map((l, i) => `<text x="${PAD_X}" y="${titleTop + TITLE_PX + i * TITLE_LH}" font-size="${TITLE_PX}" font-weight="700" fill="${C.text}" letter-spacing="-1.5">${xmlEsc(l)}</text>`)
-    .join('\n    ');
-  const subY      = titleTop + TITLE_PX + (titleLines.length - 1) * TITLE_LH + 62;
-  const subPx     = fit(subtitle, 32, 400, MAX_TEXT);
+  const firstBaseline = 232;
+  const titleSvg = titleLines
+    .map((l, i) => `<text x="${PAD_X}" y="${firstBaseline + i * TITLE_LH}" font-size="${TITLE_PX}" font-weight="700" fill="${C.text}" letter-spacing="-2">${xmlEsc(l)}</text>`)
+    .join('\n  ');
+  const subY  = firstBaseline + (titleLines.length - 1) * TITLE_LH + 70;
+  const subPx = fit(subtitle, SUB_PX, 400, MAX_TEXT, SUB_MIN);
+  if (measure(subtitle, subPx, 400) > MAX_TEXT) {
+    throw new Error(`Subtitle too long for the card: "${subtitle}"`);
+  }
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Inter">
   <rect width="${W}" height="${H}" fill="${C.bg}"/>
   <rect x="24" y="24" width="${W - 48}" height="${H - 48}" rx="16" fill="${C.surface}" stroke="${C.border}" stroke-width="2"/>
   <rect x="24" y="24" width="8" height="${H - 48}" rx="4" fill="${C.accent}"/>
 
-  <text x="${PAD_X}" y="130" font-size="24" font-weight="600" fill="${C.accent}" letter-spacing="4">${xmlEsc(label.toUpperCase())}</text>
+  <text x="${PAD_X}" y="112" font-size="30" font-weight="600" fill="${C.accent}" letter-spacing="5">${xmlEsc(label.toUpperCase())}</text>
 
   ${titleSvg}
-  <text x="${PAD_X}" y="${subY}" font-size="${subPx}" font-weight="400" fill="${C.secondary}">${xmlEsc(subtitle)}</text>
+  <text x="${PAD_X}" y="${subY}" font-size="${subPx}" font-weight="400" fill="${C.text}" fill-opacity="0.72">${xmlEsc(subtitle)}</text>
 
-  <line x1="${PAD_X}" y1="${H - 144}" x2="${W - PAD_X}" y2="${H - 144}" stroke="${C.border}" stroke-width="2"/>
-  <text x="${PAD_X}" y="${H - 82}" font-size="34" font-weight="600" fill="${C.text}">${xmlEsc(name)}</text>
-  <text x="${PAD_X}" y="${H - 50}" font-size="22" font-weight="400" fill="${C.secondary}">${xmlEsc(role)}</text>
-  <text x="${W - PAD_X}" y="${H - 82}" font-size="24" font-weight="400" fill="${C.secondary}" text-anchor="end">${xmlEsc(host)}</text>
+  <line x1="${PAD_X}" y1="${H - 140}" x2="${W - PAD_X}" y2="${H - 140}" stroke="#333333" stroke-width="2"/>
+  <text x="${PAD_X}" y="${H - 66}" font-size="44" font-weight="600" fill="${C.text}">${xmlEsc(name)}</text>
+  ${role ? `<text x="${W - PAD_X}" y="${H - 66}" font-size="32" font-weight="400" fill="${C.text}" fill-opacity="0.72" text-anchor="end">${xmlEsc(role)}</text>` : ''}
 </svg>`;
 }
 
@@ -126,11 +135,13 @@ function cardSvg({ label, title, subtitle, name, role, host }) {
 
 function loadPages() {
   const cv   = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'cv.json'), 'utf8'));
-  const base = { name: cv.profile.name, role: 'Platform Software Engineer', host: 'ivomfrazao.github.io' };
+  const base = { name: cv.profile.name, role: 'Platform Software Engineer' };
 
   const pages = [{
     file: 'index',
     ...base,
+    name: 'ivomfrazao.github.io',   // the title is already the name, so the footer shows the address
+    role: '',
     label: 'Portfolio',
     title: cv.profile.name,
     subtitle: cv.profile.tagline,
@@ -181,4 +192,6 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { cardSvg, loadPages, FONT_OPTS, W };

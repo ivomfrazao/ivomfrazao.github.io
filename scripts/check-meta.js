@@ -6,7 +6,8 @@
  *   node scripts/check-meta.js
  *
  * Checks, per page: all required tags present exactly once, absolute https URLs,
- * og:description under 160 chars, matching meta description, og:image file exists
+ * og:description 100-159 chars (LinkedIn warns under 100), matching meta description,
+ * articles also need author, article:author and article:published_time, og:image file exists
  * in assets/og/, is a 1200x627 PNG and is under 1 MB. Exits non-zero on any failure.
  */
 
@@ -52,7 +53,7 @@ function pngSize(file) {
 let failures = 0;
 const fail = (page, msg) => { failures++; console.log(`  FAIL ${page}: ${msg}`); };
 
-console.log('Page | og:title | og:image');
+console.log('Page | og:title | og:image | author | published');
 for (const page of pages) {
   const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
   const head = html.slice(0, html.indexOf('</head>'));
@@ -79,18 +80,27 @@ for (const page of pages) {
   const [type]   = get('property', 'og:type');
   const [card]   = get('name', 'twitter:card');
 
-  if (desc && desc.length >= 160)  fail(page, `og:description is ${desc.length} chars (limit: under 160)`);
+  if (desc && (desc.length >= 160 || desc.length < 100)) fail(page, `og:description is ${desc.length} chars (needs 100-159)`);
   if (meta !== desc)               fail(page, 'meta description differs from og:description');
   if (card !== 'summary_large_image') fail(page, `twitter:card is ${card}`);
   if (get('name', 'twitter:image')[0] !== image) fail(page, 'twitter:image differs from og:image');
   if (get('name', 'twitter:title')[0] !== title) fail(page, 'twitter:title differs from og:title');
   if (get('property', 'og:site_name')[0] !== 'Ivo Frazão') fail(page, 'og:site_name is not "Ivo Frazão"');
 
-  const expectedType = page === 'index.html' ? 'website' : 'article';
+  const expectedType = page.startsWith('case-studies/') ? 'article' : 'website';
   if (type !== expectedType) fail(page, `og:type is ${type}, expected ${expectedType}`);
 
   const expectedUrl = page === 'index.html' ? `${SITE}/` : `${SITE}/${page}`;
   if (url !== expectedUrl) fail(page, `og:url is ${url}, expected ${expectedUrl}`);
+
+  if (type === 'article') {
+    const [author] = get('name', 'author');
+    const [authorUrl] = get('property', 'article:author');
+    const [published] = get('property', 'article:published_time');
+    if (get('name', 'author').length !== 1 || !author) fail(page, 'missing or duplicate <meta name="author">');
+    if (get('property', 'article:author').length !== 1 || !/^https:\/\//.test(authorUrl || '')) fail(page, 'article:author must appear once as an absolute https URL');
+    if (get('property', 'article:published_time').length !== 1 || !/^\d{4}-\d{2}-\d{2}/.test(published || '') || isNaN(Date.parse(published))) fail(page, `article:published_time missing or invalid: ${published}`);
+  }
 
   if (page.startsWith('case-studies/')) {
     const h1 = (html.match(/<h1 class="case-study-hero__title">([^<]*)<\/h1>/) || [])[1];
@@ -112,7 +122,7 @@ for (const page of pages) {
     }
   }
 
-  console.log(`${page} | ${title} | ${image}`);
+  console.log(`${page} | ${title} | ${image} | ${get('name', 'author')[0] ?? '-'} | ${get('property', 'article:published_time')[0] ?? '-'}`);
 }
 
 console.log(failures ? `\n${failures} problem(s) found.` : `\nAll ${pages.length} pages OK.`);

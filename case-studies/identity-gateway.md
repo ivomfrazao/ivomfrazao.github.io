@@ -4,6 +4,7 @@ company: Fidelidade
 role: Platform Software Engineer
 dateRange: Apr 2026 – Present
 tags: [OAuth2/OIDC, JWKS, Microsoft Entra, Session Security, Platform Engineering]
+published: 2026-09-08
 description: Identity gateway bringing PKCE, nonce and JWKS-based JWT validation to applications through configuration, with no code changes. In pilot with 5 applications.
 tldrProblem: A review of the platform's highest-usage OutSystems applications found none with complete JWT validation, and inconsistent, often undisciplined, token persistence. Validation gaps included inconsistent lifetime, issuer, and audience checks, no nonce support anywhere, and signature checks against a static certificate per team instead of a JWKS endpoint, which meant the signing key had never been rotated.
 tldrDid: Added the missing IdP capabilities (PKCE, nonce, a JWKS endpoint, session-scoped tokens, and front-channel logout, all new to the identity provider), then proposed, designed and built an identity gateway that applies those capabilities and correct JWT validation to any application that moves onto it, with no code changes on that application's side. Also rewrote token minting end-to-end.

@@ -4,6 +4,7 @@ company: Deloitte
 role: Tech Consultant
 dateRange: Jan 2021 – Apr 2021
 tags: [SAP Integration, Sync Engine, State Machine, Architecture, Tablet]
+published: 2026-05-22
 description: Tablet app sync engine for SAP, rebuilt as an explicit state machine after reverse-engineering an undocumented data model, with bidirectional writes.
 tldrProblem: A construction client needed real-time SAP integration on a tablet app, but the APIs had no JOIN support and column meanings had to be reverse-engineered with no documentation.
 tldrDid: Mapped the SAP data model from systematic observation, then redesigned a timer-based sync as an explicit state machine with conditional transitions, bidirectional writes, inconsistency detection, and chunked paging.

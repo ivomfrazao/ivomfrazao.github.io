@@ -297,11 +297,22 @@ const SITE_URL  = 'https://ivomfrazao.github.io';
 const SITE_NAME = 'Ivo Frazão';
 
 // Returns the <meta> block for description, Open Graph and Twitter Card tags.
-// Used by case study pages here; index.html keeps the same set in its own head
-// (see scripts/check-meta.js, which verifies every page).
-function renderSocialMeta({ title, description, url, image, type }) {
-  return [
+// For type "article" it also emits author and article:published_time, which
+// LinkedIn's Post Inspector reads as the author and publish date.
+// Used by case study pages here; index.html keeps its own set in its head
+// (scripts/check-meta.js verifies every page).
+function renderSocialMeta({ title, description, url, image, type, author, authorUrl, published }) {
+  const lines = [
     `  <meta name="description" content="${esc(description)}">`,
+  ];
+  if (type === 'article') {
+    lines.push(
+      `  <meta name="author" content="${esc(author)}">`,
+      `  <meta property="article:author"         content="${esc(authorUrl)}">`,
+      `  <meta property="article:published_time" content="${esc(published)}">`,
+    );
+  }
+  lines.push(
     `  <meta property="og:type"        content="${esc(type)}">`,
     `  <meta property="og:site_name"   content="${esc(SITE_NAME)}">`,
     `  <meta property="og:title"       content="${esc(title)}">`,
@@ -315,7 +326,8 @@ function renderSocialMeta({ title, description, url, image, type }) {
     `  <meta name="twitter:title"       content="${esc(title)}">`,
     `  <meta name="twitter:description" content="${esc(description)}">`,
     `  <meta name="twitter:image"       content="${esc(image)}">`,
-  ].join('\n');
+  );
+  return lines.join('\n');
 }
 
 /* ── CASE STUDY PAGE TEMPLATE ─────────────────────────────────────── */
@@ -338,12 +350,15 @@ function renderTldr(fm) {
   );
 }
 
-function renderCaseStudyPage(slug, fm, body, nextCase = null) {
+function renderCaseStudyPage(slug, fm, body, nextCase = null, profile = {}) {
   const title = fm.title || 'Case Study';
   if (!fm.description) {
     throw new Error(`case-studies/${slug}.md: missing "description" in front matter (used for meta description and og:description)`);
   }
   const description = fm.description;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fm.published ?? '')) {
+    throw new Error(`case-studies/${slug}.md: "published" in front matter must be a YYYY-MM-DD date (used for article:published_time)`);
+  }
 
   const tagsHtml = Array.isArray(fm.tags) && fm.tags.length
     ? `<div class="case-study-hero__tags">${fm.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`
@@ -375,6 +390,9 @@ ${renderSocialMeta({
     url:   `${SITE_URL}/case-studies/${slug}.html`,
     image: `${SITE_URL}/assets/og/${slug}.png`,
     type:  'article',
+    author:    profile.name ?? SITE_NAME,
+    authorUrl: profile.links?.linkedin ?? SITE_URL,
+    published: fm.published,
   })}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -531,7 +549,7 @@ function main() {
     const slug = path.basename(file, '.md');
     const raw  = fs.readFileSync(`case-studies/${file}`, 'utf8');
     const { fm, body } = parseFrontMatter(raw);
-    fs.writeFileSync(`case-studies/${slug}.html`, renderCaseStudyPage(slug, fm, body, caseStudyNext[slug] ?? null));
+    fs.writeFileSync(`case-studies/${slug}.html`, renderCaseStudyPage(slug, fm, body, caseStudyNext[slug] ?? null, profile));
     console.log(`  Built case-studies/${slug}.html`);
   }
 
