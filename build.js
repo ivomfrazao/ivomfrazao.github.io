@@ -291,6 +291,33 @@ function parseFrontMatter(raw) {
   return { fm, body: match[2] };
 }
 
+/* ── SOCIAL / SEO META TAGS ──────────────────────────────────────── */
+
+const SITE_URL  = 'https://ivomfrazao.github.io';
+const SITE_NAME = 'Ivo Frazão';
+
+// Returns the <meta> block for description, Open Graph and Twitter Card tags.
+// Used by case study pages here; index.html keeps the same set in its own head
+// (see scripts/check-meta.js, which verifies every page).
+function renderSocialMeta({ title, description, url, image, type }) {
+  return [
+    `  <meta name="description" content="${esc(description)}">`,
+    `  <meta property="og:type"        content="${esc(type)}">`,
+    `  <meta property="og:site_name"   content="${esc(SITE_NAME)}">`,
+    `  <meta property="og:title"       content="${esc(title)}">`,
+    `  <meta property="og:description" content="${esc(description)}">`,
+    `  <meta property="og:url"         content="${esc(url)}">`,
+    `  <meta property="og:image"       content="${esc(image)}">`,
+    `  <meta property="og:image:width"  content="1200">`,
+    `  <meta property="og:image:height" content="627">`,
+    `  <meta property="og:image:alt"   content="${esc(title)}, by ${esc(SITE_NAME)}">`,
+    `  <meta name="twitter:card"        content="summary_large_image">`,
+    `  <meta name="twitter:title"       content="${esc(title)}">`,
+    `  <meta name="twitter:description" content="${esc(description)}">`,
+    `  <meta name="twitter:image"       content="${esc(image)}">`,
+  ].join('\n');
+}
+
 /* ── CASE STUDY PAGE TEMPLATE ─────────────────────────────────────── */
 
 const CROSS_REFS = {
@@ -313,6 +340,10 @@ function renderTldr(fm) {
 
 function renderCaseStudyPage(slug, fm, body, nextCase = null) {
   const title = fm.title || 'Case Study';
+  if (!fm.description) {
+    throw new Error(`case-studies/${slug}.md: missing "description" in front matter (used for meta description and og:description)`);
+  }
+  const description = fm.description;
 
   const tagsHtml = Array.isArray(fm.tags) && fm.tags.length
     ? `<div class="case-study-hero__tags">${fm.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>`
@@ -338,11 +369,13 @@ function renderCaseStudyPage(slug, fm, body, nextCase = null) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${esc(title)} · Ivo Frazão</title>
-  <meta name="description" content="${esc(title)} · case study by Ivo Frazão, Platform Software Engineer.">
-  <meta property="og:type"        content="article">
-  <meta property="og:title"       content="${esc(title)} · Ivo Frazão">
-  <meta property="og:description" content="${esc(title)} · case study by Ivo Frazão, Platform Software Engineer.">
-  <meta property="og:url"         content="https://ivomfrazao.github.io/case-studies/${esc(slug)}.html">
+${renderSocialMeta({
+    title,
+    description,
+    url:   `${SITE_URL}/case-studies/${slug}.html`,
+    image: `${SITE_URL}/assets/og/${slug}.png`,
+    type:  'article',
+  })}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
@@ -505,4 +538,6 @@ function main() {
   console.log('Build complete.');
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { parseFrontMatter, SITE_URL, SITE_NAME };

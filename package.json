@@ -1,0 +1,12 @@
+{
+  "name": "ivomfrazao.github.io",
+  "private": true,
+  "description": "Build tooling only. The site itself has no runtime dependencies.",
+  "scripts": {
+    "build": "node build.js",
+    "og": "node scripts/generate-og.js"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "2.6.2"
+  }
+}

@@ -4,6 +4,7 @@ company: Fidelidade
 role: Platform Software Engineer
 dateRange: Jan 2026 – Present
 tags: [Security, Authorization, JWT, Platform Engineering, Token Design]
+description: Bearer token validation added to deep-linking to close a user impersonation path across 11 exploitable integrations, with an incremental rollout.
 tldrProblem: The platform's deep-linking had application-level isolation but no user-level check: anyone with a URL could arrive authenticated as the user it was created for, an impersonation path across 11 of the more than 20 integrations registered on the service.
 tldrDid: Identified the gap proactively, designed a two-layer security model adding bearer token validation alongside the existing app-key mechanism, and extended the custom identity provider to support it.
 tldrOutcome: User impersonation path closed across the **11 exploitable integrations** (of 20+ registered on the service); rollout is incremental to allow consumers to migrate without a hard cutover.

@@ -4,6 +4,7 @@ company: Deloitte
 role: Tech Senior → Tech Experienced Senior Consultant
 dateRange: Jun 2023 – Jul 2025
 tags: [Architecture, ERP Integration, Retail, Stakeholder Management, Solo Engineering]
+description: Unified B2C and B2B point-of-sale platform on a legacy ERP with no API docs. Delivered in 10 months against a 6-month estimate, with 20 stores rolled out.
 tldrProblem: Two just-merged companies needed a unified B2C+B2B point-of-sale platform in six months, with a legacy ERP that had no API documentation and live B2B operations that couldn't be disrupted.
 tldrDid: Reverse-engineered the ERP from observation, resolved B2C/B2B process conflicts at director level through the steering committee, and operated as sole engineer through the critical delivery phase.
 tldrOutcome: Full scope delivered in **10 months** against a 6-month estimate; live B2B operations maintained throughout; 20 stores rolled out and trained.
